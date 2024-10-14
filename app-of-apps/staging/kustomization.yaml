@@ -1,0 +1,173 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base/automation
+- ../base/workflow
+#- ../base/ci-cd
+- ../base/management
+- ../base/observability
+- ../base/security
+#- ../base/server
+- ../base/service-mesh
+- ../base/service-proxy
+- ../base/storage
+- ../base/webapp
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-automation
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/automation"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-workflow
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/workflow"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-management
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/management"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-observability
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/observability"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-security
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/security"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-server
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/server"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-service-mesh
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/service-mesh"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-service-mesh
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/service-mesh"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-service-proxy
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/service-proxy"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-storage
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/storage"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-webapp
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/webapp"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: app-of-apps-secret
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "secret/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

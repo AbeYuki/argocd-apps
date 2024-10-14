@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/management/coredns
+- ../../base/management/namespace
+- ../../base/management/rbac
+- ../../base/management/secret
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: coredns
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: rbac
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "./"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: secret
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "secret/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

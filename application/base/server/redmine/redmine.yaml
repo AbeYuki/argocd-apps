@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redmine
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AbeYuki/redmine-k8s.git
+    targetRevision: HEAD
+    path: overlay/prod/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redmine
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true

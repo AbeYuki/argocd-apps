@@ -1,0 +1,89 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/service-proxy/ingress-aggregator
+#- ../../base/service-proxy/ingress-aggregator-private
+- ../../base/service-proxy/ingress-nginx
+- ../../base/service-proxy/metallb
+- ../../base/service-proxy/metallb-config
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: ingress-aggregator
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "staging/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: ingress-aggregator-nextcloud
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/nextcloud/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: ingress-aggregator-nextcloud-login
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/nextcloud-login/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: ingress-nginx
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "ingress-nginx/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: metallb
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "metallb/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: metallb-conf
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

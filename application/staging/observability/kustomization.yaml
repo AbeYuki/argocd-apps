@@ -1,0 +1,63 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+#- ../../base/observability/exchangerate-exporter
+#- ../../base/observability/kube-state-metrics
+#- ../../base/observability/kubernetes-dashboard
+- ../../base/observability/monitoring
+#- ../../base/observability/temperature-exporter
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: exchangerate-exporter
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "./"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: kube-state-metrics
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "kube-state-metrics/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: monitoring
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlays/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: temperature-exporter
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "./"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

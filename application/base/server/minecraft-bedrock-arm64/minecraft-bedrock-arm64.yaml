@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-bedrock-arm64
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AbeYuki/minecraft-bedrock-arm64-k8s.git
+    targetRevision: HEAD
+    path: overlay/prod/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod-minecraft
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

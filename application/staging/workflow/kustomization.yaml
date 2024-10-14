@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/workflow/airflow
+#- ../../base/workflow/argo-workflow
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: airflow
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "airflow/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: airflow-postgresql
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "airflow-postgresql/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

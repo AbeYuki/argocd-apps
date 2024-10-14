@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/ci-cd/argo-rollouts
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: argo-rollouts
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "argo-rollouts/testing"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

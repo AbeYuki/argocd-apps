@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-aggregator-nextcloud
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
+    targetRevision: HEAD
+    path: overlay/nextcloud/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nextcloud-production
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-aggregator-nextcloud-login
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
+    targetRevision: HEAD
+    path: overlay/nextcloud-login/
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nextcloud-production
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

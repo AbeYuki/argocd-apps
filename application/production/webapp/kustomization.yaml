@@ -1,0 +1,60 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/webapp/aimhighergg-com
+- ../../base/webapp/private-repo-1
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: www-aimhighergg-com
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/prod"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/prod-www"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/prod-sekime"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "overlay/prod-sumire"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

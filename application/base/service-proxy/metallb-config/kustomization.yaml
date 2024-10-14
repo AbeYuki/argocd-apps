@@ -1,0 +1,2 @@
+resources:
+- metallb-config.yaml

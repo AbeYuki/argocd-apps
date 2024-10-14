@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base/security/cert-manager
+- ../../base/security/vault
+
+patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: cert-manager
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "cert-manager/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: vault
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "vault/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
