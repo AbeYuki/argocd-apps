@@ -5,28 +5,18 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: argo-workflows
-    repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 0.33.1
-    helm:
-      releaseName: ""
-      valueFiles:
-         - values.yaml
-      ignoreMissingValueFiles: false
-      values: |
-        workflow:
-          serviceAccount:
-            create: true
-            name: "argo-workflow"
-          rbac:
-            create: true
-        controller:
-          workflowNamespaces:
-            - default
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: argocd
+    namespace: airflow
+  source:
+    repoURL: https://github.com/AbeYuki/manifest
+    targetRevision: HEAD
+    path: OVERLAYS
+    plugin:
+      name: kustomize-helmcharts
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
     syncOptions:
     - CreateNamespace=true

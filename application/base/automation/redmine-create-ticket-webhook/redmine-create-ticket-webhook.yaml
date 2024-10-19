@@ -9,6 +9,8 @@ spec:
     repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook-k8s.git
     targetRevision: HEAD
     path: OVERLAYS
+    plugin:
+      name: kustomize-helmcharts
   destination:
     server: https://kubernetes.default.svc
     namespace: webhook

@@ -32,3 +32,16 @@ patches:
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: argo-workflow
+  patch: |-
+    - op: replace
+      patch: /spec/source/path
+      value: "argo-workflow/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"

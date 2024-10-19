@@ -5,10 +5,15 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: metallb-system
   source:
     repoURL: https://github.com/AbeYuki/manifest
     targetRevision: HEAD
     path: OVERLAYS
+    plugin:
+      name: kustomize-helmcharts
   syncPolicy:
     automated:
       prune: false
@@ -16,6 +21,4 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: metallb-system
+
