@@ -20,7 +20,19 @@ patches:
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
-
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: namespace
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
 - target:
     kind: Application
     group: argoproj.io
@@ -34,7 +46,6 @@ patches:
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
-
 - target:
     kind: Application
     group: argoproj.io
