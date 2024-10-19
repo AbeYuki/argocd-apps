@@ -13,7 +13,7 @@ patches:
     name: consul
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "consul/testing"
     - op: replace
       path: /spec/source/targetRevision

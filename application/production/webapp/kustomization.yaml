@@ -14,7 +14,7 @@ patches:
     name: www-aimhighergg-com
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/prod"
     - op: replace
       path: /spec/source/targetRevision
@@ -27,7 +27,7 @@ patches:
     name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/prod-www"
     - op: replace
       path: /spec/source/targetRevision
@@ -40,7 +40,7 @@ patches:
     name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/prod-sekime"
     - op: replace
       path: /spec/source/targetRevision
@@ -53,7 +53,7 @@ patches:
     name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/prod-sumire"
     - op: replace
       path: /spec/source/targetRevision

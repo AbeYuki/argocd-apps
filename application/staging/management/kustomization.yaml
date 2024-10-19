@@ -16,7 +16,7 @@ patches:
     name: coredns
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/staging"
     - op: replace
       path: /spec/source/targetRevision
@@ -30,7 +30,7 @@ patches:
     name: rbac
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "./"
     - op: replace
       path: /spec/source/targetRevision
@@ -44,7 +44,7 @@ patches:
     name: secret
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "secret/"
     - op: replace
       path: /spec/source/targetRevision

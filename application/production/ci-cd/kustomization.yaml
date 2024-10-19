@@ -14,7 +14,7 @@ patches:
     name: actions-runnser-controller
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "actions-runnser-controller/production"
     - op: replace
       path: /spec/source/targetRevision

@@ -18,7 +18,7 @@ patches:
     name: ingress-aggregator
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "production/"
     - op: replace
       path: /spec/source/targetRevision
@@ -31,7 +31,7 @@ patches:
     name: ingress-aggregator-nextcloud
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/nextcloud/"
     - op: replace
       path: /spec/source/targetRevision
@@ -44,7 +44,7 @@ patches:
     name: ingress-aggregator-nextcloud-login
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/nextcloud-login/"
     - op: replace
       path: /spec/source/targetRevision
@@ -57,7 +57,7 @@ patches:
     name: ingress-nginx
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "ingress-nginx/production"
     - op: replace
       path: /spec/source/targetRevision
@@ -70,7 +70,7 @@ patches:
     name: metallb
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "metallb/production"
     - op: replace
       path: /spec/source/targetRevision
@@ -83,7 +83,7 @@ patches:
     name: metallb-conf
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/production"
     - op: replace
       path: /spec/source/targetRevision

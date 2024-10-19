@@ -14,7 +14,7 @@ patches:
     name: jyperrlab
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/testing"
     - op: replace
       path: /spec/source/targetRevision
@@ -27,7 +27,7 @@ patches:
     name: minecraft-bedrock-arm64
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/testing"
     - op: replace
       path: /spec/source/targetRevision

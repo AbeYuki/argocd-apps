@@ -17,7 +17,7 @@ patches:
     name: exchangerate-exporter
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "./"
     - op: replace
       path: /spec/source/targetRevision
@@ -30,7 +30,7 @@ patches:
     name: kube-state-metrics
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "kube-state-metrics/production"
     - op: replace
       path: /spec/source/targetRevision
@@ -43,7 +43,7 @@ patches:
     name: monitoring
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlays/production"
     - op: replace
       path: /spec/source/targetRevision
@@ -56,7 +56,7 @@ patches:
     name: temperature-exporter
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "./"
     - op: replace
       path: /spec/source/targetRevision

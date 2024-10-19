@@ -15,7 +15,7 @@ patches:
     name: longhorn
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "longhorn/testing"
     - op: replace
       path: /spec/source/targetRevision
@@ -28,7 +28,7 @@ patches:
     name: nfs-provisioner
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "nfs-subdir-external-provisioner/testing"
     - op: replace
       path: /spec/source/targetRevision
@@ -41,7 +41,7 @@ patches:
     name: storageclass
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "./"
     - op: replace
       path: /spec/source/targetRevision

@@ -14,7 +14,7 @@ patches:
     name: airflow
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "airflow/testing"
     - op: replace
       path: /spec/source/targetRevision
@@ -27,7 +27,7 @@ patches:
     name: airflow-postgresql
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "airflow-postgresql/testing"
     - op: replace
       path: /spec/source/targetRevision
@@ -40,7 +40,7 @@ patches:
     name: argo-workflow
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "argo-workflow/testing"
     - op: replace
       path: /spec/source/targetRevision

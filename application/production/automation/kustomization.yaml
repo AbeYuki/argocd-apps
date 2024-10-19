@@ -14,7 +14,7 @@ patches:
     name: keda
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "keda/production"
     - op: replace
       path: /spec/source/targetRevision

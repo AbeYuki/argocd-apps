@@ -14,7 +14,7 @@ patches:
     name: cert-manager
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "cert-manager/staging"
     - op: replace
       path: /spec/source/targetRevision
@@ -27,7 +27,7 @@ patches:
     name: vault
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "vault/staging"
     - op: replace
       path: /spec/source/targetRevision
