@@ -4,8 +4,7 @@ kind: Kustomization
 resources:
 - ../../base/management/namespace
 - ../../base/management/rbac
-- ../../base/management/registry
-- ../../base/management/repository
+- ../../base/management/secret
 
 patches:
 - target:
