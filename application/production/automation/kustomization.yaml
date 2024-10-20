@@ -27,7 +27,7 @@ patches:
     name: redmine-create-ticket-webhook
   patch: |-
     - op: replace
-      patch: /spec/source/path
+      path: /spec/source/path
       value: "overlay/production/"
     - op: replace
       path: /spec/source/targetRevision
