@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/AbeYuki/metallb-config.git
     targetRevision: HEAD
-    path: overlay/production
+    path: OVERLAYS
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system

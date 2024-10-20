@@ -79,7 +79,7 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: metallb-conf
+    name: metallb-config
   patch: |-
     - op: replace
       path: /spec/source/path
