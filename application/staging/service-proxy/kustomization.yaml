@@ -57,7 +57,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "ingress-nginx/production"
+      value: "ingress-nginx/staging"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
