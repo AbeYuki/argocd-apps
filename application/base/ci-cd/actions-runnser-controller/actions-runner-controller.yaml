@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     path: OVERLAYS
     plugin:
-      name: avp-kustomize-helmcharts
+      name: argocd-vault-plugin-kustomize-helmcharts
   syncPolicy:
     automated:
       prune: false
