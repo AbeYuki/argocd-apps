@@ -11,11 +11,11 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: actions-runnser-controller
+    name: actions-runner-controller
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "actions-runnser-controller/production"
+      value: "actions-runner-controller/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
