@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: <path:secret/data/github/private-repo-url#REPO_URL_1>
+    repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
     targetRevision: HEAD
     path: overlay/prod-www/
   destination:
@@ -42,7 +42,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: <path:secret/data/github/private-repo-url#REPO_URL_3>
+    repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
     targetRevision: HEAD
     path: overlay/prod-sumire/
   destination:
