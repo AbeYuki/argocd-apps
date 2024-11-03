@@ -13,11 +13,11 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: coredns
+    name: coredns-custom
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "overlay/production"
+      value: "overlays/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"

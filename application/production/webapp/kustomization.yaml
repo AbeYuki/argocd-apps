@@ -24,7 +24,7 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+    name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
   patch: |-
     - op: replace
       path: /spec/source/path
@@ -37,7 +37,7 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+    name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
   patch: |-
     - op: replace
       path: /spec/source/path
@@ -50,7 +50,7 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: <path:secret/data/github/private-namespace#<path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+    name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
   patch: |-
     - op: replace
       path: /spec/source/path
