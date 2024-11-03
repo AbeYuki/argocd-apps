@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: actions-runner-controller
+  name: runner-deployment
   namespace: argocd
 spec:
   project: default
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: arc-system
+    namespace: arc-runner
   source:
     repoURL: https://github.com/AbeYuki/manifest
     targetRevision: HEAD
     path: OVERLAYS
-    plugin:
-      name: avp-kustomize-helmcharts
   syncPolicy:
     automated:
       prune: false

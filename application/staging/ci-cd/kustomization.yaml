@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/ci-cd/argo-rollouts
+- ../../base/ci-cd/runner-deployment
 
 patches:
 - target:
@@ -15,6 +16,19 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "argo-rollouts/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: v1alpha1
+    name: runner-deployment
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "runner-deployment/staging"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
