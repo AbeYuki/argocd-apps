@@ -33,6 +33,19 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
+    name: app-of-apps-ci-cd
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "application/staging/ci-cd"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
     name: app-of-apps-workflow
   patch: |-
     - op: replace
