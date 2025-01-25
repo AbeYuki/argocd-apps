@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/ci-cd/argo-rollouts
-- ../../base/ci-cd/runner-deployment
+#- ../../base/ci-cd/runner-deployment
 
 patches:
 - target:
