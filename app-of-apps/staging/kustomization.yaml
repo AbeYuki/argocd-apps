@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - ../base/automation
 #- ../base/workflow
-#- ../base/ci-cd
+- ../base/ci-cd
 - ../base/management
 #- ../base/observability
 - ../base/security
