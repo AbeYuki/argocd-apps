@@ -15,7 +15,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "argo-rollouts/production"
+      value: "argo-rollouts/staging"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
