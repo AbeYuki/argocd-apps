@@ -12,6 +12,19 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
+    name: argo-rollouts
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "argo-rollouts/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
     name: actions-runner-controller
   patch: |-
     - op: replace
