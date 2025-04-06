@@ -7,6 +7,7 @@ resources:
 - ../../base/service-proxy/ingress-nginx
 - ../../base/service-proxy/metallb
 - ../../base/service-proxy/metallb-config
+- ../../base/service-proxy/istio-ingress
 
 patches:
 - target:
@@ -80,6 +81,19 @@ patches:
     version: v1alpha1
     namespace: argocd
     name: metallb-config
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "overlay/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio-ingress
   patch: |-
     - op: replace
       path: /spec/source/path
