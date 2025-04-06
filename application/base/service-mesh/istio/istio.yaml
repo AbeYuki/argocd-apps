@@ -23,7 +23,7 @@ spec:
     - ServerSideApply=true
   ignoreDifferences:
     - group: ""
-      kind: Pod
+      kind: Deployment
       jsonPointers:
         - /spec/containers/0/env/0/valueFrom/resourceFieldRef/divisor
     - group: admissionregistration.k8s.io
