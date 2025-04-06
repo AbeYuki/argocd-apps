@@ -97,7 +97,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "overlay/staging"
+      value: "istio-ingress/staging"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
