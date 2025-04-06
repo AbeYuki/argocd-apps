@@ -22,11 +22,11 @@ spec:
     - CreateNamespace=true
     - ServerSideApply=true
   ignoreDifferences:
-    - group: ""
+    - group: "apps"
       kind: Deployment
       name: istiod
       jqPathExpressions:
-        - '.spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor'
+        - .spec.template.spec.containers[].env[]?.valueFrom?.resourceFieldRef?.divisor
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
       name: istio-validator-istio-system
