@@ -24,9 +24,9 @@ spec:
   ignoreDifferences:
     - group: ""
       kind: Deployment
+      name: istiod
       jqPathExpressions:
         - '.spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor'
-        - '.spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor'
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
       name: istio-validator-istio-system
