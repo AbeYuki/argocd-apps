@@ -26,3 +26,15 @@ spec:
       kind: Pod
       jsonPointers:
         - /spec/containers/0/env/0/valueFrom/resourceFieldRef/divisor
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: istio-validator-istio-system
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+        - /webhooks/0/matchPolicy
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: istiod-default-validator
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+        - /webhooks/0/matchPolicy
