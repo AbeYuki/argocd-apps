@@ -21,3 +21,8 @@ spec:
     syncOptions:
     - CreateNamespace=true
     - ServerSideApply=true
+  ignoreDifferences:
+    - group: ""
+      kind: Pod
+      jsonPointers:
+        - /spec/containers/0/env/0/valueFrom/resourceFieldRef/divisor
