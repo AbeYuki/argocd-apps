@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-gateway-aggregator
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: istio-ingress
+  source:
+    repoURL: https://github.com/AbeYuki/manifest
+    targetRevision: HEAD
+    path: OVERLAYS
+    plugin:
+      name: helm-template
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false

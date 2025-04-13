@@ -1,0 +1,2 @@
+resources:
+- istio-acl.yaml
