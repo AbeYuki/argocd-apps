@@ -95,6 +95,19 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
+    name: istio-ingress
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio-ingress/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
     name: istio-gateway-aggregator
   patch: |-
     - op: replace
