@@ -7,6 +7,9 @@ resources:
 - ../../base/service-proxy/ingress-nginx
 - ../../base/service-proxy/metallb
 - ../../base/service-proxy/metallb-config
+- ../../base/service-proxy/istio-ingress
+- ../../base/service-proxy/istio-gateway-aggregator
+- ../../base/service-proxy/istio-acl
 
 patches:
 - target:
@@ -84,6 +87,45 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "overlay/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio-ingress
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio-ingress/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio-gateway-aggregator
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio-gateway-aggregator/overlays/staging"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio-acl
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio-acl/overlays/staging"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"

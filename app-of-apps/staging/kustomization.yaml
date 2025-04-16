@@ -9,7 +9,7 @@ resources:
 #- ../base/observability
 - ../base/security
 #- ../base/server
-#- ../base/service-mesh
+- ../base/service-mesh
 - ../base/service-proxy
 - ../base/storage
 - ../base/webapp
