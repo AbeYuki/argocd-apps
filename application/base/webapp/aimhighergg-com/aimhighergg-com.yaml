@@ -18,3 +18,9 @@ spec:
       selfHeal: false
     syncOptions:
     - CreateNamespace=true
+  ignoreDifferences:
+    - group: argoproj.io
+      kind: Rollout
+      jqPathExpressions:
+        - .status
+        - .spec.strategy.canary.steps[]
