@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - ../../base/security/cert-manager
 - ../../base/security/vault
+- ../../base/security/vault-ca
 
 patches:
 - target:
@@ -29,6 +30,20 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "vault/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: vault-ca
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "vault-ca/"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
