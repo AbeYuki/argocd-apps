@@ -1,2 +1,2 @@
 resources:
-- ingress-nginx-proxy.yaml
+- nginx-proxy.yaml
