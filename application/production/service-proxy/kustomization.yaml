@@ -5,7 +5,7 @@ resources:
 - ../../base/service-proxy/ingress-aggregator
 - ../../base/service-proxy/ingress-aggregator-private
 - ../../base/service-proxy/ingress-nginx
-#- ../../base/service-proxy/ingress-nginx-proxy
+- ../../base/service-proxy/ingress-nginx-proxy
 #- ../../base/service-proxy/ingress-nginx-service
 - ../../base/service-proxy/metallb
 - ../../base/service-proxy/metallb-config
