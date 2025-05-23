@@ -11,7 +11,7 @@ spec:
     path: OVERLAYS
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: coredns-external
   syncPolicy:
     automated:
       prune: false
