@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-ingress
+  name: istio-ingressgateway
   namespace: argocd
 spec:
   project: default
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: istio-ingress
+    namespace: istio-system
   source:
     repoURL: https://github.com/AbeYuki/manifest
     targetRevision: HEAD

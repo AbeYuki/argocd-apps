@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base/service-mesh/consul
+#- ../../base/service-mesh/consul
+- ../../base/service-mesh/istio
+- ../../base/service-mesh/istio-ingressgateway
 
 patches:
 - target:
@@ -15,6 +17,32 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "consul/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: istio-ingressgateway
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "istio-ingressgateway/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
