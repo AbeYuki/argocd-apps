@@ -17,7 +17,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "overlays/production"
+      value: "./"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
