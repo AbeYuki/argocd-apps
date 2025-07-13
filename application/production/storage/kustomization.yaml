@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
 - ../../base/storage/longhorn
 - ../../base/storage/nfs-provisioner
+- ../../base/storage/nfs-provisioner-g9-enp4s0
+- ../../base/storage/nfs-provisioner-g9-enp5s0
 - ../../base/storage/storageclass
 
 patches:
@@ -17,6 +19,32 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "longhorn/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: nfs-provisioner-g9-enp4s0
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "nfs-subdir-external-provisioner/g9-enp4s0"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: nfs-provisioner-g9-enp5s0
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "nfs-subdir-external-provisioner/g9-enp5s0"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
