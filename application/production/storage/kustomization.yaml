@@ -4,8 +4,10 @@ kind: Kustomization
 resources:
 - ../../base/storage/longhorn
 - ../../base/storage/nfs-provisioner
-- ../../base/storage/nfs-provisioner-g9-enp4s0
-- ../../base/storage/nfs-provisioner-g9-enp5s0
+- ../../base/storage/nfs-provisioner-g9-enp4s0-rwo
+- ../../base/storage/nfs-provisioner-g9-enp4s0-rwx
+- ../../base/storage/nfs-provisioner-g9-enp5s0-rwo
+- ../../base/storage/nfs-provisioner-g9-enp5s0-rwx
 - ../../base/storage/storageclass
 
 patches:
@@ -27,11 +29,11 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: nfs-provisioner-g9-enp4s0
+    name: nfs-provisioner-g9-enp4s0-rwo
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "nfs-subdir-external-provisioner/g9-enp4s0"
+      value: "nfs-subdir-external-provisioner/g9-enp4s0-rwo"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
@@ -40,11 +42,37 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: nfs-provisioner-g9-enp5s0
+    name: nfs-provisioner-g9-enp4s0-rwx
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "nfs-subdir-external-provisioner/g9-enp5s0"
+      value: "nfs-subdir-external-provisioner/g9-enp4s0-rwx"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: nfs-provisioner-g9-enp5s0-rwo
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "nfs-subdir-external-provisioner/g9-enp5s0-rwo"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: nfs-provisioner-g9-enp5s0-rwx
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "nfs-subdir-external-provisioner/g9-enp5s0-rwx"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"

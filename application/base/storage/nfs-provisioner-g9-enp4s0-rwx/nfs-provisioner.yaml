@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nfs-provisioner-g9-enp5s0
+  name: nfs-provisioner-g9-enp4s0-rwx
   namespace: argocd
 spec:
   project: default
