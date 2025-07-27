@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: immich
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AbeYuki/immich-k8s.git
+    targetRevision: HEAD
+    path: production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod-minecraft
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
