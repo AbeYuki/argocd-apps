@@ -1,71 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress-aggregator-nextcloud
+  name: ingress-aggregator-private
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
     targetRevision: HEAD
-    path: overlay/nextcloud/
+    path: production
   destination:
     server: https://kubernetes.default.svc
-    namespace: nextcloud-production
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ingress-aggregator-nextcloud-login
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
-    targetRevision: HEAD
-    path: overlay/nextcloud-login/
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: nextcloud-production
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ingress-aggregator-immich
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
-    targetRevision: HEAD
-    path: overlay/immich
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: immich
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ingress-aggregator-immich-login
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
-    targetRevision: HEAD
-    path: overlay/immich-login/
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: immich
+    namespace: ingress-aggregator
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

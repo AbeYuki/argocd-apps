@@ -31,50 +31,11 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: ingress-aggregator-immich
+    name: ingress-aggregator-private
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "overlay/immich/"
-    - op: replace
-      path: /spec/source/targetRevision
-      value: "HEAD"
-- target:
-    kind: Application
-    group: argoproj.io
-    version: v1alpha1
-    namespace: argocd
-    name: ingress-aggregator-immich-login
-  patch: |-
-    - op: replace
-      path: /spec/source/path
-      value: "overlay/immich-login/"
-    - op: replace
-      path: /spec/source/targetRevision
-      value: "HEAD"
-- target:
-    kind: Application
-    group: argoproj.io
-    version: v1alpha1
-    namespace: argocd
-    name: ingress-aggregator-nextcloud
-  patch: |-
-    - op: replace
-      path: /spec/source/path
-      value: "overlay/nextcloud/"
-    - op: replace
-      path: /spec/source/targetRevision
-      value: "HEAD"
-- target:
-    kind: Application
-    group: argoproj.io
-    version: v1alpha1
-    namespace: argocd
-    name: ingress-aggregator-nextcloud-login
-  patch: |-
-    - op: replace
-      path: /spec/source/path
-      value: "overlay/nextcloud-login/"
+      value: "production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
