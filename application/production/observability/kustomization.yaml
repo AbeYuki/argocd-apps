@@ -9,6 +9,7 @@ resources:
 - ../../base/observability/temperature-exporter
 - ../../base/observability/victoria-metrics-cluster
 - ../../base/observability/victoria-logs-cluster
+- ../../base/observability/vector
 
 patches:
 - target:
@@ -86,6 +87,19 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "victoria-logs-cluster/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: vector
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "vector/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
