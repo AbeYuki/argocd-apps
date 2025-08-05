@@ -96,7 +96,7 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: victoria-metsrics-alert
+    name: victoria-metrics-alert
   patch: |-
     - op: replace
       path: /spec/source/path
