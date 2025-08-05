@@ -96,11 +96,11 @@ patches:
     group: argoproj.io
     version: v1alpha1
     namespace: argocd
-    name: victoria-mettrics-alert
+    name: victoria-metsrics-alert
   patch: |-
     - op: replace
       path: /spec/source/path
-      value: "victoria-mettrics-alert/production"
+      value: "victoria-metrics-alert/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
