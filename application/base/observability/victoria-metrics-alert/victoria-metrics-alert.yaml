@@ -12,8 +12,6 @@ spec:
     repoURL: https://github.com/AbeYuki/manifest
     targetRevision: HEAD
     path: OVERLAYS
-    plugin:
-      name: kustomize-helmcharts
   syncPolicy:
     automated:
       prune: false
