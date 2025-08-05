@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics-alert
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
+  source:
+    repoURL: https://github.com/AbeYuki/manifest
+    targetRevision: HEAD
+    path: OVERLAYS
+    plugin:
+      name: kustomize-helmcharts
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
