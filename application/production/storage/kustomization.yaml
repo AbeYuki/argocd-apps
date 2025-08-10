@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/storage/longhorn
-- ../../base/storage/nfs-provisioner
+#- ../../base/storage/nfs-provisioner
 - ../../base/storage/nfs-provisioner-g9-enp4s0-rwo
 - ../../base/storage/nfs-provisioner-g9-enp4s0-rwx
 - ../../base/storage/nfs-provisioner-g9-enp5s0-rwo
