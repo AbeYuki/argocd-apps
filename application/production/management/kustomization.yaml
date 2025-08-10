@@ -6,6 +6,7 @@ resources:
 - ../../base/management/namespace
 - ../../base/management/rbac
 - ../../base/management/secret
+- ../../base/management/recuring-job
 
 patches:
 - target:
@@ -57,6 +58,19 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "secret/"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: recurring-job
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "recurring-job/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"

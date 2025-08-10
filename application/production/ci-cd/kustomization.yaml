@@ -3,10 +3,24 @@ kind: Kustomization
 
 resources:
 - ../../base/ci-cd/argo-rollouts
+- ../../base/ci-cd/argocd
 - ../../base/ci-cd/actions-runnser-controller
 - ../../base/ci-cd/runner-deployment
 
 patches:
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: argocd
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "argocd/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
 - target:
     kind: Application
     group: argoproj.io
