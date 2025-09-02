@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 #- ../../base/server/jypyterlab
-#- ../../base/server/minecraft-bedrock-arm64
+- ../../base/server/minecraft-bedrock-arm64
 - ../../base/server/nextcloud
 - ../../base/server/redmine
 - ../../base/server/immich

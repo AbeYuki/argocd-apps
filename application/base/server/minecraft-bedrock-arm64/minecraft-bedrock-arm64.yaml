@@ -11,7 +11,7 @@ spec:
     path: overlay/prod/
   destination:
     server: https://kubernetes.default.svc
-    namespace: prod-minecraft
+    namespace: minecraft
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
