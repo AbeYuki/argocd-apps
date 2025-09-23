@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/security/cert-manager
+- ../../base/security/trust-manager
 - ../../base/security/vault
 - ../../base/security/vault-ca
 
@@ -17,6 +18,19 @@ patches:
     - op: replace
       path: /spec/source/path
       value: "cert-manager/production"
+    - op: replace
+      path: /spec/source/targetRevision
+      value: "HEAD"
+- target:
+    kind: Application
+    group: argoproj.io
+    version: v1alpha1
+    namespace: argocd
+    name: trust-manager
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: "trust-manager/production"
     - op: replace
       path: /spec/source/targetRevision
       value: "HEAD"
