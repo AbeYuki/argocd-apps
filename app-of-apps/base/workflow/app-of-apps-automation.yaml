@@ -6,6 +6,8 @@ metadata:
 spec:
   project: default
   source:
+    directory:
+      recurse: true
     repoURL: https://github.com/AbeYuki/argocd-apps
     path: application/production/workflow
     targetRevision: HEAD

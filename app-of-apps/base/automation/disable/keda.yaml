@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keda
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: keda
+  source:
+    repoURL: https://github.com/AbeYuki/manifest
+    targetRevision: HEAD
+    path: OVERLAYS
+    plugin:
+      name: kustomize-helmcharts
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
