@@ -9,6 +9,8 @@ spec:
     repoURL: https://github.com/AbeYuki/manifest.git
     targetRevision: HEAD
     path: metrics-server
+    plugin:
+      name: kustomize-helmcharts
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
