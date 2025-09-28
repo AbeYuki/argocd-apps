@@ -5,6 +5,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncOptions:
+    - RespectIgnoreDifferences=true
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
   source:
     repoURL: https://github.com/AbeYuki/manifest.git
     targetRevision: HEAD
