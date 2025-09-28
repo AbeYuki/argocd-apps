@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/management/coredns-external
+- ../../base/management/metrics-server
 - ../../base/management/namespace
 - ../../base/management/rbac
 - ../../base/management/secret
