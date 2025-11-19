@@ -1,0 +1,329 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: applicationset
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - name: keda
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: ./keda/production
+            namespace: keda
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions: 
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: redmine-create-ticket-webhook
+            repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook.git
+            path: .
+            namespace: keda
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions: []
+          - name: actions-runner-controller
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: keda/production
+            namespace: arc-system
+            env: production
+            plugin: argocd-vault-plugin-kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: argo-rollouts
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: argo-rollouts/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: argocd
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: argocd/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions: []
+          - name: runner-deployment
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: runner-deployment/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: coredns-external
+            namespace: arc-system
+            repoURL: https://github.com/AbeYuki/coredns-external-k8s.git
+            path: production
+            plugin: argocd-vault-plugin-kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: metrics-server
+            namespace: kube-system
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: metrics-server/
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions: []
+          - name: namespace
+            namespace: ""
+            repoURL: https://github.com/AbeYuki/namespace.git
+            path: prod/
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions: []
+          - name: exchangerate-exporter
+            namespace: exchangerate-exporter
+            repoURL: https://github.com/AbeYuki/exchangerate-exporter-k8s.git
+            path: ./
+            plugin: argocd-vault-plugin-kustomize
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          #- name: kube-prometheus-stack
+          #  namespace: monitoring
+          #  repoURL: https://github.com/AbeYuki/manifest
+          #  path: kube-prometheus-stack/production
+          #  plugin: argocd-vault-plugin-kustomize
+          #  autoSync: false
+          #  syncOptions:
+          #    - CreateNamespace=true
+          #    - ServerSideApply=true
+          - name: kube-state-metrics
+            namespace: monitoring
+            repoURL: https://github.com/AbeYuki/manifest
+            path: kube-state-metrics/production
+            plugin: argocd-vault-plugin-kustomize
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: monitoring
+            namespace: monitoring
+            repoURL: https://github.com/AbeYuki/manifest
+            path: overlay/prod/
+            plugin: argocd-vault-plugin-kustomize
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: cert-manager
+            namespace: cert-manager
+            repoURL: https://github.com/AbeYuki/manifest
+            path: cert-manager/production/
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: trust-manager
+            namespace: cert-manager
+            repoURL: https://github.com/AbeYuki/manifest
+            path: trust-manager/production/
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: vault
+            namespace: cert-manager
+            repoURL: https://github.com/AbeYuki/manifest
+            path: vault/production/
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: immich
+            namespace: immich
+            repoURL: https://github.com/AbeYuki/manifest
+            path: immich/production/
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: gateway-api
+            namespace: immich
+            repoURL: https://github.com/AbeYuki/manifest
+            path: gateway-api
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: access-proxy
+            namespace: access-proxy
+            repoURL: https://github.com/AbeYuki/access-proxy-k8s.git
+            path: access-proxy/production
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: ingress-aggregator-private
+            namespace: ingress-aggregator
+            repoURL: https://github.com/AbeYuki/ingress-aggregator-private.git
+            path: production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: ingress-aggregator
+            namespace: ingress-aggregator
+            repoURL: https://github.com/AbeYuki/ingress-aggregator.git
+            path: production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: ingress-nginx
+            namespace: ingress-nginx
+            repoURL: https://github.com/AbeYuki/manifest
+            path: ingress-nginx/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: metallb-config
+            namespace: metallb-system
+            repoURL: https://github.com/AbeYuki/metallb-config.git
+            path: overlays/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: metallb
+            namespace: metallb-system
+            repoURL: https://github.com/AbeYuki/manifest
+            path: overlays/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: nginx-proxy
+            namespace: nginx-proxynginx-proxy
+            repoURL: https://github.com/AbeYuki/nginx-proxy-k8s.git
+            path: production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: longhorn
+            namespace: longhorn-system
+            repoURL: https://github.com/AbeYuki/manifest
+            path: longhorn/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: nfs-provisioner-g9-enp4s0-rwo
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/manifest
+            path: nfs-subdir-external-provisioner/g9-enp4s0-rwo
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: nfs-provisioner-g9-enp4s0-rwx
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/manifest
+            path: nfs-subdir-external-provisioner/g9-enp4s0-rwx
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: nfs-provisioner-g9-enp5s0-rwo
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/manifest
+            path: nfs-subdir-external-provisioner/g9-enp5s0-rwo
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: nfs-provisioner-g9-enp5s0-rwx
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/manifest
+            path: nfs-subdir-external-provisioner/g9-enp5s0-rwx
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: storageclass
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/storageclass.git
+            path: ./
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions: []
+          - name: www-aimhighergg-com
+            namespace: www-aimhighergg-com
+            repoURL: https://github.com/AbeYuki/aimhighergg-com.git
+            path: overlay/prod/
+            plugin: ""
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+          - name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+            namespace: <path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-www/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+            namespace: <path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-sekime/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name: <path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+            namespace: <path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-sumire/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+  template:
+    metadata:
+      name: "{{ .name }}"
+      namespace: argocd
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .namespace }}"
+      source:
+        repoURL: "{{ .repoURL }}"
+        targetRevision: HEAD
+        path: "{{ .path }}"
+  templatePatch: |
+    spec:
+      source:
+        {{- if .plugin }}
+        plugin:
+          name: "{{ .plugin }}"
+        {{- end }}
+      {{- if or .autoSync .syncOptions }}
+      syncPolicy:
+        {{- if .autoSync }}
+        automated:
+          prune: true
+          selfHeal: true
+        {{- end }}
+        {{- if .syncOptions }}
+        syncOptions:
+        {{- range .syncOptions }}
+          - {{ . }}
+        {{- end }}
+        {{- end }}
+      {{- end }}
