@@ -267,7 +267,7 @@ spec:
             namespace: argocd
             repoURL: https://github.com/AbeYuki/manifest
             path: secret/
-            plugin: ""
+            plugin: "argocd-vault-plugin-kustomize"
             autoSync: true
             syncOptions:
               - CreateNamespace=true
