@@ -318,6 +318,14 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
+          - name: secret
+            namespace: argocd
+            repoURL: https://github.com/AbeYuki/manifest
+            path: avp-secret/production
+            plugin: ""
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
           - name: rback
             namespace: argocd
             repoURL: https://github.com/AbeYuki/rbac.git
