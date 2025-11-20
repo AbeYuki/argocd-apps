@@ -372,13 +372,14 @@ spec:
         targetRevision: HEAD
         path: "{{ .path }}"
   templatePatch: |-
+    {{- if or .plugin .autoSync .syncOptions }}
     spec:
       {{- if .plugin }}
       source:
         plugin:
           name: "{{ .plugin }}"
       {{- end }}
-
+  
       {{- if or .autoSync .syncOptions }}
       syncPolicy:
         {{- if .autoSync }}
@@ -393,3 +394,4 @@ spec:
         {{- end }}
         {{- end }}
       {{- end }}
+    {{- end }}
