@@ -186,7 +186,7 @@ spec:
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/metallb-config.git
             path: overlay/production
-            plugin: argocd-vault-plugin-kustomize
+            plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
