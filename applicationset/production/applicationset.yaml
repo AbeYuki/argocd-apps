@@ -19,10 +19,10 @@ spec:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: redmine-create-ticket-webhook
-            repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook.git
+            repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook-k8s.git
             path: .
-            namespace: keda
-            plugin: kustomize-helmcharts
+            namespace: webhook
+            plugin: ""
             autoSync: false
             syncOptions: []
           - name: actions-runner-controller
@@ -63,8 +63,8 @@ spec:
           - name: coredns-external
             namespace: arc-system
             repoURL: https://github.com/AbeYuki/coredns-external-k8s.git
-            path: production
-            plugin: argocd-vault-plugin-kustomize-helmcharts
+            path: ./
+            plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
@@ -95,16 +95,16 @@ spec:
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/manifest
             path: kube-state-metrics/production
-            plugin: argocd-vault-plugin-kustomize
+            plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: monitoring
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest
+            repoURL: https://github.com/AbeYuki/monitoring-k8s.git
             path: overlay/prod/
-            plugin: argocd-vault-plugin-kustomize
+            plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
@@ -135,9 +135,9 @@ spec:
               - CreateNamespace=true
           - name: immich
             namespace: immich
-            repoURL: https://github.com/AbeYuki/manifest
-            path: immich/production/
-            plugin: kustomize-helmcharts
+            repoURL: https://github.com/AbeYuki/immich-k8s.git
+            path: production/
+            plugin: ""
             autoSync: true
             syncOptions:
               - CreateNamespace=true
@@ -145,14 +145,6 @@ spec:
             namespace: gateway-api
             repoURL: https://github.com/AbeYuki/manifest
             path: gateway-api
-            plugin: kustomize-helmcharts
-            autoSync: true
-            syncOptions:
-              - CreateNamespace=true
-          - name: access-proxy
-            namespace: access-proxy
-            repoURL: https://github.com/AbeYuki/access-proxy-k8s.git
-            path: access-proxy/production
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
@@ -185,7 +177,7 @@ spec:
           - name: metallb-config
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/metallb-config.git
-            path: overlay/production
+            path: overlay/production/
             plugin: ""
             autoSync: false
             syncOptions:
@@ -194,7 +186,7 @@ spec:
           - name: metallb
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/manifest
-            path: overlays/production
+            path: production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
@@ -203,7 +195,7 @@ spec:
           - name: nginx-proxy
             namespace: nginx-proxynginx-proxy
             repoURL: https://github.com/AbeYuki/nginx-proxy-k8s.git
-            path: production
+            path: production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
