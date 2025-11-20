@@ -326,6 +326,30 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
+          - name:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+            namespace:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_1>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-www/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+            namespace:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_2>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-sekime/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+          - name:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+            namespace:  <path:secret/data/github/private-namespace#REPO_NAMESPACE_3>
+            repoURL: <path:secret/data/github/private-repo-url#REPO_URL_2>
+            path: overlay/prod-sumire/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
   template:
     metadata:
       name: "{{ .name }}"
