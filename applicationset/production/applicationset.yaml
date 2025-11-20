@@ -233,7 +233,7 @@ spec:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: nginx-proxy
-            namespace: nginx-proxynginx-proxy
+            namespace: nginx-proxy
             repoURL: https://github.com/AbeYuki/nginx-proxy-k8s.git
             path: production/
             plugin: kustomize-helmcharts
@@ -378,7 +378,7 @@ spec:
         plugin:
           name: "{{ .plugin }}"
       {{- end }}
-  
+
       {{- if or .autoSync .syncOptions }}
       syncPolicy:
         {{- if .autoSync }}
