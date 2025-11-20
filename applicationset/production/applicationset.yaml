@@ -36,6 +36,7 @@ spec:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: argo-rollouts
+            namespace: argo-rollouts
             repoURL: https://github.com/AbeYuki/manifest.git
             path: argo-rollouts/production
             plugin: kustomize-helmcharts
@@ -44,6 +45,7 @@ spec:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: argocd
+            namespace: argocd
             repoURL: https://github.com/AbeYuki/manifest.git
             path: argocd/production
             plugin: kustomize-helmcharts
