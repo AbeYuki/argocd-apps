@@ -263,7 +263,14 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
-
+          - name: secret
+            namespace: argocd
+            repoURL: https://github.com/AbeYuki/manifest
+            path: secret/
+            plugin: ""
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
   template:
     metadata:
       name: "{{ .name }}"
