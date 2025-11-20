@@ -318,7 +318,7 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
-          - name: secret
+          - name: avp-secret
             namespace: argocd
             repoURL: https://github.com/AbeYuki/manifest
             path: avp-secret/production
