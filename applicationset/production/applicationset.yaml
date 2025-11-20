@@ -22,7 +22,7 @@ spec:
             repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook-k8s.git
             path: .
             namespace: webhook
-            plugin: ""
+            plugin: argocd-vault-plugin-kustomize-helmcharts
             autoSync: false
             syncOptions: []
           - name: actions-runner-controller
@@ -95,7 +95,7 @@ spec:
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/manifest
             path: kube-state-metrics/production
-            plugin: ""
+            plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
@@ -186,7 +186,7 @@ spec:
           - name: metallb
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/manifest
-            path: production/
+            path: metallb/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
