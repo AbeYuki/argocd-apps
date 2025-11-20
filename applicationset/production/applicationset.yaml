@@ -371,13 +371,14 @@ spec:
         repoURL: "{{ .repoURL }}"
         targetRevision: HEAD
         path: "{{ .path }}"
-  templatePatch: |
+  templatePatch: |-
     spec:
-        {{- if .plugin }}
+      {{- if .plugin }}
       source:
         plugin:
           name: "{{ .plugin }}"
-        {{- end }}
+      {{- end }}
+  
       {{- if or .autoSync .syncOptions }}
       syncPolicy:
         {{- if .autoSync }}
