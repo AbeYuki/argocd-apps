@@ -148,7 +148,7 @@ spec:
             syncOptions:
               - CreateNamespace=true
           - name: gateway-api
-            namespace: immich
+            namespace: gateway-api
             repoURL: https://github.com/AbeYuki/manifest
             path: gateway-api
             plugin: kustomize-helmcharts
