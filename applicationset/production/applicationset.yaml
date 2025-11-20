@@ -27,7 +27,7 @@ spec:
             syncOptions: []
           - name: actions-runner-controller
             repoURL: https://github.com/AbeYuki/manifest.git
-            path: keda/production
+            path: actions-runner-controller/production
             namespace: arc-system
             env: production
             plugin: argocd-vault-plugin-kustomize-helmcharts
