@@ -185,7 +185,7 @@ spec:
             namespace: gateway-api
             repoURL: https://github.com/AbeYuki/manifest
             path: gateway-api
-            plugin: kustomize-helmcharts
+            plugin: ""
             autoSync: true
             syncOptions:
               - CreateNamespace=true
