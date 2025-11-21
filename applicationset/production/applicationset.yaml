@@ -217,6 +217,7 @@ spec:
           - name: envoy-gateway
             namespace: envoy-gateway-system
             repoURL: https://github.com/AbeYuki/manifest
+            path: envoy-gateway/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
