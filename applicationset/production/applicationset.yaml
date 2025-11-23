@@ -248,14 +248,6 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
-          - name: haproxy
-            namespace: haproxy
-            repoURL: https://github.com/AbeYuki/haproxy-k8s.git
-            path: production/
-            plugin: ""
-            autoSync: false
-            syncOptions:
-              - CreateNamespace=true
           - name: longhorn
             namespace: longhorn-system
             repoURL: https://github.com/AbeYuki/manifest
