@@ -181,10 +181,10 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
-          - name: gateway-api
+          - name: nginx-gateway-crd
             namespace: gateway-api
             repoURL: https://github.com/AbeYuki/manifest
-            path: gateway-api
+            path: nginx-gateway-crd
             plugin: ""
             autoSync: true
             syncOptions:
