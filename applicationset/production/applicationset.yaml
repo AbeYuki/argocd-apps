@@ -222,6 +222,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: gateway-api
+            namespace: gateway-api
+            repoURL: https://github.com/AbeYuki/manifest
+            path: gateway-api/production
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: metallb-config
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/metallb-config.git
