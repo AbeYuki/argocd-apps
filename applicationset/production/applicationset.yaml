@@ -214,6 +214,14 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: gateway-api-crds
+            namespace: ""
+            repoURL: https://github.com/AbeYuki/manifest
+            path: gateway-api-crds
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - ServerSideApply=true
           - name: envoy-gateway-crds
             namespace: envoy-gateway-system
             repoURL: https://github.com/AbeYuki/manifest
