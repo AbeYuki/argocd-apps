@@ -250,7 +250,7 @@ spec:
           - name: metallb-config
             namespace: metallb-system
             repoURL: https://github.com/AbeYuki/manifest.git
-            path: overlay/production/
+            path: production/
             plugin: ""
             autoSync: false
             syncOptions:
