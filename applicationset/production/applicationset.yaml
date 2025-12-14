@@ -214,14 +214,6 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
-          - name: ingress
-            namespace: ingress
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ingress/traefik/production
-            plugin: ""
-            autoSync: false
-            syncOptions:
-              - CreateNamespace=true
           - name: ingress-traefik
             namespace: ingress-traefik
             repoURL: https://github.com/AbeYuki/manifest.git
@@ -231,6 +223,14 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: ingress
+            namespace: ingress
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: ingress/traefik/production
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: gateway-api-crds
             namespace: ""
             repoURL: https://github.com/AbeYuki/manifest.git
