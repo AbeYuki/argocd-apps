@@ -222,7 +222,7 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
-          - name: ingress
+          - name: ingress-traefik
             namespace: ingress-traefik
             repoURL: https://github.com/AbeYuki/manifest.git
             path: ingress-traefik/production
