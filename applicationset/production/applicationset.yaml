@@ -214,6 +214,14 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: ingress-traefik-crds
+            namespace: ""
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: ingress-traefik-crds/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - ServerSideApply=true
           - name: ingress-traefik
             namespace: ingress-traefik
             repoURL: https://github.com/AbeYuki/manifest.git
@@ -222,7 +230,6 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
-              - ServerSideApply=true
           - name: ingress
             namespace: ingress
             repoURL: https://github.com/AbeYuki/manifest.git
@@ -240,13 +247,12 @@ spec:
             syncOptions:
               - ServerSideApply=true
           - name: envoy-gateway-crds
-            namespace: envoy-gateway-system
+            namespace: ""
             repoURL: https://github.com/AbeYuki/manifest.git
-            path: envoy-gateway-crds
+            path: envoy-gateway-crds/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
-              - CreateNamespace=true
               - ServerSideApply=true
           - name: envoy-gateway
             namespace: envoy-gateway-system
