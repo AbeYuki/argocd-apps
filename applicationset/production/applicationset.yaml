@@ -162,7 +162,7 @@ spec:
             repoURL: https://github.com/AbeYuki/manifest.git
             path: vault/production/
             plugin: kustomize-helmcharts
-            autoSync: true
+            autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: vault-ca
