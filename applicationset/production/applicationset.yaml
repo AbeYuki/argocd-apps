@@ -197,14 +197,6 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
-          - name: ingress-aggregator
-            namespace: ingress-aggregator
-            repoURL: https://github.com/AbeYuki/ingress-aggregator.git
-            path: production
-            plugin: kustomize-helmcharts
-            autoSync: false
-            syncOptions:
-              - CreateNamespace=true
           - name: ingress-nginx
             namespace: ingress-nginx
             repoURL: https://github.com/AbeYuki/manifest.git
