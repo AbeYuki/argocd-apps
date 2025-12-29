@@ -104,7 +104,7 @@ spec:
             repoURL: https://github.com/AbeYuki/manifest.git
             path: kube-state-metrics/production
             plugin: kustomize-helmcharts
-            autoSync: false
+            autoSync: true
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
@@ -130,7 +130,7 @@ spec:
             repoURL: https://github.com/AbeYuki/manifest.git
             path: victoria-metrics-alert/production/
             plugin: kustomize-helmcharts
-            autoSync: false
+            autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: victoria-metrics-cluster
