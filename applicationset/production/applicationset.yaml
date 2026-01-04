@@ -113,7 +113,7 @@ spec:
             repoURL: https://github.com/AbeYuki/monitoring-k8s.git
             path: overlay/prod/
             plugin: ""
-            autoSync: false
+            autoSync: true
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
