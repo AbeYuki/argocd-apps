@@ -141,6 +141,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: opentelemetry-collector
+            namespace: monitoring
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: opentelemetry-collector/production/
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: cert-manager
             namespace: cert-manager
             repoURL: https://github.com/AbeYuki/manifest.git
