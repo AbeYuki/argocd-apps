@@ -173,6 +173,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: cert-manager-webhook-sakuracloud
+            namespace: cert-manager
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: cert-manager-webhook-sakuracloud/production/
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: vault
             namespace: vault
             repoURL: https://github.com/AbeYuki/manifest.git
