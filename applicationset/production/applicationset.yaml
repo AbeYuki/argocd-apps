@@ -177,7 +177,7 @@ spec:
             namespace: cert-manager
             repoURL: https://github.com/AbeYuki/manifest.git
             path: cert-manager-webhook-sakuracloud/production/
-            plugin: kustomize-helmcharts
+            plugin: argocd-vault-plugin-kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
