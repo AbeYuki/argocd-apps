@@ -399,7 +399,7 @@ spec:
             syncOptions:
               - CreateNamespace=true
           - name: viteful-dev
-            namespace:  <path:secret/data/viteful/namespace#NAMESPACE>
+            namespace:  <path:secret/data/viteful/dev/namespace#NAMESPACE>
             repoURL: https://github.com/AbeYuki/manifest.git
             path: viteful/dev
             plugin: ""
