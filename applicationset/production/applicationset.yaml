@@ -181,6 +181,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: cluster-issuer
+            namespace: cert-manager
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: cluster-issuer/production/
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: vault
             namespace: vault
             repoURL: https://github.com/AbeYuki/manifest.git
