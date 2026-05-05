@@ -406,6 +406,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: viteful
+            namespace:  <path:secret/data/viteful/production/namespace#NAMESPACE>
+            repoURL: https://github.com/AbeYuki/manifest.git
+            path: viteful/production
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
   template:
     metadata:
       name: "{{ .name }}"
