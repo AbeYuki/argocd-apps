@@ -10,8 +10,8 @@ spec:
     - list:
         elements:
           - name: keda
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ./keda/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/keda/production
             namespace: keda
             plugin: kustomize-helmcharts
             autoSync: true
@@ -26,8 +26,8 @@ spec:
             autoSync: false
             syncOptions: []
           - name: actions-runner-controller
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: actions-runner-controller/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/actions-runner-controller/production
             namespace: arc-system
             env: production
             plugin: argocd-vault-plugin-kustomize-helmcharts
@@ -37,8 +37,8 @@ spec:
               - ServerSideApply=true
           - name: argo-rollouts
             namespace: argo-rollouts
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: argo-rollouts/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/argo-rollouts/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
@@ -46,15 +46,15 @@ spec:
               - ServerSideApply=true
           - name: argocd
             namespace: argocd
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: argocd/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/argocd/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions: []
           - name: runner-deployment
             namespace: arc-runner
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: runner-deployment/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/runner-deployment/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
@@ -71,8 +71,8 @@ spec:
               - ServerSideApply=true
           - name: metrics-server
             namespace: kube-system
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: metrics-server/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/metrics-server
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions: []
@@ -101,8 +101,8 @@ spec:
               - CreateNamespace=true
           - name: kube-state-metrics
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: kube-state-metrics/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/kube-state-metrics/production
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
@@ -119,88 +119,88 @@ spec:
               - ServerSideApply=true
           - name: victoria-logs-cluster
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: victoria-logs-cluster/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/victoria-logs-cluster/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: victoria-metrics-alert
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: victoria-metrics-alert/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/victoria-metrics-alert/production/
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: victoria-metrics-cluster
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: victoria-metrics-cluster/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/victoria-metrics-cluster/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: opentelemetry-collector
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: opentelemetry-collector/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/opentelemetry-collector/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: vector
             namespace: monitoring
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: vector/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/vector/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: cert-manager
             namespace: cert-manager
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: cert-manager/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/cert-manager/production/
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: trust-manager
             namespace: cert-manager
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: trust-manager/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/trust-manager/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: cert-manager-webhook-sakuracloud
             namespace: cert-manager
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: cert-manager-webhook-sakuracloud/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/cert-manager-webhook-sakuracloud/production/
             plugin: argocd-vault-plugin-kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: cluster-issuer
             namespace: cert-manager
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: cluster-issuer/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/cluster-issuer/production/
             plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: vault
             namespace: vault
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: vault/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/vault/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: vault-ca
             namespace: vault
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: vault-ca/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/vault-ca/production/
             plugin: ""
             autoSync: false
             syncOptions:
@@ -215,8 +215,8 @@ spec:
               - CreateNamespace=true
           - name: ingress-nginx
             namespace: ingress-nginx
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ingress-nginx/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/ingress-nginx/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
@@ -224,64 +224,64 @@ spec:
               - ServerSideApply=true
           - name: ingress-traefik-crds
             namespace: ""
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ingress-traefik-crds/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/ingress-traefik-crds/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - ServerSideApply=true
           - name: ingress-traefik
             namespace: ingress-traefik
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ingress-traefik/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/ingress-traefik/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: ingress
             namespace: ingress
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: ingress/traefik/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/ingress/traefik/production
             plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: gateway-api-crds
             namespace: ""
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: gateway-api-crds
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/gateway-api-crds/production
             plugin: ""
             autoSync: true
             syncOptions:
               - ServerSideApply=true
           - name: envoy-gateway-crds
             namespace: ""
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: envoy-gateway-crds/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/envoy-gateway-crds/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - ServerSideApply=true
           - name: envoy-gateway
             namespace: envoy-gateway-system
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: envoy-gateway/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/envoy-gateway/production
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: gateway-api
             namespace: gateway-api
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: gateway-api/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/gateway-api/production
             plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: metallb-config
             namespace: metallb-system
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: metallb-config/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/metallb-config/production/
             plugin: ""
             autoSync: false
             syncOptions:
@@ -289,8 +289,8 @@ spec:
               - ServerSideApply=true
           - name: metallb
             namespace: metallb-system
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: metallb/production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/metallb/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
@@ -298,40 +298,40 @@ spec:
               - ServerSideApply=true
           - name: longhorn
             namespace: longhorn-system
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: longhorn/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/longhorn/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: nfs-provisioner-g9-enp4s0-rwo
             namespace: nfs-provisioner
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: nfs-subdir-external-provisioner/g9-enp4s0-rwo
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nfs-subdir-external-provisioner/g9-enp4s0-rwo
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: nfs-provisioner-g9-enp4s0-rwx
             namespace: nfs-provisioner
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: nfs-subdir-external-provisioner/g9-enp4s0-rwx
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nfs-subdir-external-provisioner/g9-enp4s0-rwx
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: nfs-provisioner-g9-enp5s0-rwo
             namespace: nfs-provisioner
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: nfs-subdir-external-provisioner/g9-enp5s0-rwo
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nfs-subdir-external-provisioner/g9-enp5s0-rwo
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: nfs-provisioner-g9-enp5s0-rwx
             namespace: nfs-provisioner
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: nfs-subdir-external-provisioner/g9-enp5s0-rwx
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nfs-subdir-external-provisioner/g9-enp5s0-rwx
             plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
@@ -353,23 +353,23 @@ spec:
               - CreateNamespace=true
           - name: recurring-job
             namespace: ""
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: recurring-job/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/recurring-job/
             plugin: ""
             autoSync: false
             syncOptions: []
           - name: secret
             namespace: argocd
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: secret/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/secret/
             plugin: ""
             autoSync: true
             syncOptions:
               - CreateNamespace=true
           - name: avp-secret
             namespace: argocd
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: avp-secret/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/avp-secret/production
             plugin: ""
             autoSync: true
             syncOptions:
@@ -408,16 +408,16 @@ spec:
               - CreateNamespace=true
           - name: viteful-dev
             namespace:  <path:secret/data/viteful/dev/namespace#NAMESPACE>
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: viteful/dev
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/viteful/dev
             plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
           - name: viteful
             namespace:  <path:secret/data/viteful/production/namespace#NAMESPACE>
-            repoURL: https://github.com/AbeYuki/manifest.git
-            path: viteful/production
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/viteful/production
             plugin: ""
             autoSync: false
             syncOptions:
