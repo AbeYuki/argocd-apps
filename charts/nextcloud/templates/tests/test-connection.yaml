@@ -1,0 +1,21 @@
+{{- if .Values.test.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "nextcloud.fullname" . }}-test-connection"
+  labels:
+    {{- include "nextcloud.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  {{- if .Values.test.timeoutSeconds }}
+  activeDeadlineSeconds: {{ .Values.test.timeoutSeconds }}
+  {{- end }}
+  containers:
+    - name: wget
+      image: {{ .Values.test.image | default "busybox" }}
+      command: ['wget']
+      args:
+        - "{{ include "nextcloud.fullname" . }}-nextcloud:{{ .Values.nextcloud.service.port }}"
+  restartPolicy: Never
+{{- end }}

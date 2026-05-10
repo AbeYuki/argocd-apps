@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: {{ include "nextcloud.fullname" . }}-nextcloud
+    labels:
+      {{- include "nextcloud.labelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 4 }}
+spec:
+  storageClassName: {{ required "nextcloud.persistentVolumeClaim.storageClassName is required!" .Values.nextcloud.persistentVolumeClaim.storageClassName }}
+  accessModes:
+    {{- range .Values.nextcloud.persistentVolumeClaim.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ required "nextcloud.persistentVolumeClaim.size is required!" .Values.nextcloud.persistentVolumeClaim.size }}

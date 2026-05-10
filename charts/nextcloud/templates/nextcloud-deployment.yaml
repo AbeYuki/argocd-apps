@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nextcloud.fullname" . }}
+  labels:
+    {{- include "nextcloud.labelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 4 }}
+spec:
+  {{- if not .Values.nextcloud.autoscaling.enabled }}
+  replicas: {{ .Values.nextcloud.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nextcloud.selectorLabelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.nextcloud.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nextcloud.labelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 8 }}
+        {{- with .Values.nextcloud.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.nextcloud.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nextcloud.serviceAccountName" . }}
+      {{- with .Values.nextcloud.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.nextcloud.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.nextcloud.image.repository }}:{{ .Values.nextcloud.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nextcloud.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.nextcloud.service.port }}
+              protocol: TCP
+          {{- with .Values.nextcloud.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nextcloud.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nextcloud.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: nextcloud-data
+              mountPath: /var/www/html
+          envFrom:
+            - secretRef:
+                name: {{ include "nextcloud.fullname" . }}-nextcloud
+      volumes:
+        - name: nextcloud-data
+          persistentVolumeClaim:
+            claimName: {{ include "nextcloud.fullname" . }}-nextcloud
+      {{- with .Values.nextcloud.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nextcloud.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nextcloud.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

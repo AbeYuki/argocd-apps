@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nextcloud.fullname" . }}-redis
+  labels:
+    {{- include "nextcloud.labelsWithComponent" (dict "component" "redis" "context" .) | nindent 4 }}
+spec:
+  type: {{ .Values.redis.service.type }}
+  ports:
+    - port: {{ .Values.redis.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "nextcloud.selectorLabelsWithComponent" (dict "component" "redis" "context" .) | nindent 4 }}
