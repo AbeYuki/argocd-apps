@@ -39,8 +39,10 @@ jobs:
             fi
           done
 
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          repo=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
           helm repo index public \
-            --url "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+            --url "https://${owner}.github.io/${repo}/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
