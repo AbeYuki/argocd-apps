@@ -63,6 +63,7 @@ jobs:
 
       - name: Run tagpr
         uses: Songmu/tagpr@v1
+        with:
+          config: charts/${{ matrix.chart }}/.tagpr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAGPR_CONFIG_FILE: charts/${{ matrix.chart }}/.tagpr
