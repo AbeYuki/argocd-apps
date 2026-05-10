@@ -1,0 +1,21 @@
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: metadata-labels
+labels:
+  environment : production
+fieldSpecs:
+- path: metadata/labels
+  create: true
+- path: spec/selector/matchLabels
+  kind: Deployment
+  create: true
+- path: spec/template/metadata/labels
+  kind: Deployment
+  create: true
+- path: spec/selector/matchLabels
+  kind: DaemonSet
+  create: true
+- path: spec/template/metadata/labels
+  kind: DaemonSet
+  create: true

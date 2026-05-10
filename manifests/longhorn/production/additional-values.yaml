@@ -1,0 +1,4 @@
+persistence:
+  defaultFsType: xfs
+defaultBackupStore:
+  backupTarget: "nfs://192.168.1.31:/longhorn/"

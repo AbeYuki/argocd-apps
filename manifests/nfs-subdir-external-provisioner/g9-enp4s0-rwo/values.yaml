@@ -1,0 +1,12 @@
+fullnameOverride: nfs-provisioner-g9-enp4s0-rwo
+nameOverride: nfs-provisioner-g9-enp4s0-rwo
+nfs:
+  server: 192.168.1.31
+  path: /k8s
+storageClass:
+  name: nfs-g9-enp4s0-rwo
+  reclaimPolicy: Delete
+  defaultClass: false
+  allowVolumeExpansion: true
+  accessModes: ReadWriteOnce
+  volumeBindingMode: Immediate

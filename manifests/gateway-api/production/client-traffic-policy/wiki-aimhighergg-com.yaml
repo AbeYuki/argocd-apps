@@ -1,0 +1,27 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: http-wiki-aimhighergg-com
+  namespace: envoy-gateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy
+      sectionName: http-wiki-aimhighergg-com
+  clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 1
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: https-wiki-aimhighergg-com
+  namespace: envoy-gateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy
+      sectionName: https-wiki-aimhighergg-com
+  proxyProtocol: {}

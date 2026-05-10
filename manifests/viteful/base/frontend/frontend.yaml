@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: viteful-frontend
+  labels:
+    app: viteful-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: viteful-frontend
+  template:
+    metadata:
+      labels:
+        app: viteful-frontend
+    spec:
+      imagePullSecrets:
+        - name: registry-credentials
+      containers:
+        - name: frontend
+          image: <path:secret/data/viteful/dev/registry#FRONTEND_IMAGE>:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_UPSTREAM
+              value: "http://viteful-backend:1323"
+          envFrom:
+            - secretRef:
+                name: viteful-env-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: viteful-frontend
+  labels:
+    app: viteful-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: viteful-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

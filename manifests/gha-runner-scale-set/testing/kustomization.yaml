@@ -1,0 +1,7 @@
+helmCharts:
+  - name: actions-runner-controller
+    repo: https://actions-runner-controller.github.io/actions-runner-controller
+    version: "0.23.7"
+    namespace: github-actions
+    releaseName: actions-runner-controller
+    valuesFile: ../values.yaml

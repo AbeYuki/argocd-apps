@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: viteful-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: viteful-db
+  labels:
+    app: viteful-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: viteful-db
+  template:
+    metadata:
+      labels:
+        app: viteful-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: viteful-db-secret
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: viteful-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: viteful-db
+  labels:
+    app: viteful-db
+spec:
+  type: ClusterIP
+  selector:
+    app: viteful-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432

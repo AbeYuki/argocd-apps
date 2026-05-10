@@ -1,0 +1,7 @@
+helmCharts:
+  - name: postgresql
+    repo:  https://charts.bitnami.com/bitnami
+    version: "15.5.16"
+    releaseName: postgresql
+    namespace: airflow
+    valuesFile: ../values.yaml

@@ -1,0 +1,103 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy
+  namespace: envoy-gateway 
+  annotations:
+    cert-manager.io/cluster-issuer: gateway
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-gateway-proxy
+  listeners:
+    - name: http-www-aimhighergg-com
+      protocol: HTTP
+      port: 80
+      hostname: "www.aimhighergg.com"
+      allowedRoutes: # HTTPRoute リソースの namespace
+        namespaces:
+          from: Selector
+          selector: # namespace リソースの label を設定
+            matchLabels:
+              gateway: www-aimhighergg-com
+    - name: https-www-aimhighergg-com
+      protocol: HTTPS
+      port: 443
+      hostname: "www.aimhighergg.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: aimhighergg-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector: 
+            matchLabels:
+              gateway: www-aimhighergg-com
+    - name: http-wiki-aimhighergg-com
+      protocol: HTTP
+      port: 80
+      hostname: "wiki.aimhighergg.com"
+      allowedRoutes: # HTTPRoute リソースの namespace
+        namespaces:
+          from: Selector
+          selector: # namespace リソースの label を設定
+            matchLabels:
+              gateway: www-aimhighergg-com
+    - name: https-wiki-aimhighergg-com
+      protocol: HTTPS
+      port: 443
+      hostname: "wiki.aimhighergg.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: wiki-aimhighergg-tls
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector: 
+            matchLabels:
+              gateway: www-aimhighergg-com
+    - name: http-argocd-aimhighergg-com
+      protocol: HTTP
+      port: 80
+      hostname: "argocd.aimhighergg.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https-argocd-aimhighergg-com
+      protocol: HTTPS
+      port: 443
+      hostname: "argocd.aimhighergg.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: argocd-aimhighergg-com-tls
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: http-grafana-aimhighergg-com
+      protocol: HTTP
+      port: 80
+      hostname: "grafana.aimhighergg.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https-grafana-aimhighergg-com
+      protocol: HTTPS
+      port: 443
+      hostname: "grafana.aimhighergg.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: grafana-aimhighergg-com-tls
+      allowedRoutes:
+        namespaces:
+          from: All

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
+  namespace: <path:secret/data/viteful/dev/namespace#NAMESPACE>
+spec:
+  secretName: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: ingress-traefik
+  dnsNames:
+    - <path:secret/data/viteful/dev/ingress#HOST>

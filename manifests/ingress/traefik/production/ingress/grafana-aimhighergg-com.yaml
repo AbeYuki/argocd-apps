@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-aimhighergg-com
+  namespace: monitoring
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: monitoring-ip-whitelist@kubernetescrd,monitoring-basic-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - grafana.aimhighergg.com
+      secretName: grafana-aimhighergg-com-tls
+  rules:
+    - host: vlalert.aimhighergg.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: monitoring-frontend-grafana-app01-001
+                port:
+                  number: 80

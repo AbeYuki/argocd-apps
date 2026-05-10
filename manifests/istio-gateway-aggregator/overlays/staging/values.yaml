@@ -1,0 +1,27 @@
+env: staging
+services:
+  vault:
+    enabled: false
+    hostname: vault.aimhighergg.com
+    gateway:
+      name: vault-gateway
+      namespace: vault
+      selector:
+        istio: ingressgateway
+      port: 8200
+    virtualService:
+      destinationHost: vault.vault.svc.cluster.local
+      destinationPort: 8200
+
+  longhorn:
+    enabled: true
+    hostname: longhorn.aimhighergg.com
+    gateway:
+      name: longhorn-gateway
+      namespace: longhorn-system
+      selector:
+        istio: ingressgateway
+      port: 80
+    virtualService:
+      destinationHost: longhorn-frontend.longhorn-system.svc.cluster.local
+      destinationPort: 80

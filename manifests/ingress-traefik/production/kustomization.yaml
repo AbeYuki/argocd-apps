@@ -1,0 +1,8 @@
+helmCharts:
+  - name: traefik
+    repo: oci://ghcr.io/traefik/helm/
+    version: "37.4.0"
+    releaseName: ingress-traefik
+    namespace: ingress-traefik
+    includeCRDs: false
+    valuesFile: values.yaml

@@ -1,0 +1,21 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: prometheus-aimhighergg-com
+  namespace: argocd
+spec:
+  targetRefs:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: prometheus-aimhighergg-com
+  authorization:
+    defaultAction: Deny
+    rules:
+    - action: Allow
+      principal:
+        clientCIDRs:
+        - 192.168.0.0/16
+  basicAuth:
+    users:
+      name: basic-auth
+      namespace: monitoring

@@ -1,0 +1,7 @@
+helmCharts:
+  - name: victoria-metrics-cluster
+    repo: https://victoriametrics.github.io/helm-charts/
+    version: "0.27.0"
+    releaseName: victoria-metrics-cluster
+    namespace: monitoring
+    valuesFile: values.yaml

@@ -1,0 +1,6 @@
+helmCharts:
+  - name: traefik-crds
+    repo: oci://ghcr.io/traefik/helm/
+    version: "1.12.0"
+    releaseName: ingress-traefik-crds
+    includeCRDs: true

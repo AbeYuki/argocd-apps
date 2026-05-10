@@ -1,0 +1,10 @@
+resources:
+  - bundle.yaml
+
+helmCharts:
+  - name: trust-manager
+    repo: https://charts.jetstack.io
+    version: "0.20.3"
+    releaseName: trust-manager
+    namespace: cert-manager
+    valuesFile: values.yaml

@@ -1,0 +1,2 @@
+resources:
+  - github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.4.0

@@ -1,0 +1,6 @@
+nfs:
+  server: 192.168.1.21
+  path: /k8s
+storageClass:
+  name: nfs
+  reclaimPolicy: Delete

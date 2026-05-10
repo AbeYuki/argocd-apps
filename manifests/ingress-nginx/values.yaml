@@ -1,0 +1,4 @@
+controller:
+  allowSnippetAnnotations: false
+  service:
+    externalTrafficPolicy: "Local"

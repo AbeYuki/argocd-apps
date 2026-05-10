@@ -1,0 +1,13 @@
+global:
+  proxy:
+    autoInject: enabled
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 1024Mi
+  istioNamespace: istio-system
+  meshID: mesh1
+  network: network1

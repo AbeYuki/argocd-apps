@@ -1,0 +1,7 @@
+resources:
+  - traefik-dashboard.yaml
+  - vault-aimhighergg-com.yaml
+  - viteful-dev.yaml
+  - viteful-location-1.yaml
+  - viteful-location-2.yaml
+  - viteful-location-3.yaml

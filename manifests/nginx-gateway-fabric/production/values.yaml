@@ -1,0 +1,4 @@
+service:
+  annotations:
+    metallb.universe.tf/address-pool: nginx-gateway-fabric
+  type: LoadBalancer

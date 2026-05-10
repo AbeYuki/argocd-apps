@@ -1,0 +1,176 @@
+---
+# Root CA をブートストラップするための SelfSigned ClusterIssuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  selfSigned: {}
+---
+# Root CA を自己署名で作成（秘密鍵 + 証明書を Secret に格納）
+# 運用メモ:
+# - Root CA は trust-manager の bundle source になる
+# - Root CA 更新時は bundle 配布先、Vault、ArgoCD repo-server、関連クライアント証明書の世代を揃える
+# - ここでは理解・運用確認しやすいように 1年有効 / 30日前更新 とする
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-root-ca
+  namespace: cert-manager # ClusterIssuer を利用するので cert-manager に作成する
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  isCA: true
+  commonName: vault-root-ca
+  secretName: vault-root-ca-secret
+
+  # Root CA の有効期間: 1年
+  duration: 8760h
+
+  # Root CA の更新開始: 30日前
+  # Root CA 更新時は Leaf 証明書と trust bundle の世代ずれに注意する
+  renewBefore: 720h
+
+  privateKey:
+    algorithm: RSA
+    size: 2048
+
+    # Root CA の秘密鍵を自動ローテーションしない方針
+    # Root CA の世代変更は明示的な運用イベントとして扱う
+    rotationPolicy: Never
+
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+# Root CA Secret を使って Root で署名できる Issuer（Root CA Issuer）
+# この Issuer から Vault server cert / AVP client cert / Traefik client cert を発行する
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-ca-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  ca:
+    secretName: vault-root-ca-secret # ClusterIssuer はデフォルトで cert-manager namespace の Secret を参照する
+---
+# Vault server Leaf 証明書
+# 運用メモ:
+# - Vault がサーバ証明書として提示する証明書
+# - Vault listener の tls_cert_file / tls_key_file で利用する
+# - 更新後は Vault Pod の再起動で確実に反映する
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-server-cert
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  secretName: vault-ha-tls
+
+  # Leaf 証明書の有効期間: 90日
+  duration: 2160h
+
+  # Leaf 証明書の更新開始: 15日前
+  renewBefore: 360h
+
+  issuerRef:
+    name: vault-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  commonName: vault.vault.svc
+  dnsNames:
+    - vault
+    - vault.vault
+    - vault.vault.svc
+    - vault.vault.svc.cluster.local
+    - vault-0.vault-internal
+    - vault-1.vault-internal
+    - vault-2.vault-internal
+  ipAddresses:
+    - 127.0.0.1
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+    - client auth
+---
+# ArgoCD repo-server / AVP 用 mTLS クライアント Leaf 証明書
+# 運用メモ:
+# - AVP が Vault に接続する際に提示するクライアント証明書
+# - ArgoCD repo-server 側で /etc/vault/tls/tls.crt, /etc/vault/tls/tls.key として mount する
+# - 更新後は argocd-repo-server の再起動で確実に反映する
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: avp-client-leaf
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  secretName: vault-client-tls
+
+  # Leaf 証明書の有効期間: 90日
+  duration: 2160h
+
+  # Leaf 証明書の更新開始: 15日前
+  renewBefore: 360h
+
+  issuerRef:
+    name: vault-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  commonName: argocd-vault-plugin
+  uris:
+    - spiffe://cluster.local/ns/argocd/sa/argocd-repo-server
+  subject:
+    organizationalUnits:
+      - argocd
+      - avp
+  usages:
+    - digital signature
+    - key encipherment
+    - client auth
+---
+# Vault Web アクセス用 mTLS クライアント Leaf 証明書
+# 運用メモ:
+# - Traefik などが Vault に接続する際に提示するクライアント証明書
+# - 更新後は Traefik / 利用コンポーネント側の再起動または reload で確実に反映する
+# - 現状は Intermediate CA ではなく vault-root-ca から直接発行している
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-vault-client-leaf
+  namespace: vault
+spec:
+  secretName: traefik-vault-client-tls
+
+  # Leaf 証明書の有効期間: 90日
+  duration: 2160h
+
+  # Leaf 証明書の更新開始: 15日前
+  renewBefore: 360h
+
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  issuerRef:
+    name: vault-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  commonName: traefik-to-vault
+  uris:
+    - spiffe://cluster.local/ns/vault/traefik-to-vault
+  subject:
+    organizationalUnits:
+      - traefik
+      - vault
+  usages:
+    - digital signature
+    - key encipherment
+    - client auth

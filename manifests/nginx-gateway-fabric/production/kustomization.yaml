@@ -1,0 +1,7 @@
+helmCharts:
+  - name: nginx-gateway-fabric
+    repo: oci://ghcr.io/nginx/charts/nginx-gateway-fabric
+    version: "2.2.1"
+    namespace: nginx-gateway-fabric
+    releaseName: nginx-gateway-fabric
+    valuesFile: values.yaml

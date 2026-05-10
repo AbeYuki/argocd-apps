@@ -1,0 +1,6 @@
+authSecret:
+  enabled: true
+  create: true
+  name: "controller-manager"
+  annotations: {}
+  github_token: <path:secret/data/github/actions#TOKEN>

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-dashboard-aimhighergg-com-tls
+  namespace: ingress-traefik
+spec:
+  secretName: traefik-dashboard-aimhighergg-com-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: ingress-traefik
+  dnsNames:
+  - traefik-dashboard.aimhighergg.com

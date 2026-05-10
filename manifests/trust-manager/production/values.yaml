@@ -1,0 +1,5 @@
+secretTargets:
+  enabled: true
+  authorizedSecretsAll: false
+  authorizedSecrets:
+    - vault-root-ca-secret-bundle

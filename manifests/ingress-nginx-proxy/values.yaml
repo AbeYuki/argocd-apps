@@ -1,0 +1,16 @@
+controller:
+  ingressClassResource:
+    name: nginx-proxy
+  ingressClass: nginx-proxy
+  watchIngressWithoutClass: false
+  ingressClassByName: true
+  service:
+    externalTrafficPolicy: "Local"
+    annotations:
+      metallb.universe.tf/address-pool: ingress-nginx
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 60
+    targetMemoryUtilizationPercentage: 70

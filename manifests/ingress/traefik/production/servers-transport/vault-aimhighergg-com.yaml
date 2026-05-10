@@ -1,0 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: vault-transport
+  namespace: vault
+spec:
+  serverName: vault.vault.svc.cluster.local
+  insecureSkipVerify: false
+  rootCAs:  # Vault サーバ証明書を検証するための CA
+    - secret: vault-root-ca-secret-bundle
+  certificatesSecrets: # Traefik が Vault へ提示するクライアント証明書
+    - traefik-vault-client-tls

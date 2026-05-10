@@ -1,0 +1,30 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: arc-runner-terraform-helm-argocd
+  namespace: arc-system
+spec:
+  replicas: 2
+  template:
+    spec:
+      repository: AbeYuki/terraform-helm-argocd
+      labels:
+        - self-hosted
+        - kubernetes
+        - arm64
+      containerMode: kubernetes
+      serviceAccountName: arc-runner-sa
+      workVolumeClaimTemplate:
+        storageClassName: "longhorn"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+      env:
+        - name: ACTIONS_RUNNER_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+          value: "true"

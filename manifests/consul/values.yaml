@@ -1,0 +1,48 @@
+global:
+  name: consul
+server:
+  enabled: true
+  replicas: 3
+  bootstrapExpect: 3
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 1
+  service:
+    enabled: true
+    name: consul-server
+    type: ClusterIP
+    port: 8500
+    additionalPorts:
+      - port: 8600
+        name: dns
+        protocol: UDP
+  storageClass: "longhorn"
+  storage: 1Gi
+client:
+  enabled: true
+  grpc: true
+  exposeGossipPorts: true
+networking:
+  dnsPolicy: ClusterFirst
+  hostNetwork: false
+extraEnvVars:
+  - name: "CONSUL_HTTP_ADDR"
+    value: "http://localhost:8500"
+dns:
+  enabled: true
+  service:
+    type: ClusterIP
+    port: 53
+    nodePort: null
+    annotations: {}
+    loadBalancerIP: null
+    externalTrafficPolicy: Cluster
+    sessionAffinity: None
+    publishNotReadyAddresses: false
+connectInject:
+  enabled: true
+  cni:
+    enabled: true
+    logLevel: info
+    cniBinDir: "/opt/cni/bin"
+    cniNetDir: "/etc/cni/net.d"

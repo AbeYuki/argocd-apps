@@ -1,0 +1,31 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: http-grafana-aimhighergg-com
+  namespace: envoy-gateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy
+      sectionName: http-grafana-aimhighergg-com
+  clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 1
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: https-grafana-aimhighergg-com
+  namespace: envoy-gateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy
+      sectionName: https-grafana-aimhighergg-com
+  proxyProtocol: {}
+  clientIPDetection:
+    xForwardedFor:
+      numTrustedHops: 1

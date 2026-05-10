@@ -1,0 +1,10 @@
+resources:
+  - basic_auth/secret.yaml
+  - client-traffic-policy/
+  - cluster-issuer/cluster-issuer.yaml
+  - envoy-proxy/envoy-proxy.yaml
+  - gateway/envoy/gateway.yaml
+  - gateway-class/gateway-class.yaml
+  - http-route/
+  - http-route-filter/http-route-filter.yaml
+  - security-policy/

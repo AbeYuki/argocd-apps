@@ -1,0 +1,7 @@
+helmCharts:
+  - name: arc
+    repo: https://actions-runner-controller.github.io/actions-runner-controller
+    version: "0.9.3"
+    namespace: arc-systems
+    releaseName: gha-runner-scale-set-controller
+    valuesFile: ../values.yaml

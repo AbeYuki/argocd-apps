@@ -1,0 +1,3 @@
+server:
+  datasource:
+    url: "http://victoria-logs-cluster-vlselect.monitoring.svc.cluster.local:9471"

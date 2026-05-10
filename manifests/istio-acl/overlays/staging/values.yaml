@@ -1,0 +1,24 @@
+services:
+  vault:
+    enabled: false
+    matchLabels:
+      app: vault-ui
+    aclAllowEnabled: true
+    aclAllowIPBlocks:
+        - 183.76.178.36/32
+    aclDenyEnabled: false
+    aclDenyIPBlocks: []  # empty = deny-all
+    gateway:
+      namespace: vault
+
+  longhorn:
+    enabled: true
+    matchLabels:
+      app: longhorn-ui
+    aclAllowEnabled: true
+    aclAllowIPBlocks:
+        - 183.76.178.36/32
+    aclDenyEnabled: false
+    aclDenyIPBlocks: []  # empty = deny-all
+    gateway:
+      namespace: longhorn-system

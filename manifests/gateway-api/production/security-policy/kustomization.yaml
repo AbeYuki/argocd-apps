@@ -1,0 +1,7 @@
+resources:
+  - argocd-aimhighergg-com.yaml
+  - grafana-aimhighergg-com.yaml
+ # - longhorn-aimhighergg-com.yaml
+ # - prometheus-aimhighergg-com.yaml
+ # - vlalert-aimhighergg-com.yaml
+ # - vmalert-aimhighergg-com.yaml

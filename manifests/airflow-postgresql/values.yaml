@@ -1,0 +1,31 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+global:
+  storageClass: "longhorn-replica-none"
+  postgresql:
+    auth:
+      postgresPassword: <path:secret/data/airflow/database#PASSWORD>
+      username: <path:secret/data/airflow/database#USERNAME>
+      password: <path:secret/data/airflow/database#PASSWORD>
+      database: <path:secret/data/airflow/database#DATABASE>
+      existingSecret: ""
+      secretKeys:
+        adminPasswordKey: ""
+        userPasswordKey: ""
+        replicationPasswordKey: ""
+    service:
+      ports:
+        postgresql: ""
+primary:
+  name: primary
+  resourcesPreset: "nano"
+  resources: {}
+  persistence:
+    enabled: true
+    volumeName: "data"
+    existingClaim: ""
+    mountPath: /bitnami/postgresql
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+

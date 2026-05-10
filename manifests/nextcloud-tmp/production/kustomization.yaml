@@ -1,0 +1,58 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nextcloud
+resources:
+  - ../base/nextcloud
+  - avp-secret.yaml
+  - nextcloud-config.yaml
+  - apache-config.yaml
+configMapGenerator:
+- name: db
+  literals:
+    - MYSQL_HOST=nextcloud-db-production:3306
+- name: redis
+  literals:
+    - REDIS_HOST=nextcloud-redis-production
+transformers:
+  - transformer-label.yaml
+  - transformer-suffixprefix.yaml
+images:
+  - name: app
+    newName: nextcloud
+    newTag: "31.0.7-apache"
+  - name: cron
+    newName: nextcloud
+    newTag: "31.0.7-apache"
+  - name: redis
+    newName: redis
+    newTag: "7.2.4-alpine"
+  - name: db
+    newName: mariadb
+    newTag: "10.5"
+replicas:
+- name: app
+  count: 2
+patches:
+  - target:
+      version: v1
+      kind: PersistentVolumeClaim
+      name: app
+    patch: |-
+      - op: replace
+        path: /spec/strorageClassName
+        value: nfs-g9-enp4s0
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 3Gi
+  - target:
+      version: v1
+      group: apps
+      kind: PersistentVolumeClaim
+      name: db
+    patch: |-
+      - op: replace
+        path: /spec/strorageClassName
+        value: longhorn
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 3Gi

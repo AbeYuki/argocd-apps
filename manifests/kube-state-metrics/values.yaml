@@ -1,0 +1,56 @@
+customResourceState:
+  enabled: true
+  config:
+    spec:
+      resources:
+        - groupVersionKind:
+            group: longhorn.io
+            kind: Backup
+            version: v1beta2
+          metricNamePrefix: kube_custom_resouce_longhorn
+          metrics:
+            - name: backup_state_condition
+              help: Longhorn backup state condition
+              labelsFromPath:
+                backup_id: [metadata, name]
+                volume_name: [status, volumeName]
+                snapshot_name: [status, snapshotName]
+              each:
+                type: StateSet
+                stateSet:
+                  path: [status, state]
+                  labelName: state
+                  list: ["InProgress", "Completed", "Error", "Unknown"]
+        - groupVersionKind:
+            group: argoproj.io
+            kind: Application
+            version: v1alpha1
+          metricNamePrefix: kube_custom_resouce_argocd
+          metrics:
+            - name: application_state
+              help: ArgoCD application state
+              labelsFromPath:
+                app_name: [metadata, name]
+                namespace: [metadata, namespace]
+              each:
+                type: StateSet
+                stateSet:
+                  path: [status, health, status]
+                  labelName: state
+                  list: ["Healthy", "Degraded", "Progressing", "Suspended", "Missing", "Unknown"]
+rbac:
+  extraRules:
+    - apiGroups:
+        - longhorn.io
+      resources:
+        - backups
+      verbs:
+        - list
+        - watch
+    - apiGroups:
+        - argoproj.io
+      resources:
+        - applications
+      verbs:
+        - list
+        - watch

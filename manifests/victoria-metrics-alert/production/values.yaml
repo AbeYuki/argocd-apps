@@ -1,0 +1,28 @@
+server:
+  replicaCount: 2
+  remote:
+    write:
+      url: http://victoria-metrics-cluster-vminsert.monitoring.svc:8480
+    read:
+      url: http://victoria-metrics-cluster-vmselect.monitoring.svc:8481
+  notifier:
+    alertmanager:
+      url: http://monitoring-backend-alertmanager01-001.monitoring.svc:9093
+  extraArgs:
+    external.url: "https://grafana.aimhighergg.com"
+    external.alert.source: >-
+      {{- $t := .ActiveAt -}}
+      explore?orgId=1&schemaVersion=1&panes=
+      {{- if eq .Type `vlogs` -}}
+      {{ printf `{"p0":{"datasource":"victoria-logs-cluster","queries":[{"refId":"A","expr":%s}],"range":{"from":"%d","to":"%d"},"compact":false}}`
+        (.Expr|jsonEscape)
+        (($t.Add (parseDurationTime `-30m`)).UnixMilli)
+        (($t.Add (parseDurationTime `30m`)).UnixMilli)
+        | queryEscape }}
+      {{- else -}}
+      {{ printf `{"p0":{"datasource":"victoria-metrics-cluster","queries":[{"refId":"A","expr":%s}],"range":{"from":"%d","to":"%d"},"compact":false}}`
+        (.Expr|jsonEscape)
+        (($t.Add (parseDurationTime `-30m`)).UnixMilli)
+        (($t.Add (parseDurationTime `30m`)).UnixMilli)
+        | queryEscape }}
+      {{- end -}}

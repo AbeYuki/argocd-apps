@@ -1,0 +1,13 @@
+helmCharts:
+  - name: gateway-crds-helm
+    repo: oci://docker.io/envoyproxy/
+    version: "1.6.0"
+    releaseName: envoy-gateway
+    includeCRDs: true
+    valuesInline:
+      crds:
+        gatewayAPI:
+          enabled: false
+          channel: standard
+        envoyGateway:
+          enabled: true

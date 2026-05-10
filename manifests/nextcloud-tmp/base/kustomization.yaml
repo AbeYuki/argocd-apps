@@ -1,0 +1,5 @@
+resources:
+  - deploy-nextcloud-cron.yaml
+  - deploy-nextcloud-db.yaml
+  - deploy-nextcloud-redis.yaml
+  - deploy-nextcloud-webapp.yaml

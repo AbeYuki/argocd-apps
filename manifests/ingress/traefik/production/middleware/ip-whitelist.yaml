@@ -1,0 +1,59 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: ingress-traefik
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: monitoring
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: argo-rollouts
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: longhorn-system
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: vault
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
+  namespace: <path:secret/data/ingress/app_1#namespace>
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16

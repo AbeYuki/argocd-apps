@@ -1,0 +1,269 @@
+server:
+  config:
+    alerts:
+      groups:
+        - name: system
+          rules:
+          - alert: HighLoadAVG
+            expr: |
+              node_load15 > 10
+            labels:
+              severity: critical
+            annotations:
+              summary: " {{ $labels.instance }} でロードアベレージが高騰"
+              description: "topでプロセスのCPU使用率、ps -efで滞留プロセス、iostatでI/Oのボトルネック、vmstatでリソース状況確認"
+        - name: server
+          rules:
+          - alert: PrometheusDown
+            expr: |
+              absent(count_over_time(prometheus_ready[15m]))
+            labels:
+              severity: page
+            annotations:
+              summary: "Instance {{ $labels.instance }} down"
+              description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+          - alert: LowRemoteStorageRate
+            expr: |
+              rate(prometheus_remote_storage_samples_total[10m]) < 500
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Low remote storage rate detected"
+              description: "The rate of prometheus_remote_storage_samples_total is below 500 (current value: {{ $value }})"
+          - alert: NfsServerDown
+            expr: |
+              namedprocess_namegroup_num_procs{groupname="rpc.idmapd"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "NFS Server process is DOWN"
+              description: "rpc.idmapd プロセスが (current value: {{ $value }})"
+        - name: kubernetes
+          rules:
+          - alert: scheduler_pending_pods
+            expr: |
+              sum(scheduler_pending_pods) != 0
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Instance {{ $labels.instance }} scheduler pending pod"
+              description: "POD is pending in {{ $labels.queue }} status for more than 5 minutes on {{ $labels.instance }}."
+          - alert: longhor_backup_error
+            expr: |
+              kube_custom_resouce_longhorn_backup_state_condition{state="Error"} == 1
+            for: 0m
+            labels:
+              severity: alert
+            annotations:
+              summary: "Longhorn Backup PVC/{{$labels.backup_id}} Error"
+              description: "PVC/{{$labels.backup_id}} が Longhorn Backup に失敗した"
+          - alert: argocd_application_progressing
+            expr: |
+              kube_custom_resouce_argocd_application_state{state="Progressing"} == 1
+            for: 10m
+            labels:
+              severity: alert
+            annotations:
+              summary: "Argocd application {{$labels.app_name}} Progressing"
+              description: "Argocd の application/{{$labels.app_name}} が Progressing 状態が継続している"
+          - alert: argocd_application_degraded
+            expr: |
+              kube_custom_resouce_argocd_application_state{state="Degraded"} == 1
+            for: 5m
+            labels:
+              severity: alert
+            annotations:
+              summary: "Argocd application {{$labels.app_name}} Degraded"
+              description: "Argocd の application/{{$labels.app_name}} が Degraded になった"
+          - alert: pod_status_not_ready
+            expr: |
+              kube_pod_status_ready{condition="false", pod!~"(daily-backup-|daily-snapshot|daily-trim).*"} == 1
+            for: 5m
+            labels:
+              severity: alert
+            annotations:
+              summary: "NS/{{ $labels.namespace }} POD/{{ $labels.pod}} NotReady"
+              description: "{{ $labels.namespace }}/{{ $labels.pod}} POD が Not Ready 状態が継続している"
+          - alert: loki_ruler_cofig_reload_failed
+            expr: |
+              irate(loki_ruler_sync_rules_total{reason="periodic"}[5m]) > 1
+            for: 0m
+            labels:
+              severity: alert
+            annotations:
+              summary: "Loki Ruler の config の reload に失敗"
+              description: "Loki Ruler config のフォーマットに誤りがあるので修正してください"
+        - name: service
+          rules:
+          - alert: ServiceDown
+            expr: |
+              probe_http_status_code{} != 200
+            labels:
+              severity: critical
+            annotations:
+              summary: "Service {{ $labels.instance }} down"
+        - name: hardware
+          rules:
+            - alert: cpu_temperature_high
+              expr: |
+                cpu_temperature > 90
+              for: 0m
+              labels:
+                severity: critical
+              annotations:
+                summary: "{{ $labels.instance }} のCPU温度が {{ $value }} "
+                description: "CPUクーラーの設定を調整してください"
+        - name: pvc
+          rules:
+          - alert: HighPVCUsage
+            expr: |
+              100 * (
+                sum by (namespace, persistentvolumeclaim) (kubelet_volume_stats_used_bytes)
+                /
+                sum by (namespace, persistentvolumeclaim) (kubelet_volume_stats_capacity_bytes)
+              ) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High PVC usage detected"
+              description: "PVC {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} の使用率が90%超過"
+        - name: server_resources
+          rules:
+          - alert: HighMemoryUsage
+            expr: |
+              (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.instance }}でMemoryの使用率が90%超過"
+              description: "Memmoryの使用率: (current value: {{ $value }}%)"
+          - alert: HighCpuUsage
+            expr: |
+              100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.instance }}でCPUの使用率が90%超過"
+              description: "CPUの使用率: (current value: {{ $value }}%)"
+        - name: kubernetes_resources
+          rules:
+          - alert: Utilization_of_allocated_CPU_resources
+            expr: |
+              (100 * (sum(rate(container_cpu_usage_seconds_total{container!="",container!="POD"}[5m])) by (namespace, pod)
+                  / sum(container_spec_cpu_quota{container!="",container!="POD"} / container_spec_cpu_period{container!="",container!="POD"}) by (namespace, pod))) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.pod }} に割り当てられた CPU リソース上限に対する使用率が90%超過"
+              description: "{{ $labels.pod }} に割り当てられた CPU リソース上限に対する使用率: (current value: {{ $value }}%)"
+          - alert: Utilization_of_allocated_memory_resources
+            expr: |
+              (100 * (sum by (namespace, pod) (container_memory_usage_bytes{container!="",container!="POD"})
+                  / sum by (namespace, pod) (container_spec_memory_limit_bytes{container!="",container!="POD"} > 0))) > 90
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.pod }} に割り当てられた memory リソース上限に対する使用率が90%超過"
+              description: "{{ $labels.pod }} に割り当てられた memory リソース上限に対する使用率: (current value: {{ $value }}%)"
+        - name: disk
+          rules:
+          - alert: node_disk_written_bytes_total
+            expr: |
+              rate(node_disk_written_bytes_total{}[5m]) > 6000000
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} の {{ $labels.device}} で書き込みレート超過"
+              description: "{{ $labels.instance }} の {{ $labels.device}} でディスクに書き込まれたバイト数のレート（秒あたりのバイト数）: (current value: {{ $value }})"
+          - alert: node_disk_io_time_seconds_total
+            expr: |
+              rate(node_disk_io_time_seconds_total{}[5m]) > 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} の {{ $labels.device}} でディスクI/O操作に費やされた時間のレート超過"
+              description: "{{ $labels.instance }} の {{ $labels.device}} でディスクI/O操作に費やされた時間のレート: (current value: {{ $value }})"
+          - alert: node_disk_write_time_seconds_total
+            expr: |
+              rate(node_disk_write_time_seconds_total{}[5m]) > 4
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} の {{ $labels.device}} で書き込み操作に費やされた時間のレート超過"
+              description: "{{ $labels.instance }} の {{ $labels.device}} で書き込み操作に費やされた時間のレート（秒あたりの時間）: (current value: {{ $value }})"
+          - alert: NodeDiskUsageWarning
+            expr: |
+              100 * (1 - (
+                node_filesystem_avail_bytes{fstype!~"tmpfs|devtmpfs|overlay|squashfs|rpc_pipefs|nsfs|autofs|fuse.lxcfs"}
+                /
+                node_filesystem_size_bytes{fstype!~"tmpfs|devtmpfs|overlay|squashfs|rpc_pipefs|nsfs|autofs|fuse.lxcfs"}
+              )) > 80
+              and on(instance, device, mountpoint)
+              node_filesystem_readonly == 0
+            for: 15m
+            labels:
+              severity: warning
+            annotations:
+              summary: "NodeDiskUsageWarning"
+              description: "ファイルシステムの使用率 80 % 超過 server=({{ $labels.instance }}, device={{ $labels.device }}, mountPoint={{ $labels.mountpoint }})"
+          - alert: NodeDiskUsageCritical
+            expr: |
+              100 * (1 - (
+                node_filesystem_avail_bytes{fstype!~"tmpfs|devtmpfs|overlay|squashfs|rpc_pipefs|nsfs|autofs|fuse.lxcfs"}
+                /
+                node_filesystem_size_bytes{fstype!~"tmpfs|devtmpfs|overlay|squashfs|rpc_pipefs|nsfs|autofs|fuse.lxcfs"}
+              )) > 90
+              and on(instance, device, mountpoint)
+              node_filesystem_readonly == 0
+            for: 10m
+            labels:
+              severity: critical
+            annotations:
+              summary: "NodeDiskUsageCritical"
+              description: "ファイルシステムの使用率 90 % 超過 server=({{ $labels.instance }}, device={{ $labels.device }}, mountPoint={{ $labels.mountpoint }})"
+        - name: gateway
+          rules:
+          - alert: node_disk_written_bytes_total
+            expr: |
+              rate(node_disk_written_bytes_total{}[5m]) > 6000000
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} の {{ $labels.device}} で書き込みレート超過"
+              description: "{{ $labels.instance }} の {{ $labels.device}} でディスクに書き込まれたバイト数のレート（秒あたりのバイト数）: (current value: {{ $value }})"
+          - alert: NodeSystemdUnitNotActive
+            expr: node_systemd_unit_state{job="node-exporter", name=~"(nfs-server|rpcbind|rpc-statd|nfs-idmapd)\\.service", state="active"} != 1
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.instance }} NodeSystemdUnitNotActive"
+              description: "{{ $labels.name }} サービスが Active じゃない (active!=1). current={{ $value }}"
+          - alert: NodeSystemdUnitFailed
+            expr: node_systemd_unit_state{job="node-exporter", name=~"(nfs-server|rpcbind|rpc-statd|nfs-idmapd)\\.service", state="failed"} == 1
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.instance }} NodeSystemdUnitFailed"
+              description: "{{ $labels.name }} サービスが failed"
+          - alert: NodeSystemdUnitActivatingTooLong
+            expr: node_systemd_unit_state{job="node-exporter", name=~"(haproxy|nfs-server|rpcbind|rpc-statd|nfs-idmapd)\\.service", state="activating"} == 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.instance }} NodeSystemdUnitActivatingTooLong"
+              description: "{{ $labels.name }} サービスがハングアップしている可能性あり"

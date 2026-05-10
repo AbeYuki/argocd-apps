@@ -1,0 +1,9 @@
+helmCharts:
+ - name: gateway
+   repo: https://istio-release.storage.googleapis.com/charts
+   version: 1.25.1
+   releaseName: istio-ingressgateway
+   namespace: istio-system
+   additionalValuesFiles:
+     - additional-values.yaml
+   valuesFile: ../values.yaml

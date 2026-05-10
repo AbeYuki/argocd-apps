@@ -1,0 +1,37 @@
+# https://github.com/apache/airflow/blob/main/chart/values.yaml
+createUserJob:
+  useHelmHooks: false
+  applyCustomEnv: false
+migrateDatabaseJob:
+  useHelmHooks: false
+  applyCustomEnv: false
+  jobAnnotations:
+      "argocd.argoproj.io/hook": Sync
+executor: "KubernetesExecutor"
+data:
+  metadataConnection:
+    user: <path:secret/data/airflow/database#USERNAME>
+    pass: <path:secret/data/airflow/database#PASSWORD>
+    protocol: postgresql
+    host: "airflow-postgresql"
+    port: 5432
+    db: <path:secret/data/airflow/database#DATABASE>
+    sslmode: disable
+redis:
+  password: <path:secret/data/airflow/redis#PASSWORD>
+postgresql:
+  enabled: false
+dags:
+  gitSync:
+    enabled: true
+    repo: <path:secret/data/github/private-repo-url#REPO_URL_8>
+    branch: main
+    rev: HEAD
+    depth: 1
+    maxFailures: 0
+    subPath: "tests"
+    sshKeySecret: airflow-ssh-secret
+triggerer:
+  persistence:
+    size: 1Gi
+  storageClassName: "longhorn"

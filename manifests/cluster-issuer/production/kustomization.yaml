@@ -1,0 +1,4 @@
+resources:
+  - letsencrypt-prod-dns01.yaml
+  - letsencrypt-prod-http01-traefik.yaml
+  - letsencrypt-prod-http01-nginx.yaml

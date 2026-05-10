@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: nextcloud-db
+    app.kubernetes.io/name: nextcloud
+  name: db
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    targetPort: 3306
+    protocol: TCP
+  selector:
+    app.kubernetes.io/component: nextcloud-db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db
+  labels:
+    app.kubernetes.io/component: nextcloud-db
+    app.kubernetes.io/name: nextcloud
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: nextcloud-db
+    app.kubernetes.io/name: nextcloud
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: nextcloud-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: nextcloud-db
+        app.kubernetes.io/name: nextcloud
+    spec:
+      containers:
+      - name: db
+        image: db
+        args:
+          - --transaction-isolation=READ-COMMITTED
+          - --log-bin=binlog
+          - --binlog-format=ROW
+        env:
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db
+              key: MYSQL_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db
+              key: MYSQL_ROOT_PASSWORD   
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: db
+              key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db
+              key: MYSQL_USER    
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: db
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: db
+        persistentVolumeClaim:
+          claimName: db

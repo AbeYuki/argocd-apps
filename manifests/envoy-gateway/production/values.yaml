@@ -1,0 +1,7 @@
+config:
+  envoyGateway:
+    gateway:
+      controllerName: gateway.envoyproxy.io/gatewayclass-controller
+    extensionApis:
+      enableEnvoyPatchPolicy: true
+      enableBackend: true

@@ -1,0 +1,7 @@
+helmCharts:
+  - name: vector
+    repo: https://helm.vector.dev
+    version: "0.50.0"
+    namespace: monitoring
+    releaseName: vector
+    valuesFile: values.yaml

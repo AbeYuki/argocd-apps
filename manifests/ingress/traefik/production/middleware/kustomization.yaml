@@ -1,0 +1,3 @@
+resources:
+  - ip-whitelist.yaml
+  - basic-auth.yaml

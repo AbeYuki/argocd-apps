@@ -1,0 +1,9 @@
+resources:
+  - certificate/
+  - cluster-issuer/ingress-traefik.yaml
+  - ingress/
+  - ingress-route/
+  - middleware/
+  - secret/basic-auth.yaml
+  - servers-transport/
+  - traefik-service/

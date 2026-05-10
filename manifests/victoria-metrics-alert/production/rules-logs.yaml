@@ -1,0 +1,295 @@
+server:
+  config:
+    alerts:
+      groups:
+        - name: server
+          interval: 1m
+          type: vlogs 
+          rules:
+          - alert: system_emerg_detected
+            expr: |
+              PRIORITY:"0"
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: emergency
+            annotations:
+              summary: "system_emerg_detected"
+              description: "システム稼働障害が発生(カーネルパニックなど)"
+          - alert: system_alert_detected
+            expr: |
+              PRIORITY:"1"
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: alert
+            annotations:
+              summary: "system_emerg_detected"
+              description: "対応が必要な障害が発生(ディスク破損など)"
+          - alert: system_crit_detected
+            expr: |
+              PRIORITY:"2"
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "system_emerg_detected"
+              description: "重大エラーが発生(ハードウェア障害など)"
+          - alert: system_err_detected
+            expr: |
+              PRIORITY:"3"
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: error
+            annotations:
+              summary: "system_err_detected"
+              description: "エラーが発生(サービスユニットエラーなど)"
+          - alert: system_warning_detected
+            expr: |
+              PRIORITY:"4"
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "system_warning_detected"
+              description: "警告が発生(firewall block など)"
+          - alert: under_voltage_detected
+            expr: |
+              _RUNTIME_SCOPE:"system" 
+              "Undervoltage detected" 
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Instance {{ $labels.node }} Under-voltage detected"
+              description: "電圧不足のため電源交換を実施"
+          - alert: journal_io_error
+            expr: |
+              _RUNTIME_SCOPE:"system" 
+              "I/O error" 
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>1
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels._HOSTNAME }} で I/O Error が発生"
+              description: "ファイルシステムをアンマウントして修復してください。"
+          - alert: journal_device_offline_error
+            expr: |
+              _RUNTIME_SCOPE:"system" 
+              "device offline error"  
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>1
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels._HOSTNAME }} でデバイスのオフラインエラーが発生"
+              description: "ディスクの損傷・接続不良などの問題の可能性がある。"
+          - alert: journal_nfs_lost_lock
+            expr: |
+              _RUNTIME_SCOPE:"system" 
+              ~"NFS: .+: lost .+ locks" 
+              | stats by (_HOSTNAME) count() as matches 
+              | filter matches:>1
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels._HOSTNAME }} で NFS ファイルロックがロストした"
+              description: "kubectl get all -A | grep <IP> で SERVICE/PVC を特定し PVC を再マウントする"
+          - alert: journal_ufw_block
+            expr: |
+              _RUNTIME_SCOPE:"system"
+              "[UFW BLOCK]"
+              | stats by (_HOSTNAME) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "journal_ufw_block"
+              description: "{{ $labels._HOSTNAME }} で UFW で通信が BLOCK された"
+          - alert: SshLoginFromOutsice
+            expr: |
+              _RUNTIME_SCOPE: "system"
+              ~"Accepted publickey"
+              ~"192\\.168"\\..+
+              | stats by (_HOSTNAME) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "外部からSSHログイン"
+        - name: application
+          type: vlogs 
+          interval: 1m
+          rules:
+          - alert: remote_storage_error
+            expr: |
+              app.kubernetes.io.name:"prometheus"
+              "non-recoverable error" 
+              | stats by (hostname, namespace, pod_name) count() as matches
+              | filter matches:>0
+            for: 5m
+            labels:
+              severity: alert
+            annotations:
+              summary: "prometheus remote write error"
+              description: "PrometheusのRemoteWrite周りを確認"
+          - alert: oom_killer
+            expr: |
+              _RUNTIME_SCOPE:"system"
+              "Memory cgroup out of memory" 
+              | stats by (_HOSTNAME) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: alert
+              airflow_trigger: oom_killer
+            annotations:
+              summary: "Instance {{ $labels.node }} Memory cgroup out of memory"
+              description: "アプリケーションがメモリ不足のためresourcesを調整する"
+          - alert: vault_failed_to_heartbeat_to_peer
+            expr: |
+              app.kubernetes.io.name:"vault" 
+              "storage.raft: failed to heartbeat to: peer"
+              | stats by (hostname, namespace, pod_name) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: alert
+            annotations:
+              summary: "vault で raft peers のハートビート監視で失敗"
+              description: "vault を確認して raft peers を構成してください"
+          - alert: pod_input_output_error
+            expr: |
+              app.kubernetes.io.name:!"loki"
+              pod_name:~".+" 
+              "input/output"
+              | stats by (hostname, namespace, pod_name) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: emergency
+            annotations:
+              summary: "{{ $labels.pod_name }}でI/Oエラーが発生しました"
+              description: |
+                {{ $labels.hostname }} のホストで発生
+                {{ $labels.pod_name }} の pod を再起動してください
+          - alert: minecraft_bedrock_server_user_connected
+            expr: |
+              k8s.namespace.name:"prod-minecraft"
+              "Player connected"
+              | stats by (hostname, namespace, pod_name) count() as matches
+              | filter matches:>0
+            for: 5m
+            labels:
+              severity: info
+            annotations:
+              summary: "Minecraft bedrock server user connected"
+          - alert: longhorn_buckup_error
+            expr: |
+              k8s.namespace.name:"longhorn-system"
+              "cannot mount nfs"
+              | stats by (hostname, namespace, pod_name) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: alert
+            annotations:
+              summary: "longhorn-system {{ $labels.node }} cannot mount nfs"
+              description: "NFSサーバの状態確認を実施"
+        - name: security
+          type: vlogs 
+          interval: 1m
+          rules:
+          - alert: XMRigMiningAttempt
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system"
+              "mining"
+              | stats by (hostname) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "XMRig マイニングアクセスを検出"
+          - alert: SQLInjectionAttempt
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system"
+              ~"UNION SELECT|DROP TABLE|OR 1=1|--|%27"
+              | stats by (hostname) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "SQLインジェクションの可能性あり"
+          - alert: WordPressScan
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system"
+              ~"wp-login\\.php|xmlrpc\\.php|wp-admin"
+              | stats by (hostname) count() as matches
+              | filter matches:>3
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "WordPress ターゲットのスキャン試行"
+          - alert: Log4ShellAttempt
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system"
+              ~"\\$\\{jndi:[a-z]+://" 
+              | stats by (hostname) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Log4Shell 攻撃検出"
+          - alert: PathTraversalAttempt
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system" 
+              ~"\\.\\./|\\.\\.\\\\|%2e%2e%2f"
+              | stats by (hostname) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "パストラバーサル試行"
+          - alert: SuspiciousUserAgent
+            expr: |
+              k8s.namespace.name:~"ingress-nginx|ingress-traefik|envoy-gateway|envoy-gateway-system"
+              ~"sqlmap|nikto|XMRig|curl$"
+              | stats by (hostname) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "疑わしい User-Agent を検出"
+          - alert: http80VulnerabilityScan
+            expr: |
+              _SYSTEMD_UNIT:"haproxy" 
+              "<NOSRV>"
+              | stats by (_HOSTNAME, _SYSTEMD_UNIT) count() as matches
+              | filter matches:>30
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "脆弱性スキャンを検出"
