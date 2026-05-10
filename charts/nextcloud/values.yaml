@@ -188,11 +188,11 @@ nextcloud:
     size: 1Gi
 
   secret:
-    MYSQL_PASSWORD: "password"
-    MYSQL_DATABASE: "db"
-    MYSQL_USER: "user"
-    MYSQL_HOST: "host"
-    REDIS_HOST: "redishost"
+    MYSQL_PASSWORD: "nextcloud"
+    MYSQL_DATABASE: "nextcloud"
+    MYSQL_USER: "nextcloud"
+    MYSQL_HOST: "nextcloud"
+    REDIS_HOST: "redis"
 
   # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
   replicaCount: 1
