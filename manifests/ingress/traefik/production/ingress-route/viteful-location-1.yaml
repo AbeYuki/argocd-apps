@@ -22,6 +22,20 @@ spec:
       services:
         - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_1>`) && PathRegexp(`^/お問い合わせ(/.*)?$`)
+      kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+          port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_1>`) && PathRegexp(`^/202(/.*)?$`)
+      kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+          port: 80
     - match: Host(`<path:secret/data/viteful/production/ingress#HOST_1>`) && PathPrefix(`/`)
       kind: Rule
       services:
