@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_1>`) && PathRegexp(`^/.+教室(/.*)?|category(/.*)?)$`)
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_1>`) && PathRegexp(`^/.+教室(/.*)?$`)
       kind: Rule
       middlewares:
         - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
