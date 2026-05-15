@@ -11,9 +11,30 @@ spec:
     - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathRegexp(`^/.+教室(/.*)?$`)
       kind: Rule
       middlewares:
-        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+          port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathRegexp(`^/category(/.*)?$`)
+      kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+          port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathRegexp(`^/お問い合わせ(/.*)?$`)
+      kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+          port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathRegexp(`^/20[0-9]{2}.*$`)
+      kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
     - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathPrefix(`/`)
       kind: Rule
