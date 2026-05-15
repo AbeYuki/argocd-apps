@@ -5,6 +5,6 @@ metadata:
   namespace: <path:secret/data/viteful/production/namespace#NAMESPACE>
 spec:
   redirectRegex:
-    regex: ^https?://([^/]+)/.+教室(/.*)?$
+    regex: ^https?://([^/]+)/.*
     replacement: https://${1}/
     permanent: true
