@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`)
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathPrefix(`/`)
       kind: Rule
       services:
         - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>
