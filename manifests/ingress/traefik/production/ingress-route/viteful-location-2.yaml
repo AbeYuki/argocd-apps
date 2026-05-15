@@ -10,6 +10,13 @@ spec:
   routes:
     - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathRegexp(`^/.+教室(/.*)?$`)
       kind: Rule
+      middlewares:
+        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+      services:
+        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>
+          port: 80
+    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_2>`) && PathPrefix(`/`)
+      kind: Rule
       services:
         - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_2>
           port: 80
