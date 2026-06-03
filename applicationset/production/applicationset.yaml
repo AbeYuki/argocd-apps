@@ -200,7 +200,7 @@ spec:
           - name: vault-ca
             namespace: vault
             repoURL: https://github.com/AbeYuki/argocd-apps.git
-            path: ./manifests/vault-ca/production/
+            path: ./manifests/vault-ca/
             plugin: ""
             autoSync: false
             syncOptions:
@@ -249,7 +249,7 @@ spec:
           - name: gateway-api-crds
             namespace: ""
             repoURL: https://github.com/AbeYuki/argocd-apps.git
-            path: ./manifests/gateway-api-crds/production
+            path: ./manifests/gateway-api-crds/
             plugin: ""
             autoSync: true
             syncOptions:
