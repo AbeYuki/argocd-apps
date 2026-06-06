@@ -14,7 +14,13 @@ spec:
         - arm64
       containerMode: kubernetes
       serviceAccountName: arc-runner-sa
-      workVolumeClaimTemplate: {}
+      workVolumeClaimTemplate:
+        storageClassName: "longhorn"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1B
       env:
         - name: ACTIONS_RUNNER_POD_NAME
           valueFrom:
