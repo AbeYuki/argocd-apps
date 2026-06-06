@@ -1,2 +1,2 @@
 resources:
-  - terrafrom-sakura-cloud-dns.yaml
+  - terraform-sakura-cloud-dns.yaml
