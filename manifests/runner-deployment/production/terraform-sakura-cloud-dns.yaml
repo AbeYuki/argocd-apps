@@ -20,7 +20,7 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 1B
+            storage: 1Gi
       env:
         - name: ACTIONS_RUNNER_POD_NAME
           valueFrom:
