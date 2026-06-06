@@ -55,7 +55,7 @@ spec:
             namespace: arc-runner
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/runner-deployment/production
-            plugin: kustomize-helmcharts
+            plugin: ""
             autoSync: false
             syncOptions:
               - CreateNamespace=true
