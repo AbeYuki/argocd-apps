@@ -1,26 +1,19 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: arc-runner-terraform-helm-argocd
+  name: arc-runner-terraform-sakura-cloud-dns
   namespace: arc-system
 spec:
-  replicas: 2
+  replicas: 1
   template:
     spec:
-      repository: AbeYuki/terraform-helm-argocd
+      repository: AbeYuki/terraform-sakura-cloud-dns
       labels:
         - self-hosted
         - kubernetes
         - arm64
       containerMode: kubernetes
       serviceAccountName: arc-runner-sa
-      workVolumeClaimTemplate:
-        storageClassName: "longhorn"
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
       env:
         - name: ACTIONS_RUNNER_POD_NAME
           valueFrom:

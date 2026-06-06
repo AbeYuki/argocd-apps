@@ -1,2 +1,2 @@
 resources:
-  - ../base/
+  - terraform-helm-argocd.yaml
