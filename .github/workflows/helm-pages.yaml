@@ -30,19 +30,22 @@ jobs:
 
       - name: Package charts
         run: |
-          mkdir -p public
+          set -euo pipefail
+
+          mkdir -p public/charts
 
           for chart in charts/*; do
             if [[ -f "$chart/Chart.yaml" ]]; then
               helm dependency update "$chart"
-              helm package "$chart" -d public
+              helm package "$chart" -d public/charts
             fi
           done
 
           owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           repo=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
-          helm repo index public \
-            --url "https://${owner}.github.io/${repo}/"
+
+          helm repo index public/charts \
+            --url "https://${owner}.github.io/${repo}/charts/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
