@@ -1,23 +1,46 @@
-## Actions Overview
+# Helm Charts
 
-- charts/** に変更があると、HelmチャートのパッケージとindexをGitHub Pagesへ公開（Workflow: helm-pages）。
-- charts/** に触れるPRでChartのversionを自動更新（Workflow: chart-version-bump）。
-- tagprはchartsのみを対象にリリースPRとタグを作成（Workflow: tagpr）。
+## リポジトリ追加
 
-## Chart Versioning (chart-version-bump)
+```
+helm repo add abeyuki-charts \
+    https://abeyuki.github.io/argocd-apps/charts/
+```
+```
+helm repo update
+```
 
-- PRラベルでbumpを決定: tagpr:major / tagpr:minor、無ければpatch。
-- 変更されたchartのChart.yaml versionを自動更新。
-- Chart.yamlのappVersionは手動で更新。
+## charts リスト
 
-## tagpr Operation (per chart)
+```
+helm search repo abeyuki-charts
+```
 
-- mainでcharts/**に変更があるときのみ実行。
-- chartごとの設定はcharts/<name>/.tagprを使用。
-- タグはcharts/<name>/vX.Y.Zで、chartごとに独立してバージョン管理。
-- CHANGELOGはcharts/<name>/CHANGELOG.mdに出力。
+## Instart chart
 
-## Recommended PR Practice
+```
+helm upgrade --install <release-name> \
+    abeyuki-charts/<chart-name> \
+    --namespace <namespace> \ 
+    --create-namespace \
+    -f values.yaml
+```
 
-- chartの変更はcharts/**だけを触るPRに分ける。
-- manifests/など他の変更は別PRにして、リリースログをきれいに保つ。
+## Uninstall
+
+```
+helm uninstall <release-name> --namespace <namespace>
+```
+
+## Helm リポジトリのインデックス
+
+
+# 運用
+
+### Actions
+
+- chars/ に変更があると Helm チャートのパッケージと index を pages に公開(workflow: helm-pages)
+- tagpr は chart のみを対象に PR と タグを作成(workflwo: tagpr)
+
+### PR
+- chart の変更は charts の内容だけの PR にする
