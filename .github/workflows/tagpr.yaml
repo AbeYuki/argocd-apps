@@ -15,6 +15,10 @@ permissions:
   pull-requests: write
   issues: read
 
+concurrency:
+  group: tagpr
+  cancel-in-progress: false
+
 jobs:
   discover:
     runs-on: ubuntu-latest
@@ -30,21 +34,26 @@ jobs:
 
       - name: Build chart matrix
         id: set-matrix
+        shell: bash
         run: |
+          set -euo pipefail
+
           charts=()
 
           for chart in charts/*; do
-            if [[ -f "$chart/Chart.yaml" && -f "$chart/.tagpr" ]]; then
-              charts+=("\"$(basename "$chart")\"")
+            if [[ -f "${chart}/Chart.yaml" && -f "${chart}/.tagpr" ]]; then
+              charts+=("\"$(basename "${chart}")\"")
             fi
           done
 
-          if [[ ${#charts[@]} -eq 0 ]]; then
-            echo 'matrix={"chart":[]}' >> "$GITHUB_OUTPUT"
+          if [[ "${#charts[@]}" -eq 0 ]]; then
+            echo 'matrix={"chart":[]}' >> "${GITHUB_OUTPUT}"
             exit 0
           fi
 
-          printf 'matrix={"chart":[%s]}\n' "$(IFS=,; echo "${charts[*]}")" >> "$GITHUB_OUTPUT"
+          printf 'matrix={"chart":[%s]}\n' \
+            "$(IFS=,; echo "${charts[*]}")" \
+            >> "${GITHUB_OUTPUT}"
 
   tagpr:
     needs: discover
