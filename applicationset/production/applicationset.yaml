@@ -403,7 +403,7 @@ spec:
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/nextcloud/production
             plugin: kustomize-helmcharts
-            autoSync: true
+            autoSync: false
             syncOptions:
               - CreateNamespace=true
   template:
