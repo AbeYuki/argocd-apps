@@ -4,3 +4,9 @@ db:
     accessModes:
       - ReadWriteMany
     size: 1Gi
+nextcloud:
+  persistentVolumeClaim:
+    storageClassName: longhorn
+    accessModes:
+      - ReadWriteMany
+    size: 1Gi
