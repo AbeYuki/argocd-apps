@@ -94,6 +94,12 @@ db:
       - ReadWriteMany
     size: 1Gi
 
+  secret:
+    MARIADB_ROOT_PASSWORD: "nextcloud"
+    MARIADB_DATABASE: "nextcloud"
+    MARIADB_USER: "nextcloud"
+    REDIS_HOST: "nextcloud-redis"
+
   # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
   replicaCount: 1
 
@@ -191,8 +197,8 @@ nextcloud:
     MYSQL_PASSWORD: "nextcloud"
     MYSQL_DATABASE: "nextcloud"
     MYSQL_USER: "nextcloud"
-    MYSQL_HOST: "nextcloud"
-    REDIS_HOST: "redis"
+    MYSQL_HOST: "nextcloud-db"
+    REDIS_HOST: "nextcloud-redis"
 
   # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
   replicaCount: 1

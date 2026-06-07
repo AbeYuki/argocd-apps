@@ -61,6 +61,9 @@ spec:
           volumeMounts:
             - name: db-data
               mountPath: /var/lib/mysql
+          envFrom:
+            - secretRef:
+                name: {{ include "nextcloud.fullname" . }}-db
       volumes:
         - name: db-data
           persistentVolumeClaim:
