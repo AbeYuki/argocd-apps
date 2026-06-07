@@ -57,15 +57,24 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: nextcloud-data
+            - name: nextcloud
               mountPath: /var/www/html
+            {{- if .Values.nextcloud.persistence.data.enabled }}
+            - name: nextcloud-data
+              mountPath: /var/www/html/data
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ include "nextcloud.fullname" . }}-nextcloud
       volumes:
-        - name: nextcloud-data
+        - name: nextcloud
           persistentVolumeClaim:
             claimName: {{ include "nextcloud.fullname" . }}-nextcloud
+        {{- if .Values.nextcloud.persistence.data.enabled }}
+        - name: nextcloud-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.nextcloud.persistence.data.existingClaim | default (printf "%s-nextcloud-data" (include "nextcloud.fullname" .)) }}
+        {{- end }}
       {{- with .Values.nextcloud.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

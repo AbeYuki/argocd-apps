@@ -1,0 +1,18 @@
+{{- if and .Values.nextcloud.persistence.data.enabled (not .Values.nextcloud.persistence.data.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "nextcloud.fullname" . }}-nextcloud-data
+  labels:
+    {{- include "nextcloud.pvcLabels" . | nindent 4 }}
+    app.kubernetes.io/component: nextcloud
+spec:
+  accessModes:
+    {{- toYaml .Values.nextcloud.persistence.data.accessModes | nindent 4 }}
+  {{- with .Values.nextcloud.persistence.data.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.nextcloud.persistence.data.size }}
+{{- end }}

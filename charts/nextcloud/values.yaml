@@ -21,7 +21,7 @@ cron:
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "31.0.7-apache"
+    tag: "32.0.9-apache"
 
   # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   imagePullSecrets: []
@@ -91,7 +91,7 @@ db:
     # storageClassName: 必須。使用するStorageClass名を指定してください（例: standard）
     storageClassName: standard
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     size: 1Gi
 
   secret:
@@ -187,12 +187,21 @@ db:
   affinity: {}
 
 nextcloud:
-  persistentVolumeClaim:
-    # storageClassName: 必須。使用するStorageClass名を指定してください（例: standard）
-    storageClassName: standard
+  persistence:
+    enabled: true
+    existingClaim: ""
+    storageClass: "standard"
     accessModes:
-      - ReadWriteMany
-    size: 1Gi
+      - ReadWriteOnce
+    size: 3Gi
+
+    data:
+      enabled: true
+      existingClaim: ""
+      storageClass: "nfs"
+      accessModes:
+        - ReadWriteMany
+      size: 5Gi
 
   secret:
     MYSQL_PASSWORD: "nextcloud"

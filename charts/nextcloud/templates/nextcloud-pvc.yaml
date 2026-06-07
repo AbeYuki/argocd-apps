@@ -1,3 +1,4 @@
+{{- if and .Values.nextcloud.persistence.enabled (not .Values.nextcloud.persistence.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -6,11 +7,12 @@ metadata:
     {{- include "nextcloud.pvcLabels" . | nindent 4 }}
     app.kubernetes.io/component: nextcloud
 spec:
-  storageClassName: {{ required "nextcloud.persistentVolumeClaim.storageClassName is required!" .Values.nextcloud.persistentVolumeClaim.storageClassName }}
   accessModes:
-    {{- range .Values.nextcloud.persistentVolumeClaim.accessModes }}
-    - {{ . }}
-    {{- end }}
+    {{- toYaml .Values.nextcloud.persistence.accessModes | nindent 4 }}
+  {{- with .Values.nextcloud.persistence.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
   resources:
     requests:
-      storage: {{ required "nextcloud.persistentVolumeClaim.size is required!" .Values.nextcloud.persistentVolumeClaim.size }}
+      storage: {{ .Values.nextcloud.persistence.size }}
+{{- end }}
