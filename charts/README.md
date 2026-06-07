@@ -4,7 +4,7 @@
 
 ```
 helm repo add abeyuki-charts \
-    https://abeyuki.github.io/argocd-apps/charts/
+    https://abeyuki.github.io/argocd-apps
 ```
 ```
 helm repo update
@@ -40,7 +40,7 @@ helm uninstall <release-name> --namespace <namespace>
 ### Actions
 
 - chars/ に変更があると Helm チャートのパッケージと index を pages に公開(workflow: helm-pages)
-- tagpr は chart のみを対象に PR と タグを作成(workflwo: tagpr)
+- tagpr は chart のみを対象に PR と タグを作成(workflow: tagpr)
 
 ### PR
 - chart の変更は charts の内容だけの PR にする

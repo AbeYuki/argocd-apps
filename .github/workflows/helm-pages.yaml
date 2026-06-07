@@ -44,12 +44,20 @@ jobs:
         run: |
           set -euo pipefail
 
+          chart_count=0
+
           for chart in charts/*; do
             if [[ -f "${chart}/Chart.yaml" ]]; then
               echo "Updating dependencies: ${chart}"
               helm dependency update "${chart}"
+              chart_count=$((chart_count + 1))
             fi
           done
+
+          if [[ "${chart_count}" -eq 0 ]]; then
+            echo "::error::No Helm charts were found under charts/."
+            exit 1
+          fi
 
       - name: Release charts
         uses: helm/chart-releaser-action@v1.7.0
@@ -57,43 +65,4 @@ jobs:
           charts_dir: charts
           skip_existing: true
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Publish repository index under charts path
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          git fetch origin gh-pages
-
-          worktree="${RUNNER_TEMP}/gh-pages"
-
-          rm -rf "${worktree}"
-
-          git worktree add \
-            -B gh-pages \
-            "${worktree}" \
-            origin/gh-pages
-
-          mkdir -p "${worktree}/charts"
-
-          if [[ ! -f "${worktree}/index.yaml" ]]; then
-            echo "::error::gh-pages/index.yaml was not generated."
-            exit 1
-          fi
-
-          cp \
-            "${worktree}/index.yaml" \
-            "${worktree}/charts/index.yaml"
-
-          cd "${worktree}"
-
-          git add charts/index.yaml
-
-          if git diff --cached --quiet; then
-            echo "charts/index.yaml is already up to date."
-            exit 0
-          fi
-
-          git commit -m "Update Helm repository index under charts path"
-          git push origin gh-pages
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}

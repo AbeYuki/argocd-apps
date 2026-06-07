@@ -76,6 +76,10 @@
 #       Cannot be used with calendarVersioning.
 #
 [tagpr]
-	vPrefix = true
-	releaseBranch = main
-	versionFile = -
+releaseBranch = main
+versionFile = charts/nextcloud/Chart.yaml
+vPrefix = true
+tagPrefix = charts/nextcloud
+release = false
+changelog = true
+changelogFile = charts/nextcloud/CHANGELOG.md
