@@ -1,5 +1,7 @@
 # Changelog
 
+## [v0.1.4](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.3...charts/nextcloud/v0.1.4) - 2026-06-07
+
 ## [v0.1.3](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.2...charts/nextcloud/v0.1.3) - 2026-06-07
 
 ## [v0.1.2](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.1...charts/nextcloud/v0.1.2) - 2026-06-07
