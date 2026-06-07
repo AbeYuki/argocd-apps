@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: {{ include "nextcloud.fullname" . }}-nextcloud
-    labels:
-      {{- include "nextcloud.pvcLabels" . | nindent 4 }}
-      app.kubernetes.io/component: nextcloud
+  name: {{ include "nextcloud.fullname" . }}-nextcloud
+  labels:
+    {{- include "nextcloud.pvcLabels" . | nindent 4 }}
+    app.kubernetes.io/component: nextcloud
 spec:
   storageClassName: {{ required "nextcloud.persistentVolumeClaim.storageClassName is required!" .Values.nextcloud.persistentVolumeClaim.storageClassName }}
   accessModes:
