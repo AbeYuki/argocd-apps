@@ -1,0 +1,6 @@
+db:
+  persistentVolumeClaim:
+    storageClassName: longhorn
+    accessModes:
+      - ReadWriteMany
+    size: 1Gi
