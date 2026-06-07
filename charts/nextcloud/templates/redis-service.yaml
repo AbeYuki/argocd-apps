@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.redis.service.type }}
   ports:
     - port: {{ .Values.redis.service.port }}
-      targetPort: http
+      targetPort: redis
       protocol: TCP
-      name: http
+      name: redis
   selector:
     {{- include "nextcloud.selectorLabelsWithComponent" (dict "component" "redis" "context" .) | nindent 4 }}
