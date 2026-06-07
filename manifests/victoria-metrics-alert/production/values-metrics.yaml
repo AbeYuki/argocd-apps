@@ -1,3 +1,0 @@
-server:
-  datasource:
-    url: "http://victoria-metrics-cluster-vmselect.monitoring.svc.cluster.local:8481/select/0/prometheus"

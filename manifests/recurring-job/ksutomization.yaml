@@ -1,5 +1,0 @@
----
-resources:
-  - daily-backup.yaml
-  - daily-snapshot.yaml
-  - daily-trim.yaml

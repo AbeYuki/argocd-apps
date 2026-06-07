@@ -1,5 +1,0 @@
-resources:
-  - argocd-aimhighergg-com.yaml
-  - grafana-aimhighergg-com.yaml
-  - wiki-aimhighergg-com.yaml
-  - www-aimhighergg-com.yaml

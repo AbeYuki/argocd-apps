@@ -1,6 +1,0 @@
-resources:
-  - ip-whitelist.yaml
-  - basic-auth.yaml
-  - redirect-viteful-location-1.yaml
-  - redirect-viteful-location-2.yaml
-  - redirect-viteful-location-3.yaml

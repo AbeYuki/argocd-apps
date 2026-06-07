@@ -1,9 +1,0 @@
-persistence:
-  nfsOptions: "vers=4.2,noresvport,softerr,timeo=600,retrans=5"
-preUpgradeChecker:
-  jobEnabled: false
-defaultSettings:
-  defaultLonghornStaticStorageClass: "longhorn"
-  nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
-  nodeDrainPolicy: "block-for-eviction-if-contains-last-replica"
-  replicaAutoBalance: "best-effort"

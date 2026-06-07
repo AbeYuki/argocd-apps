@@ -1,6 +1,0 @@
-[tagpr]
-releaseBranch = "main"
-versionFile = "charts/nextcloud/Chart.yaml"
-tagPrefix = "charts/nextcloud"
-changelogFile = "charts/nextcloud/CHANGELOG.md"
-	vPrefix = true

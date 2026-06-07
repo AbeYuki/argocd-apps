@@ -1,4 +1,6 @@
-# argocd-apps
+# Helm Chart Repository
 
-ApplicationSet を使って Application を作成する manifest  
-Charts についても管理する
+```bash
+helm repo add abeyuki-charts https://abeyuki.github.io/argocd-apps
+helm repo update
+```

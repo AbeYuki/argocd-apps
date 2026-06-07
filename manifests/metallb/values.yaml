@@ -1,8 +1,0 @@
-speaker:
-  securityContext:
-    runAsNonRoot: false
-    runAsUser: 0
-  livenessProbe:
-    enabled: false
-  readinessProbe:
-    enabled: false

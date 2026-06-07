@@ -1,7 +1,0 @@
-helmCharts:
-  - name: alloy
-    repo: https://grafana.github.io/helm-charts
-    version: "0.2.0"
-    namespace: monitoring
-    releaseName: alloy
-    valuesFile: values.yaml
