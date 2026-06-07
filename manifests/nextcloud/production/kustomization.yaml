@@ -1,7 +1,7 @@
 helmCharts:
   - name: nextcloud
     repo: https://abeyuki.github.io/argocd-apps/charts/
-    version: "0.1.8"
+    version: "0.1.9"
     namespace: nextcloud
     releaseName: nextcloud
     valuesFile: values.yaml

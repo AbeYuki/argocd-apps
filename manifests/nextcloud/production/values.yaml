@@ -5,8 +5,15 @@ db:
       - ReadWriteMany
     size: 1Gi
 nextcloud:
-  persistentVolumeClaim:
-    storageClassName: longhorn
+  persistence:
+    enabled: true
+    storageClass: "longhorn"
     accessModes:
       - ReadWriteMany
-    size: 1Gi
+    size: 3Gi
+    data:
+      enabled: true
+      storageClass: "nfs-g9-enp4s0-rwx"
+      accessModes:
+        - ReadWriteMany
+      size: 5Gi
