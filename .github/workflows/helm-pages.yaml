@@ -8,62 +8,51 @@ on:
       - main
     paths:
       - "charts/**"
+      - ".cr.yaml"
       - ".github/workflows/helm-pages.yaml"
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: helm-chart-release
   cancel-in-progress: false
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Helm
         uses: azure/setup-helm@v4
 
-      - name: Package charts
+      - name: Update chart dependencies
+        shell: bash
         run: |
           set -euo pipefail
 
-          mkdir -p public/charts
-
           for chart in charts/*; do
-            if [[ -f "$chart/Chart.yaml" ]]; then
-              helm dependency update "$chart"
-              helm package "$chart" -d public/charts
+            if [[ -f "${chart}/Chart.yaml" ]]; then
+              helm dependency update "${chart}"
             fi
           done
 
-          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          repo=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+      - name: Configure Git
+        shell: bash
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
-          helm repo index public/charts \
-            --url "https://${owner}.github.io/${repo}/charts/"
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Release charts
+        uses: helm/chart-releaser-action@v1.7.0
         with:
-          path: public
-
-  deploy:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          charts_dir: charts
+          config: .cr.yaml
+          skip_existing: true
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
