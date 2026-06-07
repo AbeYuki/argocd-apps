@@ -398,6 +398,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: nextcloud
+            namespace: nextcloud
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nextcloud/production
+            plugin: kustomize-helmcharts
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
   template:
     metadata:
       name: "{{ .name }}"
