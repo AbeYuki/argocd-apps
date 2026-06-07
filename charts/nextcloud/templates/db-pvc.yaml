@@ -3,7 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
     name: {{ include "nextcloud.fullname" . }}-db
     labels:
-      {{- include "nextcloud.labelsWithComponent" (dict "component" "db" "context" .) | nindent 4 }}
+      {{- include "nextcloud.pvcLabels" . | nindent 4 }}
+      app.kubernetes.io/component: db
 spec:
   storageClassName: {{ required "db.persistentVolumeClaim.storageClassName is required!" .Values.db.persistentVolumeClaim.storageClassName }}
   accessModes:

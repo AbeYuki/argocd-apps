@@ -78,3 +78,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the labels for a PersistentVolumeClaim
+*/}}
+{{- define "nextcloud.pvcLabels" -}}
+app.kubernetes.io/name: {{ include "nextcloud.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
