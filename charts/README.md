@@ -44,3 +44,25 @@ helm uninstall <release-name> --namespace <namespace>
 
 ### PR
 - chart の変更は charts の内容だけの PR にする
+
+
+### Test
+
+```
+cd charts/nextcloud/
+```
+
+deploy
+
+```
+helm upgrade --install nextcloud ./ \
+    -f ../../manifests/nextcloud/production/values.yaml \
+    --namespace nextcloud-dev \
+    --create-namespace
+```
+
+cleaning
+
+```
+helm uninstall nextcloud -n nextcloud-dev
+```
