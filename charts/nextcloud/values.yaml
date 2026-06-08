@@ -188,13 +188,21 @@ db:
 
 nextcloud:
   persistence:
-    enabled: true
     existingClaim: ""
     storageClass: "standard"
     accessModes:
       - ReadWriteMany
     size: 3Gi
 
+    # Nextcloud のデータディレクトリを専用PVCへ分離
+    #
+    # enabled: true の場合:
+    # - PVCを /var/lib/nextcloud にマウントします
+    # - NEXTCLOUD_DATA_DIR=/var/lib/nextcloud/data を設定します
+    #
+    # enabled: false の場合:
+    # - 専用PVCは使用しません
+    # - デフォルトの /var/www/html/data を使用します
     data:
       enabled: true
       existingClaim: ""
