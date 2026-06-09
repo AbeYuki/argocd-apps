@@ -1,4 +1,5 @@
 resources:
+  - nextcloud-aimhighergg-com.yaml
   - traefik-dashboard.yaml
   - vault-aimhighergg-com.yaml
   - viteful-dev.yaml
