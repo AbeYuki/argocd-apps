@@ -7,6 +7,6 @@ spec:
   secretName: nextcloud-aimhighergg-com-tls
   issuerRef:
     kind: ClusterIssuer
-    name: ingress-traefik
+    name: letsencrypt-prod-http01-traefik
   dnsNames:
     - nextcloud.aimhighergg.com
