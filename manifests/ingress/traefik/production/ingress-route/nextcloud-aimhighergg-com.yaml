@@ -16,6 +16,6 @@ spec:
           namespace: nextcloud
       services:
         - name: nextcloud-nextcloud
-          kind: service
+          port: 80
   tls:
     secretName: nextcloud-aimhighergg-com-tls
