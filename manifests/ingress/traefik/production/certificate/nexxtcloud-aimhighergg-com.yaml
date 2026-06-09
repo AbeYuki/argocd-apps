@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nextcloud-aimhighergg-com-tls
+  namespace: nextcloud
+spec:
+  secretName: nextcloud-aimhighergg-com-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: ingress-traefik
+  dnsNames:
+    - nextcloud.aimhighergg.com
