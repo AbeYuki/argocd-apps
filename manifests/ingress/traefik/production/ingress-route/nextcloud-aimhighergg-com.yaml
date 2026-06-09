@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`nextcloud.aimhighergg.com`)
+    - match: Host(`nextcloud.aimhighergg.com`) && (PathPrefix(`/`) 
       kind: Rule
       middlewares:
         - name: ip-whitelist
