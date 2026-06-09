@@ -7,6 +7,6 @@ spec:
   secretName: vault-aimhighergg-com-tls
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-prod-http01-traefik
+    name: letsencrypt-prod-dns01
   dnsNames:
     - vault.aimhighergg.com
