@@ -282,14 +282,3 @@ server:
               severity: warning
             annotations:
               summary: "疑わしい User-Agent を検出"
-          - alert: http80VulnerabilityScan
-            expr: |
-              _SYSTEMD_UNIT:"haproxy" 
-              "<NOSRV>"
-              | stats by (_HOSTNAME, _SYSTEMD_UNIT) count() as matches
-              | filter matches:>100
-            for: 0m
-            labels:
-              severity: warning
-            annotations:
-              summary: "脆弱性スキャンを検出"
