@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.1.14](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.13...charts/nextcloud/v0.1.14) - 2026-06-14
+
+- mod/chart nextcloud checksum trigger by @AbeYuki in https://github.com/AbeYuki/argocd-apps/pull/20
+
 ## [v0.1.13](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.12...charts/nextcloud/v0.1.13) - 2026-06-08
 
 ## [v0.1.12](https://github.com/AbeYuki/argocd-apps/compare/nextcloud-0.1.12...charts/nextcloud/v0.1.12) - 2026-06-08
