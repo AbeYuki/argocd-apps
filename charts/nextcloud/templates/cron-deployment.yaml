@@ -11,10 +11,11 @@ spec:
       {{- include "nextcloud.selectorLabelsWithComponent" (dict "component" "cron" "context" .) | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.cron.podAnnotations }}
       annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/nextcloud-secret.yaml") . | sha256sum }}
+        {{- with .Values.nextcloud.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "nextcloud.labelsWithComponent" (dict "component" "cron" "context" .) | nindent 8 }}
         {{- with .Values.cron.podLabels }}
@@ -36,8 +37,8 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.cron.image.pullPolicy }}
+          image: "{{ .Values.nextcloud.image.repository }}:{{ .Values.nextcloud.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.nextcloud.image.pullPolicy }}
           command: ["/bin/sh", "-c", "/cron.sh"]
           {{- with .Values.cron.livenessProbe }}
           livenessProbe:
@@ -56,9 +57,16 @@ spec:
               mountPath: /var/www/html
             {{- if .Values.nextcloud.persistence.data.enabled }}
             - name: nextcloud-data
-              mountPath: /var/www/html/data
+              mountPath: /var/lib/nextcloud
             {{- end }}
-
+          {{- if .Values.nextcloud.persistence.data.enabled }}
+          env:
+            - name: NEXTCLOUD_DATA_DIR
+              value: "/var/lib/nextcloud/data"
+          {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ include "nextcloud.fullname" . }}-nextcloud
       volumes:
         - name: nextcloud
           persistentVolumeClaim:
