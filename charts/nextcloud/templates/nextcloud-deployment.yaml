@@ -13,10 +13,11 @@ spec:
       {{- include "nextcloud.selectorLabelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.nextcloud.podAnnotations }}
       annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/nextcloud-secret.yaml") . | sha256sum }}
+        {{- with .Values.nextcloud.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "nextcloud.labelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 8 }}
         {{- with .Values.nextcloud.podLabels }}
