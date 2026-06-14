@@ -4,15 +4,26 @@ db:
     accessModes:
       - ReadWriteMany
     size: 1Gi
+  secret:
+    MARIADB_ROOT_PASSWORD: "<path:secret/data/nextcloud#MYSQL_ROOT_PASSWORD>"
+    MARIADB_PASSWORD: "<path:secret/data/nextcloud#MYSQL_PASSWORD>"
+    MARIADB_DATABASE: "<path:secret/data/nextcloud#MYSQL_DATABASE>"
+    MARIADB_USER: "<path:secret/data/nextcloud#MYSQL_USER>"
 nextcloud:
   persistence:
     storageClass: "longhorn"
     accessModes:
       - ReadWriteMany
-    size: 3Gi
+    size: 1Gi
     data:
       enabled: true
       storageClass: "nfs-g9-enp4s0-rwx"
       accessModes:
         - ReadWriteMany
       size: 5Gi
+  secret:
+    MYSQL_PASSWORD: "<path:secret/data/nextcloud#MYSQL_PASSWORD>"
+    MYSQL_DATABASE: "<path:secret/data/nextcloud#MYSQL_DATABASE>"
+    MYSQL_USER: "<path:secret/data/nextcloud#MYSQL_USER>"
+    NEXTCLOUD_TRUSTED_DOMAINS: "<path:secret/data/nextcloud#NEXTCLOUD_TRUSTED_DOMAINS>"
+    TRUSTED_PROXIES: "<path:secret/data/nextcloud#TRUSTED_PROXIES>"
