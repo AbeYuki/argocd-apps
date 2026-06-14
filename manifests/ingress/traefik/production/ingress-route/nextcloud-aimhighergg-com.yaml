@@ -12,8 +12,8 @@ spec:
       middlewares:
         - name: ip-whitelist
           namespace: nextcloud
-        - name: basic-auth
-          namespace: nextcloud
+        #- name: basic-auth
+        #  namespace: nextcloud
       services:
         - name: nextcloud-nextcloud
           port: 80
