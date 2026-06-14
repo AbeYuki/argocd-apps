@@ -23,7 +23,7 @@ nextcloud:
       size: 5Gi
   secret:
     MYSQL_PASSWORD: <path:secret/data/nextcloud#MYSQL_PASSWORD>
-    MYSQL_DATABASE: <path:secret/data/nextcloud#MYSQL_DATABASE
+    MYSQL_DATABASE: <path:secret/data/nextcloud#MYSQL_DATABASE>
     MYSQL_USER: <path:secret/data/nextcloud#MYSQL_USER>
     NEXTCLOUD_TRUSTED_DOMAINS: <path:secret/data/nextcloud#NEXTCLOUD_TRUSTED_DOMAINS>
     TRUSTED_PROXIES: <path:secret/data/nextcloud#TRUSTED_PROXIES>
