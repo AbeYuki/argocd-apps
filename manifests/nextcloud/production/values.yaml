@@ -27,3 +27,4 @@ nextcloud:
     MYSQL_USER: <path:secret/data/nextcloud#MYSQL_USER>
     NEXTCLOUD_TRUSTED_DOMAINS: <path:secret/data/nextcloud#NEXTCLOUD_TRUSTED_DOMAINS>
     TRUSTED_PROXIES: <path:secret/data/nextcloud#TRUSTED_PROXIES>
+    TEST: TEST
