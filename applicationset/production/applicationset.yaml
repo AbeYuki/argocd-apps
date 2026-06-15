@@ -9,6 +9,7 @@ spec:
   ignoreApplicationDifferences:
     - jsonPointers:
         - /spec/source/targetRevision
+        - /spec/syncPolicy
   generators:
     - list:
         elements:
