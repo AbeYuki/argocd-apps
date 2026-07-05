@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "immich.serverWorkloadName" . }}
+  labels:
+    {{- include "immich.labelsWithComponent" (dict "component" "server" "context" .) | nindent 4 }}
+spec:
+  {{- if not .Values.server.autoscaling.enabled }}
+  replicas: {{ .Values.server.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "immich.selectorLabelsWithComponent" (dict "component" "server" "context" .) | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/server-configmap.yaml") . | sha256sum }}
+        {{- with .Values.server.immichConfig }}
+        checksum/immich-config: {{ include (print $.Template.BasePath "/immich-configmap.yaml") $ | sha256sum }}
+        {{- end }}
+        checksum/secret: {{ include (print $.Template.BasePath "/server-secret.yaml") . | sha256sum }}
+        {{- with .Values.server.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "immich.labelsWithComponent" (dict "component" "server" "context" .) | nindent 8 }}
+        {{- with .Values.server.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.server.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "immich.serviceAccountName" . }}
+      {{- with .Values.server.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "immich.serverWorkloadName" . }}
+          {{- with .Values.server.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.server.resources | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.server.service.targetPort }}
+          {{- with .Values.server.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.server.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: immich-data
+              mountPath: /usr/src/app/upload
+              subPath: upload
+            - name: immich-data
+              mountPath: /usr/src/app/thumbs
+              subPath: thumbs
+            - name: immich-data
+              mountPath: /usr/src/app/encoded-video
+              subPath: encoded-video
+            - name: immich-data
+              mountPath: /usr/src/app/library
+              subPath: library
+            - name: immich-data
+              mountPath: /usr/src/app/profile
+              subPath: profile
+            - name: immich-data
+              mountPath: /usr/src/app/backups
+              subPath: backups
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
+            {{- with .Values.server.immichConfig }}
+            - name: immich-config
+              mountPath: /config
+              readOnly: true
+            {{- end }}
+          env:
+            - name: TZ
+              value: {{ .Values.global.timezone | quote }}
+            {{- with .Values.server.immichConfig }}
+            - name: IMMICH_CONFIG_FILE
+              value: /config/immich.yaml
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "immich.serverConfigName" . }}
+            - secretRef:
+                name: {{ include "immich.serverConfigName" . }}
+      volumes:
+        - name: immich-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.server.persistence.existingClaim | default (include "immich.serverDataPvcName" .) | quote }}
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        {{- with .Values.server.immichConfig }}
+        - name: immich-config
+          configMap:
+            name: {{ include "immich.immichConfigName" $ }}
+            items:
+              - key: immich.yaml
+                path: immich.yaml
+        {{- end }}
+      {{- with .Values.server.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

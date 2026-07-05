@@ -1,0 +1,8 @@
+[tagpr]
+releaseBranch = main
+versionFile = charts/immich/Chart.yaml
+vPrefix = true
+tagPrefix = charts/immich
+release = false
+changelog = true
+changelogFile = charts/immich/CHANGELOG.md

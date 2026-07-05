@@ -1,0 +1,4 @@
+Immich has been installed.
+
+Server service:
+  {{ include "immich.serverWorkloadName" . }}:{{ .Values.server.service.port }}

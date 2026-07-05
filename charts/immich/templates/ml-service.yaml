@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "immich.mlName" . }}
+  labels:
+    {{- include "immich.labelsWithComponent" (dict "component" "immich-ml" "context" .) | nindent 4 }}
+spec:
+  type: {{ .Values.machineLearning.service.type }}
+  selector:
+    {{- include "immich.selectorLabelsWithComponent" (dict "component" "immich-ml" "context" .) | nindent 4 }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.machineLearning.service.port }}
+      targetPort: {{ .Values.machineLearning.service.targetPort }}
