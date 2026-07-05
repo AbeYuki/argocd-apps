@@ -41,19 +41,42 @@ jobs:
 
           charts=()
 
-          for chart in charts/*; do
-            if [[ -f "${chart}/Chart.yaml" && -f "${chart}/.tagpr" ]]; then
-              charts+=("\"$(basename "${chart}")\"")
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            for chart in charts/*; do
+              if [[ -f "${chart}/Chart.yaml" && -f "${chart}/.tagpr" ]]; then
+                charts+=("$(basename "${chart}")")
+              fi
+            done
+          else
+            before="${{ github.event.before }}"
+            after="${{ github.sha }}"
+
+            if [[ "${before}" =~ ^0+$ ]]; then
+              changed_files="$(git diff-tree --no-commit-id --name-only -r "${after}" -- charts)"
+            else
+              changed_files="$(git diff --name-only "${before}" "${after}" -- charts)"
             fi
-          done
+
+            while IFS= read -r chart; do
+              if [[ -n "${chart}" && -f "charts/${chart}/Chart.yaml" && -f "charts/${chart}/.tagpr" ]]; then
+                charts+=("${chart}")
+              fi
+            done < <(
+              printf '%s\n' "${changed_files}" |
+                awk -F/ '$1 == "charts" && NF >= 2 {print $2}' |
+                sort -u
+            )
+          fi
 
           if [[ "${#charts[@]}" -eq 0 ]]; then
             echo 'matrix={"chart":[]}' >> "${GITHUB_OUTPUT}"
             exit 0
           fi
 
-          printf 'matrix={"chart":[%s]}\n' \
-            "$(IFS=,; echo "${charts[*]}")" \
+          printf '%s\n' "${charts[@]}" |
+            jq -R . |
+            jq -cs '{chart: .}' |
+            sed 's/^/matrix=/' \
             >> "${GITHUB_OUTPUT}"
 
   tagpr:
