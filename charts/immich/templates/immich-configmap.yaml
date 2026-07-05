@@ -1,0 +1,17 @@
+{{- with .Values.server.immichConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "immich.immichConfigName" $ }}
+  labels:
+    {{- include "immich.labelsWithComponent" (dict "component" "server" "context" $) | nindent 4 }}
+  {{- with $.Values.server.immichConfigAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+{{- range $key, $val := . }}
+  {{ $key }}: |
+{{ $val | indent 4 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,15 @@
+{{- if not .Values.machineLearning.persistence.existingClaim }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "immich.modelCachePvcName" . }}
+  labels:
+    {{- include "immich.labelsWithComponent" (dict "component" "immich-ml" "context" .) | nindent 4 }}
+spec:
+  storageClassName: {{ .Values.machineLearning.persistence.storageClassName | quote }}
+  accessModes:
+    {{- toYaml .Values.machineLearning.persistence.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.machineLearning.persistence.size | quote }}
+{{- end }}

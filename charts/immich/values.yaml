@@ -1,0 +1,207 @@
+# Default values for immich.
+
+global:
+  environment: production
+  timezone: Asia/Tokyo
+
+server:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    pullPolicy: IfNotPresent
+    tag: "v2.5.2"
+  service:
+    type: ClusterIP
+    port: 2283
+    targetPort: 2283
+    nodePort: ""
+  resources: {}
+    #requests:
+    #  memory: 2048Mi
+    #  cpu: "1"
+    #limits:
+    #  memory: 2048Mi
+    #  cpu: "1"
+  startupProbe:
+    httpGet:
+      path: /api/server/ping
+      port: 2283
+    failureThreshold: 30
+    periodSeconds: 5
+    timeoutSeconds: 2
+  readinessProbe:
+    httpGet:
+      path: /api/server/ping
+      port: 2283
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 6
+  persistence:
+    existingClaim: ""
+    storageClassName: ""
+    accessModes:
+      - ReadWriteMany
+    size: 50Gi
+  config:
+    UPLOAD_LOCATION: "./library"
+    DB_DATA_LOCATION: "./postgres"
+    IMMICH_LOG_LEVEL: "warn"
+  secret:
+    annotations: {}
+    stringData:
+      DB_PASSWORD: "postgres"
+      DB_USERNAME: "postgres"
+      DB_DATABASE_NAME: "postgres"
+  immichConfigAnnotations: {}
+  immichConfig: {}
+    #immich.yaml: |
+    #  server:
+    #    externalDomain: ""
+    #  passwordLogin:
+    #    enabled: false
+    #  oauth:
+    #    enabled: true
+    #    issuerUrl: "https://accounts.google.com"
+    #    clientId: ""
+    #    clientSecret: ""
+    #    scope: "openid email profile"
+    #    signingAlgorithm: "RS256"
+    #    mobileOverrideEnabled: true
+    #    mobileRedirectUri: ""
+    #    autoRegister: false
+    #  machineLearning:
+    #    enabled: true
+    #    urls:
+    #      - http://immich-immich-ml:3003
+  podAnnotations: {}
+  podLabels: {}
+  imagePullSecrets: []
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+
+machineLearning:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/immich-app/immich-machine-learning
+    pullPolicy: IfNotPresent
+    tag: "v2.5.2"
+  service:
+    type: ClusterIP
+    port: 3003
+    targetPort: 3003
+  resources:
+    requests:
+      memory: 2048Mi
+      cpu: "2"
+    limits:
+      memory: 2048Mi
+      cpu: "2.2"
+  persistence:
+    existingClaim: ""
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+  config:
+    MACHINE_LEARNING_WORKERS: "3"
+    MACHINE_LEARNING_REQUEST_THREADS: "1"
+    MACHINE_LEARNING_MODEL_INTER_OP_THREADS: "1"
+    MACHINE_LEARNING_MODEL_INTRA_OP_THREADS: "2"
+    MACHINE_LEARNING_MODEL_TTL: "300"
+  podAnnotations: {}
+  podLabels: {}
+  imagePullSecrets: []
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+postgres:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/immich-app/postgres
+    pullPolicy: IfNotPresent
+    tag: "14-vectorchord0.4.3-pgvectors0.2.0@sha256:5f6a838e4e44c8e0e019d0ebfe3ee8952b69afc2809b2c25f7b0119641978e91"
+  service:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+  persistence:
+    existingClaim: ""
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+  secret:
+    annotations:
+      avp.kubernetes.io/path: "secret/data/immich"
+    stringData:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "postgres"
+  readinessProbe:
+    tcpSocket:
+      port: 5432
+    initialDelaySeconds: 2
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 12
+  resources: {}
+  podAnnotations: {}
+  podLabels: {}
+  imagePullSecrets: []
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+redis:
+  replicaCount: 1
+  image:
+    repository: docker.io/valkey/valkey
+    pullPolicy: IfNotPresent
+    tag: "8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11"
+  args:
+    - --save
+    - ""
+    - --appendonly
+    - "no"
+  service:
+    type: ClusterIP
+    port: 6379
+    targetPort: 6379
+  readinessProbe:
+    exec:
+      command:
+        - redis-cli
+        - ping
+  resources: {}
+  podAnnotations: {}
+  podLabels: {}
+  imagePullSecrets: []
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+
+test:
+  enabled: false
+  image: busybox

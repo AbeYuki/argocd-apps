@@ -1,0 +1,15 @@
+{{- if not .Values.server.persistence.existingClaim }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "immich.serverDataPvcName" . }}
+  labels:
+    {{- include "immich.labelsWithComponent" (dict "component" "server" "context" .) | nindent 4 }}
+spec:
+  storageClassName: {{ .Values.server.persistence.storageClassName | quote }}
+  accessModes:
+    {{- toYaml .Values.server.persistence.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.server.persistence.size | quote }}
+{{- end }}
