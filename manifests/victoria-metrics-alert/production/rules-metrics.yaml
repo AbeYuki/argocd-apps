@@ -31,15 +31,6 @@ server:
             annotations:
               summary: "Low remote storage rate detected"
               description: "The rate of prometheus_remote_storage_samples_total is below 500 (current value: {{ $value }})"
-          - alert: NfsServerDown
-            expr: |
-              namedprocess_namegroup_num_procs{groupname="rpc.idmapd"} == 0
-            for: 1m
-            labels:
-              severity: critical
-            annotations:
-              summary: "NFS Server process is DOWN"
-              description: "rpc.idmapd プロセスが (current value: {{ $value }})"
         - name: kubernetes
           rules:
           - alert: scheduler_pending_pods
@@ -87,15 +78,6 @@ server:
             annotations:
               summary: "NS/{{ $labels.namespace }} POD/{{ $labels.pod}} NotReady"
               description: "{{ $labels.namespace }}/{{ $labels.pod}} POD が Not Ready 状態が継続している"
-          - alert: loki_ruler_cofig_reload_failed
-            expr: |
-              irate(loki_ruler_sync_rules_total{reason="periodic"}[5m]) > 1
-            for: 0m
-            labels:
-              severity: alert
-            annotations:
-              summary: "Loki Ruler の config の reload に失敗"
-              description: "Loki Ruler config のフォーマットに誤りがあるので修正してください"
         - name: service
           rules:
           - alert: ServiceDown
