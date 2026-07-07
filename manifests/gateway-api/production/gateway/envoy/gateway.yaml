@@ -4,7 +4,7 @@ metadata:
   name: envoy
   namespace: envoy-gateway 
   annotations:
-    cert-manager.io/cluster-issuer: gateway
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
 spec:
   gatewayClassName: envoy
   infrastructure:
