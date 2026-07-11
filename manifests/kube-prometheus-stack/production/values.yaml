@@ -6,7 +6,7 @@ crds:
 defaultRules:
   create: true
   rules:
-    windows: true
+    windows: false
 
 alertmanager:
   enabled: true

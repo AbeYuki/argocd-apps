@@ -118,6 +118,7 @@ spec:
             path: ./manifests/kube-prometheus-stack/production/
             plugin: "argocd-vault-plugin-kustomize-helmcharts"
             autoSync: false
+            includeCRDs: true
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
@@ -421,7 +422,8 @@ spec:
         namespace: "{{ .namespace }}"
       source:
         repoURL: "{{ .repoURL }}"
-        targetRevision: HEAD
+        includeCRDs: '{{ .includeCRDs | default "false" }}'
+        targetRevision: '{{ .targetRevision | default "HEAD" }}'
         path: "{{ .path }}"
   templatePatch: |-
     {{- if or .plugin .autoSync .syncOptions }}
