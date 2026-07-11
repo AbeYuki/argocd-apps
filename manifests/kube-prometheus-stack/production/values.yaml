@@ -10,9 +10,14 @@ defaultRules:
 
 alertmanager:
   enabled: true
+  alertmanagerSpec:
+    externalUrl: https://kps-alertmanager.aimhighergg.com
 
 grafana:
   enabled: true
+  grafana.ini:
+    server:
+      root_url: https://kps-grafana.aimhighergg.com
 
 kubeApiServer:
   enabled: true
@@ -105,6 +110,10 @@ prometheusOperator:
 
 prometheus:
   enabled: true
+  prometheusSpec:
+    externalUrl: https://kps-prometheus.aimhighergg.com
 
 thanosRuler:
   enabled: true
+  thanosRulerSpec:
+    externalPrefix: https://kps-thanos-ruler.aimhighergg.com
