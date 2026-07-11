@@ -116,7 +116,7 @@ spec:
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/kube-prometheus-stack/production/
-            plugin: ""
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
             autoSync: false
             syncOptions:
               - CreateNamespace=true
