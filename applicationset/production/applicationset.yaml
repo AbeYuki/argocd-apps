@@ -422,8 +422,8 @@ spec:
         namespace: "{{ .namespace }}"
       source:
         repoURL: "{{ .repoURL }}"
-        includeCRDs: '{{ .includeCRDs | default "false" }}'
-        targetRevision: '{{ .targetRevision | default "HEAD" }}'
+        includeCRDs: '{{ get . "includeCRDs" | default "false" }}'
+        targetRevision: '{{ get . "targetRevision" | default "HEAD" }}'
         path: "{{ .path }}"
   templatePatch: |-
     {{- if or .plugin .autoSync .syncOptions }}
