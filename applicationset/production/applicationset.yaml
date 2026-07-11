@@ -103,21 +103,21 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
-          - name: kube-state-metrics
-            namespace: monitoring
-            repoURL: https://github.com/AbeYuki/argocd-apps.git
-            path: ./manifests/kube-state-metrics/production
-            plugin: kustomize-helmcharts
-            autoSync: true
-            syncOptions:
-              - CreateNamespace=true
-              - ServerSideApply=true
           - name: monitoring
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/monitoring-k8s.git
             path: overlay/prod/
             plugin: ""
             autoSync: true
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: kube-prometheus-stack
+            namespace: monitoring
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/kube-prometheus-stack/production/
+            plugin: ""
+            autoSync: false
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
