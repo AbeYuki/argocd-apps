@@ -1,4 +1,8 @@
 authSecret:
   enabled: true
   create: true
-  github_token: <path:secret/data/github/actions#TOKEN>
+  #github_token: <path:secret/data/github/actions#TOKEN>
+  github_app_id: "<path:secret/data/github/apps/AbeYuki-arc#APP_ID>"
+  github_app_installation_id: "<path:secret/data/github/apps/AbeYuki-arc#INSTALLATION_ID>"
+  github_app_private_key: |
+    <path:secret/data/github/apps/AbeYuki-arc#PRIVATE_KEY>
