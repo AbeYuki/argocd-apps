@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grafana-aimhighergg-com
+  name: kps-grafana-aimhighergg-com
   namespace: monitoring
   annotations:
     ingressClassName: traefik
@@ -12,16 +12,16 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - grafana.aimhighergg.com
-      secretName: grafana-aimhighergg-com-tls
+        - kps-grafana.aimhighergg.com
+      secretName: kps-grafana-aimhighergg-com-tls
   rules:
-    - host: grafana.aimhighergg.com
+    - host: kps-grafana.aimhighergg.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: monitoring-frontend-grafana-app01-001
+                name: kube-prometheus-stack-grafana
                 port:
                   number: 80
