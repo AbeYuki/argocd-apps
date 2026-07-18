@@ -7,6 +7,6 @@ spec:
   secretName: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
   issuerRef:
     kind: ClusterIssuer
-    name: ingress-traefik
+    name: letsencrypt-prod-http01-traefik
   dnsNames:
     - <path:secret/data/viteful/dev/ingress#HOST>
