@@ -32,7 +32,7 @@ coreDns:
   enabled: true
 
 kubeDns:
-  enabled: true
+  enabled: false
 
 kubeEtcd:
   enabled: true
