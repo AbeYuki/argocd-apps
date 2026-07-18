@@ -7,6 +7,6 @@ spec:
   secretName: traefik-dashboard-aimhighergg-com-tls
   issuerRef:
     kind: ClusterIssuer
-    name: ingress-traefik
+    name: letsencrypt-prod-dns01
   dnsNames:
   - traefik-dashboard.aimhighergg.com
