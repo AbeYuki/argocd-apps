@@ -91,7 +91,9 @@ server:
           rules:
             - alert: cpu_temperature_high
               expr: |
-                cpu_temperature > 90
+                node_hwmon_temp_celsius > 90
+                or
+                node_thermal_zone_temp > 90
               for: 0m
               labels:
                 severity: critical

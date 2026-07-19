@@ -53,6 +53,10 @@ server:
             unauthenticated_metrics_access = "true"
           }
         }
+        telemetry {
+          prometheus_retention_time = "30s"
+          disable_hostname = true
+        }
         storage "raft" {
           path = "/vault/data"
           retry_join {
@@ -72,3 +76,24 @@ ui:
   serviceNodePort: null
   externalPort: 8200
   targetPort: 8200
+
+serverTelemetry:
+  serviceMonitor:
+    enabled: true
+    selectors:
+      release: kube-prometheus-stack
+    interval: 30s
+    scrapeTimeout: 10s
+    tlsConfig:
+      serverName: vault.vault.svc.cluster.local
+      ca:
+        secret:
+          name: vault-ha-tls
+          key: ca.crt
+      cert:
+        secret:
+          name: vault-ha-tls
+          key: tls.crt
+      keySecret:
+        name: vault-ha-tls
+        key: tls.key

@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: http-status
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  jobName: blackbox-http-status
+  interval: 1m
+  scrapeTimeout: 30s
+  module: http_status
+  prober:
+    url: prometheus-blackbox-exporter.monitoring.svc.cluster.local:9115
+    scheme: http
+    path: /probe
+  targets:
+    staticConfig:
+      static:
+        - https://www.aimhighergg.com/
+        - "<path:secret/data/monitoring-k8s/prometheus#private_url_1>"
+        - "<path:secret/data/monitoring-k8s/prometheus#private_url_2>"
+        - "<path:secret/data/monitoring-k8s/prometheus#private_url_3>"
+      labels:
+        probe_type: http_status

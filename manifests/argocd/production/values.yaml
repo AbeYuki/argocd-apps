@@ -2,6 +2,26 @@ global:
   logging:
     level: info
 
+controller:
+  metrics:
+    enabled: true
+
+dex:
+  metrics:
+    enabled: true
+
+redis:
+  metrics:
+    enabled: true
+
+applicationSet:
+  metrics:
+    enabled: true
+
+notifications:
+  metrics:
+    enabled: true
+
 configs:
   params:
     server.insecure: true
@@ -94,6 +114,8 @@ configs:
         lockRepo: false
 repoServer:
   name: repo-server
+  metrics:
+    enabled: true
   replicas: 1
   autoscaling:
     enabled: true
@@ -353,6 +375,8 @@ repoServer:
       readOnly: true
 server:
   name: server
+  metrics:
+    enabled: true
   replicas: 1
   extensions:
     enabled: true

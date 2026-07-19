@@ -6,3 +6,14 @@ helmCharts:
     releaseName: kube-prometheus-stack
     includeCRDs: true
     valuesFile: values.yaml
+  - name: prometheus-blackbox-exporter
+    repo: oci://ghcr.io/prometheus-community/charts
+    version: "11.15.1"
+    namespace: monitoring
+    releaseName: prometheus-blackbox-exporter
+    valuesFile: blackbox-values.yaml
+
+resources:
+  - alertmanager-config-secret.yaml
+  - additional-scrape-configs-secret.yaml
+  - blackbox-probe.yaml

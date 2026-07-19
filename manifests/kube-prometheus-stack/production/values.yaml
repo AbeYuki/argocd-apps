@@ -12,6 +12,8 @@ alertmanager:
   enabled: true
   alertmanagerSpec:
     externalUrl: https://kps-alertmanager.aimhighergg.com
+    useExistingSecret: true
+    configSecret: kube-prometheus-stack-alertmanager-config
 
 grafana:
   enabled: true
@@ -103,7 +105,34 @@ kubeStateMetrics:
           - watch
 
 nodeExporter:
-  enabled: false
+  enabled: true
+
+prometheus-node-exporter:
+  service:
+    port: 9101
+    targetPort: 9101
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+  resources:
+    requests:
+      cpu: 50m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  extraArgs:
+    - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/containerd/.+|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+    - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
+    - --no-collector.nfsd
+    - --collector.thermal_zone
 
 prometheusOperator:
   enabled: true
@@ -112,7 +141,277 @@ prometheus:
   enabled: true
   prometheusSpec:
     externalUrl: https://kps-prometheus.aimhighergg.com
-
+    scrapeInterval: 1m
+    scrapeTimeout: 30s
+    evaluationInterval: 1m
+    remoteWrite:
+      - url: http://victoria-metrics-cluster-vminsert:8480/insert/0/prometheus/api/v1/write
+    additionalScrapeConfigsSecret:
+      enabled: true
+      name: kube-prometheus-stack-additional-scrape-configs
+      key: additional-scrape-configs.yaml
+  additionalServiceMonitors:
+    - name: victoria-metrics-vmselect
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-metrics-cluster
+          app.kubernetes.io/instance: victoria-metrics-cluster
+          app: vmselect
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: victoria-metrics-vminsert
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-metrics-cluster
+          app.kubernetes.io/instance: victoria-metrics-cluster
+          app: vminsert
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: victoria-metrics-vmstorage
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-metrics-cluster
+          app.kubernetes.io/instance: victoria-metrics-cluster
+          app: vmstorage
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: victoria-logs-vlselect
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-logs-cluster
+          app.kubernetes.io/instance: victoria-logs-cluster
+          app: vlselect
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: victoria-logs-vlinsert
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-logs-cluster
+          app.kubernetes.io/instance: victoria-logs-cluster
+          app: vlinsert
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: victoria-logs-vlstorage
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: victoria-logs-cluster
+          app.kubernetes.io/instance: victoria-logs-cluster
+          app: vlstorage
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: longhorn
+      namespaceSelector:
+        matchNames:
+          - longhorn-system
+      selector:
+        matchLabels:
+          app: longhorn-manager
+      endpoints:
+        - port: manager
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: cert-manager
+      namespaceSelector:
+        matchNames:
+          - cert-manager
+      selector:
+        matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+              - cainjector
+              - cert-manager
+              - webhook
+          - key: app.kubernetes.io/instance
+            operator: In
+            values:
+              - cert-manager
+          - key: app.kubernetes.io/component
+            operator: In
+            values:
+              - cainjector
+              - controller
+              - webhook
+      endpoints:
+        - targetPort: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-application-controller
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-metrics
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: application-controller
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-applicationset-controller
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-metrics
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: applicationset-controller
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-notifications-controller
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-metrics
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: notifications-controller
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-repo-server
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-repo-server-metrics
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: repo-server
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-server
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-server-metrics
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: server
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-dex-server
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-dex-server
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: dex-server
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: argocd-redis
+      namespaceSelector:
+        matchNames:
+          - argocd
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: argocd-redis
+          app.kubernetes.io/instance: argo-cd
+          app.kubernetes.io/component: redis
+      endpoints:
+        - port: http-metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: envoy-gateway
+      namespaceSelector:
+        matchNames:
+          - envoy-gateway-system
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: gateway-helm
+          app.kubernetes.io/instance: envoy-gateway
+      endpoints:
+        - port: metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: blackbox-exporter
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: prometheus-blackbox-exporter
+          app.kubernetes.io/instance: prometheus-blackbox-exporter
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
+    - name: traefik
+      namespaceSelector:
+        matchNames:
+          - ingress-traefik
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
+          app.kubernetes.io/instance: ingress-traefik-ingress-traefik
+          app.kubernetes.io/component: metrics
+      endpoints:
+        - targetPort: metrics
+          path: /metrics
+          interval: 30s
+          scrapeTimeout: 10s
 thanosRuler:
   enabled: true
   thanosRulerSpec:
