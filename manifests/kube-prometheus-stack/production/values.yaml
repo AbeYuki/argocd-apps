@@ -7,6 +7,8 @@ defaultRules:
   create: true
   rules:
     windows: false
+  disabled:
+    CPUThrottlingHigh: true
 
 alertmanager:
   enabled: true
