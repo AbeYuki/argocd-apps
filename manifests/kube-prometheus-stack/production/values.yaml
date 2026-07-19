@@ -38,7 +38,7 @@ kubelet:
   enabled: true
 
 kubeControllerManager:
-  enabled: true
+  enabled: false
 
 coreDns:
   enabled: true
@@ -50,10 +50,10 @@ kubeEtcd:
   enabled: true
 
 kubeScheduler:
-  enabled: true
+  enabled: false
 
 kubeProxy:
-  enabled: true
+  enabled: false
 
 kubeStateMetrics:
   enabled: true
@@ -121,6 +121,13 @@ prometheus-node-exporter:
   service:
     port: 9101
     targetPort: 9101
+  prometheus:
+    monitor:
+      relabelings:
+        - sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: hostname
+          action: replace
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
