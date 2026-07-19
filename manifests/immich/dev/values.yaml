@@ -1,0 +1,56 @@
+server:
+  replicaCount: 2
+  resources: 
+    requests:
+      memory: 2048Mi
+      cpu: "1"
+    limits:
+      memory: 2048Mi
+      cpu: "1"
+  persistence:
+    storageClassName: "nfs-g9-enp5s0-rwx"
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
+  secret:
+    annotations:
+      avp.kubernetes.io/path: "secret/data/immich"
+    stringData:
+      DB_PASSWORD: <DB_PASSWORD>
+      DB_USERNAME: <DB_USERNAME>
+      DB_DATABASE_NAME: <DB_DATABASE_NAME>
+  immichConfigAnnotations:
+    avp.kubernetes.io/path: "secret/data/immich"
+  immichConfig:
+    immich.yaml: |
+      server:
+        externalDomain: "https://<EXTERNAL_DOMAIN>"
+      passwordLogin:
+        enabled: false
+      oauth:
+        enabled: true
+        issuerUrl: "https://accounts.google.com"
+        clientId: <path:secret/data/oauth_client/google/immich#client_id>
+        clientSecret: <path:secret/data/oauth_client/google/immich#client_secret>
+        scope: "openid email profile"
+        signingAlgorithm: "RS256"
+        mobileOverrideEnabled: true
+        mobileRedirectUri: "https://<EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        autoRegister: false
+      machineLearning:
+        enabled: true
+        urls:
+          - http://immich-immich-ml:3003
+postgres:
+  persistence:
+    storageClassName: longhorn
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+  secret:
+    annotations:
+      avp.kubernetes.io/path: "secret/data/immich"
+    stringData:
+      POSTGRES_PASSWORD: <DB_PASSWORD>
+      POSTGRES_USER: <DB_USERNAME>
+      POSTGRES_DB: <DB_DATABASE_NAME>
