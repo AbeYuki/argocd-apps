@@ -11,9 +11,19 @@ defaultRules:
 alertmanager:
   enabled: true
   alertmanagerSpec:
+    replicas: 3
     externalUrl: https://kps-alertmanager.aimhighergg.com
     useExistingSecret: true
     configSecret: kube-prometheus-stack-alertmanager-config
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
 
 grafana:
   enabled: true
