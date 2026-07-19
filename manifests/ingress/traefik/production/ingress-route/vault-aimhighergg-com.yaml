@@ -7,8 +7,21 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # Vault API: Terraform や Vault CLI から利用するため Basic 認証は適用しない
+    - match: Host(`vault.aimhighergg.com`) && PathPrefix(`/v1/`)
+      kind: Rule
+      priority: 100
+      middlewares:
+        - name: ip-whitelist
+          namespace: vault
+      services:
+        - name: vault-ui-https
+          kind: TraefikService
+
+    # Vault UI: API 以外のパスには Basic 認証を適用する
     - match: Host(`vault.aimhighergg.com`)
       kind: Rule
+      priority: 10
       middlewares:
         - name: ip-whitelist
           namespace: vault
