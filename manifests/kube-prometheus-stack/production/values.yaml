@@ -29,6 +29,10 @@ alertmanager:
 
 grafana:
   enabled: true
+  admin:
+    existingSecret: kube-prometheus-stack-grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
   grafana.ini:
     server:
       root_url: https://kps-grafana.aimhighergg.com

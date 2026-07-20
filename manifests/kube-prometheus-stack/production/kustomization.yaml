@@ -16,4 +16,5 @@ helmCharts:
 resources:
   - alertmanager-config-secret.yaml
   - additional-scrape-configs-secret.yaml
+  - grafana-admin-secret.yaml
   - blackbox-probe.yaml
