@@ -4,7 +4,6 @@ metadata:
   name: longhorn-aimhighergg-com
   namespace: longhorn-system
   annotations:
-    ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: longhorn-system-ip-whitelist@kubernetescrd,longhorn-system-basic-auth@kubernetescrd

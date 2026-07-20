@@ -5,7 +5,6 @@ metadata:
   name: <path:secret/data/ingress/app_1#name>-login
   namespace: <path:secret/data/ingress/app_1#namespace>
   annotations:
-    ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: <path:secret/data/ingress/app_1#namespace>-ip-whitelist@kubernetescrd

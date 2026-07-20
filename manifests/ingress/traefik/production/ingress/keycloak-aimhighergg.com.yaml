@@ -4,10 +4,9 @@ metadata:
   name: keycloak-aimhighergg-com
   namespace: keycloak
   annotations:
-    ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.middlewares: keycloak-ip-whitelist@kubernetescrd,keycloak-basic-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: keycloak-ip-whitelist@kubernetescrd
 spec:
   ingressClassName: traefik
   tls:

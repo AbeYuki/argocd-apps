@@ -4,7 +4,6 @@ metadata:
   name: vmalert-aimhighergg-com
   namespace: monitoring
   annotations:
-    ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: monitoring-ip-whitelist@kubernetescrd,monitoring-basic-auth@kubernetescrd
