@@ -11,6 +11,7 @@ http:
 proxy:
   http:
     enabled: true
+  mode: xforwarded
 
 database:
   vendor: postgres
@@ -26,7 +27,7 @@ dbchecker:
 
 extraEnv: |
   - name: KC_HOSTNAME
-    value: keycloak.aimhighergg.com
+    value: https://keycloak.aimhighergg.com
   - name: KC_HOSTNAME_STRICT
     value: "true"
   # Keep every Keycloak instance's pool stable for PostgreSQL prepared
