@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-aimhighergg-com
+  namespace: keycloak
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: keycloak-ip-whitelist@kubernetescrd,keycloak-basic-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - keycloak.aimhighergg.com
+      secretName: keycloak-aimhighergg-com-tls
+  rules:
+    - host: keycloak.aimhighergg.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak-keycloakx-http
+                port:
+                  number: 8080
