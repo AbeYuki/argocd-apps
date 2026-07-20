@@ -1,0 +1,11 @@
+helmCharts:
+  - name: keycloakx
+    repo: https://codecentric.github.io/helm-charts
+    version: "7.2.0"
+    namespace: keycloak
+    releaseName: keycloak
+    valuesFile: values.yaml
+
+resources:
+  - keycloak-secret.yaml
+  - realm-configmap.yaml

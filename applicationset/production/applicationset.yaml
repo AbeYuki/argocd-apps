@@ -121,6 +121,15 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: keycloak
+            namespace: keycloak
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/keycloak/production/
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
           - name: victoria-logs-cluster
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/argocd-apps.git
