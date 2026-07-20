@@ -3,7 +3,6 @@ resources:
   - app_1.yaml
   - argo-rollouts-aimhighergg-com.yaml
   #- grafana-aimhighergg-com.yaml
-  - keycloak-aimhighergg.com.yaml
   - kps-alertmanager-aimhighergg-com.yaml
   - kps-grafana-aimhighergg-com.yaml
   - kps-prometheus-aimhighergg-com.yaml
