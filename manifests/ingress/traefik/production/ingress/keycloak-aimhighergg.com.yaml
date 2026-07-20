@@ -24,4 +24,4 @@ spec:
               service:
                 name: keycloak-keycloakx-http
                 port:
-                  number: 8080
+                  number: 80
