@@ -130,6 +130,14 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: cloudnative-pg-crds
+            namespace: ""
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/cloudnative-pg-crds/production/
+            plugin: ""
+            autoSync: true
+            syncOptions:
+              - ServerSideApply=true
           - name: victoria-logs-cluster
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/argocd-apps.git

@@ -1,0 +1,3 @@
+resources:
+  # Keep this version aligned with the CloudNativePG operator appVersion.
+  - github.com/cloudnative-pg/cloudnative-pg/config/crd?ref=v1.29.1

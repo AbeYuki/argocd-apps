@@ -1,0 +1,21 @@
+# The operator only manages PostgreSQL clusters in its own namespace.
+# This keeps the RBAC scope limited to the Keycloak application.
+config:
+  clusterWide: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+monitoring:
+  podMonitorEnabled: true
+  podMonitorAdditionalLabels:
+    release: kube-prometheus-stack
+
+crds:
+  # Managed by the separate cloudnative-pg-crds Argo CD application.
+  create: false
