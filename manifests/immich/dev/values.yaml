@@ -34,7 +34,7 @@ server:
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
         mobileRedirectUri: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
-        autoRegister: false
+        autoRegister: true
       machineLearning:
         enabled: true
         urls:
