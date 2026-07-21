@@ -235,7 +235,7 @@ spec:
             syncOptions:
               - CreateNamespace=true
           - name: immich-dev
-            namespace: immich
+            namespace: immich-dev
             repoURL:  https://github.com/AbeYuki/argocd-apps.git
             path: manifests/immich/dev/
             plugin: "argocd-vault-plugin-kustomize-helmcharts"
