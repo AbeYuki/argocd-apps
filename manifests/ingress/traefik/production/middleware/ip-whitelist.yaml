@@ -62,6 +62,16 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: ip-whitelist
+  namespace: <path:secret/data/ingress/app_2#namespace>
+spec:
+  ipWhiteList:
+    sourceRange:
+    - 192.168.0.0/16
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: ip-whitelist
   namespace: nextcloud
 spec:
   ipWhiteList:
