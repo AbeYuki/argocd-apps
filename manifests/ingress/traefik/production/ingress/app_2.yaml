@@ -1,0 +1,50 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <path:secret/data/ingress/app_2#name>-login
+  namespace: <path:secret/data/ingress/app_2#namespace>
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: <path:secret/data/ingress/app_2#namespace>-ip-whitelist@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: <path:secret/data/ingress/app_2#hosts>
+      http:
+        paths:
+          - path: /auth/login
+            pathType: Prefix
+            backend:
+              service:
+                name: <path:secret/data/ingress/app_2#service_name>
+                port:
+                  number: <path:secret/data/ingress/app_2#service_port | jsonParse>
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <path:secret/data/ingress/app_2#name>
+  namespace: <path:secret/data/ingress/app_2#namespace>
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod-dns01
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - <path:secret/data/ingress/app_2#hosts>
+      secretName: <path:secret/data/ingress/app_2#hosts>-tls
+  rules:
+    - host: <path:secret/data/ingress/app_2#hosts>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: <path:secret/data/ingress/app_2#service_name>
+                port:
+                  number: <path:secret/data/ingress/app_2#service_port | jsonParse>

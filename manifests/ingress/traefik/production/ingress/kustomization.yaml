@@ -1,6 +1,7 @@
 resources:
   - alertmanager-aimhighergg-com.yaml
   - app_1.yaml
+  - app_2.yaml
   - argo-rollouts-aimhighergg-com.yaml
   #- grafana-aimhighergg-com.yaml
   - kps-alertmanager-aimhighergg-com.yaml
