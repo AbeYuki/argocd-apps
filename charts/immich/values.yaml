@@ -49,10 +49,7 @@ server:
     IMMICH_LOG_LEVEL: "warn"
   secret:
     annotations: {}
-    stringData:
-      DB_PASSWORD: "postgres"
-      DB_USERNAME: "postgres"
-      DB_DATABASE_NAME: "postgres"
+    stringData: {}
   immichConfigAnnotations: {}
   immichConfig: {}
     #immich.yaml: |
@@ -143,8 +140,7 @@ postgres:
       - ReadWriteOnce
     size: 5Gi
   secret:
-    annotations:
-      avp.kubernetes.io/path: "secret/data/immich"
+    annotations: {}
     stringData:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
