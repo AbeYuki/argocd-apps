@@ -11,7 +11,7 @@ server:
     storageClassName: "nfs-g9-enp5s0-rwx"
     accessModes:
       - ReadWriteMany
-    size: 10Gi
+    size: 1Gi
   secret:
     annotations:
       avp.kubernetes.io/path: "secret/data/immich-dev"
