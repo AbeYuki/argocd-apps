@@ -18,7 +18,10 @@ spec:
         {{- with .Values.server.immichConfig }}
         checksum/immich-config: {{ include (print $.Template.BasePath "/immich-configmap.yaml") $ | sha256sum }}
         {{- end }}
+        {{- if or .Values.server.secret.annotations .Values.server.secret.stringData }}
         checksum/secret: {{ include (print $.Template.BasePath "/server-secret.yaml") . | sha256sum }}
+        {{- end }}
+        checksum/database-secret: {{ include (print $.Template.BasePath "/postgres-secret.yaml") . | sha256sum }}
         {{- with .Values.server.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -87,6 +90,21 @@ spec:
           env:
             - name: TZ
               value: {{ .Values.global.timezone | quote }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "immich.postgresSecretName" . }}
+                  key: POSTGRES_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "immich.postgresSecretName" . }}
+                  key: POSTGRES_USER
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "immich.postgresSecretName" . }}
+                  key: POSTGRES_DB
             {{- with .Values.server.immichConfig }}
             - name: IMMICH_CONFIG_FILE
               value: /config/immich.yaml
@@ -94,8 +112,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "immich.serverConfigName" . }}
+            {{- if or .Values.server.secret.annotations .Values.server.secret.stringData }}
             - secretRef:
                 name: {{ include "immich.serverConfigName" . }}
+            {{- end }}
       volumes:
         - name: immich-data
           persistentVolumeClaim:
