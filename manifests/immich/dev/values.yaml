@@ -27,9 +27,9 @@ server:
         enabled: false
       oauth:
         enabled: true
-        issuerUrl: "https://accounts.google.com"
-        clientId: <path:secret/data/oauth_client/google/keycloak#client_id>
-        clientSecret: <path:secret/data/oauth_client/google/keycloak#client_secret>
+        issuerUrl: "https://keycloak.aimhighergg.com/realms/aimhighergg"
+        clientId: <path:secret/data/oauth_client/keycloak/immich-dev#client_id>
+        clientSecret: <path:secret/data/oauth_client/keycloak/immich-dev#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
