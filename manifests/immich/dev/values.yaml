@@ -47,7 +47,7 @@ postgres:
     size: 5Gi
   secret:
     annotations:
-      avp.kubernetes.io/path: "secret/data/immich"
+      avp.kubernetes.io/path: "secret/data/immich-dev"
     stringData:
       POSTGRES_PASSWORD: <DB_PASSWORD>
       POSTGRES_USER: <DB_USERNAME>
