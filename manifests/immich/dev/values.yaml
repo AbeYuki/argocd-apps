@@ -14,28 +14,26 @@ server:
     size: 10Gi
   secret:
     annotations:
-      avp.kubernetes.io/path: "secret/data/immich"
+      avp.kubernetes.io/path: "secret/data/immich-dev"
     stringData:
       DB_PASSWORD: <DB_PASSWORD>
       DB_USERNAME: <DB_USERNAME>
       DB_DATABASE_NAME: <DB_DATABASE_NAME>
-  immichConfigAnnotations:
-    avp.kubernetes.io/path: "secret/data/immich"
   immichConfig:
     immich.yaml: |
       server:
-        externalDomain: "https://<EXTERNAL_DOMAIN>"
+        externalDomain: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>"
       passwordLogin:
         enabled: false
       oauth:
         enabled: true
         issuerUrl: "https://accounts.google.com"
-        clientId: <path:secret/data/oauth_client/google/immich#client_id>
-        clientSecret: <path:secret/data/oauth_client/google/immich#client_secret>
+        clientId: <path:secret/data/oauth_client/google/keycloak#client_id>
+        clientSecret: <path:secret/data/oauth_client/google/keycloak#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
-        mobileRedirectUri: "https://<EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        mobileRedirectUri: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
         autoRegister: false
       machineLearning:
         enabled: true

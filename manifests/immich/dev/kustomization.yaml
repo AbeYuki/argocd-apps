@@ -1,7 +1,7 @@
 helmCharts:
-  - name: immich
+  - name: immich-dev
     repo: https://abeyuki.github.io/argocd-apps/
     version: "0.1.0"
-    namespace: immich
-    releaseName: immich
+    namespace: immich-dev
+    releaseName: immich-dev
     valuesFile: values.yaml

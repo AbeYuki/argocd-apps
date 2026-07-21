@@ -234,6 +234,14 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
+          - name: immich-dev
+            namespace: immich
+            repoURL:  https://github.com/AbeYuki/argocd-apps.git
+            path: manifests/immich/dev/
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
+            autoSync: true
+            syncOptions:
+              - CreateNamespace=true
           - name: ingress-traefik-crds
             namespace: ""
             repoURL: https://github.com/AbeYuki/argocd-apps.git
