@@ -24,7 +24,7 @@ server:
       server:
         externalDomain: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>"
       passwordLogin:
-        enabled: false
+        enabled: true
       oauth:
         enabled: true
         issuerUrl: "https://keycloak.aimhighergg.com/realms/aimhighergg"
