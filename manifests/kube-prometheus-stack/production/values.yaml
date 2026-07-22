@@ -9,6 +9,7 @@ defaultRules:
     windows: false
   disabled:
     CPUThrottlingHigh: true
+    Watchdog: true
 
 alertmanager:
   enabled: true

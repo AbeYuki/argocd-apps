@@ -15,10 +15,10 @@ proxy:
 
 database:
   vendor: postgres
-  hostname: <path:secret/data/keycloak/database#host>
-  port: <path:secret/data/keycloak/database#port>
-  database: <path:secret/data/keycloak/database#database>
-  username: <path:secret/data/keycloak/database#username>
+  hostname: <path:secret/data/keycloak-dev/database#host>
+  port: <path:secret/data/keycloak-dev/database#port>
+  database: <path:secret/data/keycloak-dev/database#database>
+  username: <path:secret/data/keycloak-dev/database#username>
   existingSecret: keycloak-database-credentials
   existingSecretKey: password
 
