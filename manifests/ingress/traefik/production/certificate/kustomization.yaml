@@ -1,5 +1,6 @@
 resources:
   - keycloak-aimhighergg-com.yaml
+  - keycloak-dev-aimhighergg-com.yaml
   - nextcloud-aimhighergg-com.yaml
   - traefik-dashboard.yaml
   - vault-aimhighergg-com.yaml
