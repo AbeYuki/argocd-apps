@@ -130,6 +130,15 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: keycloak-dev
+            namespace: keycloak-dev
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/keycloak/dev/
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
           - name: cloudnative-pg-crds
             namespace: ""
             repoURL: https://github.com/AbeYuki/argocd-apps.git

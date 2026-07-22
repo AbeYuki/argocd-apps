@@ -1,0 +1,78 @@
+replicas: 2
+
+command:
+  - /opt/keycloak/bin/kc.sh
+  - start
+  - --import-realm
+
+http:
+  relativePath: /
+
+proxy:
+  http:
+    enabled: true
+  mode: xforwarded
+
+database:
+  vendor: postgres
+  hostname: <path:secret/data/keycloak/database#host>
+  port: <path:secret/data/keycloak/database#port>
+  database: <path:secret/data/keycloak/database#database>
+  username: <path:secret/data/keycloak/database#username>
+  existingSecret: keycloak-database-credentials
+  existingSecretKey: password
+
+dbchecker:
+  enabled: true
+
+extraEnv: |
+  - name: KC_HOSTNAME
+    value: https://keycloak-dev.aimhighergg.com
+  - name: KC_HOSTNAME_STRICT
+    value: "true"
+  # Keep every Keycloak instance's pool stable for PostgreSQL prepared
+  # statement reuse. Two Keycloak replicas consume at most 40 connections.
+  - name: KC_DB_POOL_INITIAL_SIZE
+    value: "20"
+  - name: KC_DB_POOL_MIN_SIZE
+    value: "20"
+  - name: KC_DB_POOL_MAX_SIZE
+    value: "20"
+
+extraEnvFrom: |
+  - secretRef:
+      name: keycloak-credentials
+
+extraVolumes: |
+  - name: realm
+    configMap:
+      name: keycloak-realm
+
+extraVolumeMounts: |
+  - name: realm
+    mountPath: /opt/keycloak/data/import
+    readOnly: true
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: "2"
+    memory: 2Gi
+
+metrics:
+  enabled: true
+
+health:
+  enabled: true
+
+serviceMonitor:
+  enabled: true
+  labels:
+    release: kube-prometheus-stack
+  interval: 30s
+  scrapeTimeout: 10s
+
+ingress:
+  enabled: false
