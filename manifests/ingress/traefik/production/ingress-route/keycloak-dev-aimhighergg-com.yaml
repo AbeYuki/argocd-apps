@@ -1,0 +1,26 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: keycloak-dev-aimhighergg-com
+  namespace: keycloak-dev
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`keycloak-dev.aimhighergg.com`) && (Path(`/realms/aimhighergg`) || PathPrefix(`/realms/aimhighergg/`) || PathPrefix(`/resources/`))
+      kind: Rule
+      priority: 100
+      services:
+        - name: keycloak-dev-keycloakx-http
+          port: 80
+    - match: Host(`keycloak-dev.aimhighergg.com`)
+      kind: Rule
+      priority: 10
+      middlewares:
+        - name: ip-whitelist
+          namespace: keycloak-dev
+      services:
+        - name: keycloak-dev-keycloakx-http
+          port: 80
+  tls:
+    secretName: keycloak-dev-aimhighergg-com-tls
