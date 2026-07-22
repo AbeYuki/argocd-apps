@@ -11,7 +11,7 @@ helmCharts:
     namespace: keycloak-dev
     releaseName: keycloak-dev
     valuesFile: keycloak-values.yaml
-
+namespace: keycloak-dev
 resources:
   - keycloak-secret.yaml
   - postgres-secret.yaml
