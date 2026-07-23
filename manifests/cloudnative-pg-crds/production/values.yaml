@@ -1,5 +1,7 @@
+# This application owns the complete CloudNativePG installation:
+# CRDs, admission webhooks, operator, and RBAC.
 config:
-  clusterWide: false
+  clusterWide: true
 
 resources:
   requests:
@@ -15,4 +17,4 @@ monitoring:
     release: kube-prometheus-stack
 
 crds:
-  create: false
+  create: true

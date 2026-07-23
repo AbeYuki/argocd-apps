@@ -140,12 +140,13 @@ spec:
               - CreateNamespace=true
               - ServerSideApply=true
           - name: cloudnative-pg-crds
-            namespace: ""
+            namespace: cnpg-system
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/cloudnative-pg-crds/production/
-            plugin: ""
+            plugin: kustomize-helmcharts
             autoSync: true
             syncOptions:
+              - CreateNamespace=true
               - ServerSideApply=true
           - name: victoria-logs-cluster
             namespace: monitoring

@@ -1,3 +1,7 @@
-resources:
-  # Keep this version aligned with the CloudNativePG operator appVersion.
-  - github.com/cloudnative-pg/cloudnative-pg/config/crd?ref=v1.29.1
+helmCharts:
+  - name: cloudnative-pg
+    repo: https://cloudnative-pg.github.io/charts
+    version: "0.28.1"
+    namespace: cnpg-system
+    releaseName: cloudnative-pg
+    valuesFile: values.yaml
