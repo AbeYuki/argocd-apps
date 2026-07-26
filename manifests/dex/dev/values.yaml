@@ -48,7 +48,7 @@ config:
       name: Google
       config:
         issuer: https://accounts.google.com
-        clientID: <path:secret/data/oauth-client/google/dex#client_id>
+        clientID: <path:secret/data/oauth-client/google/dex-dev#client_id>
         clientSecret: <path:secret/data/oauth-client/google/dex#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
 
