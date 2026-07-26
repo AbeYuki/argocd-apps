@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: dex
+  name: dex-aimhighergg.com
   namespace: dex
 spec:
   entryPoints:
@@ -10,6 +10,6 @@ spec:
     - match: Host(`dex.aimhighergg.com`)
       services:
         - name: dex
-          port: 5557
+          port:  5556
   tls:
     secretName: dex-aimhighergg-com-tls

@@ -52,7 +52,14 @@ config:
         clientSecret: <path:secret/data/oauth-client/google/dex#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
 
-  staticClients: []
+  staticClients:
+    - id: <path:secret/data/oauth-client/dex/immich-dev#client_id>
+      name: Immich Dev
+      secret: <path:secret/data/oauth-client/dex/immich-dev#client_secret>
+      redirectURIs:
+        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
+        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"
+        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
 
 serviceAccount:
   create: true

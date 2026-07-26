@@ -9,7 +9,7 @@ spec:
   routes:
     - match: Host(`dex-dev.aimhighergg.com`)
       services:
-        - name: dex-dev
-          port: 5557
+        - name: dex
+          port: 5556
   tls:
     secretName: dex-dev-aimhighergg-com-tls
