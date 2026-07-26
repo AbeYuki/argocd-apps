@@ -77,6 +77,14 @@ securityContext:
       - ALL
   readOnlyRootFilesystem: true
 
+volumes:
+  - name: tmp
+    emptyDir: {}
+
+volumeMounts:
+  - name: tmp
+    mountPath: /tmp
+
 resources:
   requests:
     cpu: 100m
