@@ -106,7 +106,7 @@ topologySpreadConstraints:
     whenUnsatisfiable: ScheduleAnyway
     labelSelector:
       matchLabels:
-        app.kubernetes.io/instance: dex
+        app.kubernetes.io/instance: dex-dev
         app.kubernetes.io/name: dex
 
 service:
