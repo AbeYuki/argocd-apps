@@ -53,9 +53,9 @@ config:
         redirectURI: https://dex-dev.aimhighergg.com/callback
 
   staticClients:
-    - id: <path:secret/data/oauth-client/dex/immich-dev#client_id>
+    - id: <path:secret/data/oauth-client/dex-dev/immich-dev#client_id>
       name: Immich Dev
-      secret: <path:secret/data/oauth-client/dex/immich-dev#client_secret>
+      secret: <path:secret/data/oauth-client/dex-dev/immich-dev#client_secret>
       redirectURIs:
         - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
         - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"

@@ -28,8 +28,8 @@ server:
       oauth:
         enabled: true
         issuerUrl: "https://dex-dev.aimhighergg.com"
-        clientId: <path:secret/data/oauth-client/dex/immich-dev#client_id>
-        clientSecret: <path:secret/data/oauth-client/dex/immich-dev#client_secret>
+        clientId: <path:secret/data/oauth-client/dex-dev/immich-dev#client_id>
+        clientSecret: <path:secret/data/oauth-client/dex-dev/immich-dev#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
