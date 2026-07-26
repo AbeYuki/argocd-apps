@@ -5,7 +5,7 @@ configSecret:
   create: true
 
 config:
-  issuer: https://dex.aimhighergg.com
+  issuer: https://dex-dev.aimhighergg.com
 
   storage:
     type: kubernetes
@@ -32,10 +32,10 @@ config:
       id: entra-id
       name: Microsoft Entra ID
       config:
-        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/azure/dex#tenant_id>/v2.0"
-        clientID: <path:secret/data/oauth-client/azure/dex#client_id>
-        clientSecret: <path:secret/data/oauth-client/azure/dex#client_secret>
-        redirectURI: https://dex.aimhighergg.com/callback
+        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex-dev#tenant_id>/v2.0"
+        clientID: <path:secret/data/oauth-client/entra-id/dex-dev#client_id>
+        clientSecret: <path:secret/data/oauth-client/entra-id/dex-dev#client_secret>
+        redirectURI: https://dex-dev.aimhighergg.com/callback
         scopes:
           - profile
           - email
@@ -50,7 +50,7 @@ config:
         issuer: https://accounts.google.com
         clientID: <path:secret/data/oauth-client/google/dex#client_id>
         clientSecret: <path:secret/data/oauth-client/google/dex#client_secret>
-        redirectURI: https://dex.aimhighergg.com/callback
+        redirectURI: https://dex-dev.aimhighergg.com/callback
 
   staticClients: []
 

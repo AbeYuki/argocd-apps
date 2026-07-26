@@ -32,9 +32,9 @@ config:
       id: entra-id
       name: Microsoft Entra ID
       config:
-        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/azure/dex#tenant_id>/v2.0"
-        clientID: <path:secret/data/oauth-client/azure/dex#client_id>
-        clientSecret: <path:secret/data/oauth-client/azure/dex#client_secret>
+        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex#tenant_id>/v2.0"
+        clientID: <path:secret/data/oauth-client/entra-id/dex#client_id>
+        clientSecret: <path:secret/data/oauth-client/entra-id/dex#client_secret>
         redirectURI: https://dex.aimhighergg.com/callback
         scopes:
           - profile
