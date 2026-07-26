@@ -1,0 +1,15 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dex-dev-aimhighergg-com
+  namespace: dex-dev
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dex-dev.aimhighergg.com`)
+      services:
+        - name: dex-dev
+          port: 5557
+  tls:
+    secretName: dex-dev-aimhighergg-com-tls

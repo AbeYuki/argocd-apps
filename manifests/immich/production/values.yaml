@@ -30,8 +30,8 @@ server:
       oauth:
         enabled: true
         issuerUrl: "https://accounts.google.com"
-        clientId: <path:secret/data/oauth_client/google/immich#client_id>
-        clientSecret: <path:secret/data/oauth_client/google/immich#client_secret>
+        clientId: <path:secret/data/oauth-client/google/immich#client_id>
+        clientSecret: <path:secret/data/oauth-client/google/immich#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true

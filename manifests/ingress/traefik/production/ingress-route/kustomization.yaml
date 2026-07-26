@@ -1,4 +1,6 @@
 resources:
+  - dex-aimhighergg-com.yaml
+  - dex-dev-aimhighergg-com.yaml
   - keycloak-aimhighergg-com.yaml
   - keycloak-dev-aimhighergg-com.yaml
   - nextcloud-aimhighergg-com.yaml

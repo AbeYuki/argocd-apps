@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dex-aimhighergg-com-tls
+  namespace: dex
+spec:
+  secretName: dex-aimhighergg-com-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod-dns01
+  dnsNames:
+    - dex.aimhighergg.com

@@ -121,6 +121,24 @@ spec:
             syncOptions:
               - CreateNamespace=true
               - ServerSideApply=true
+          - name: dex
+            namespace: dex
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/dex/production/
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
+          - name: dex-dev
+            namespace: dex-dev
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/dex/dev/
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
           - name: keycloak
             namespace: keycloak
             repoURL: https://github.com/AbeYuki/argocd-apps.git

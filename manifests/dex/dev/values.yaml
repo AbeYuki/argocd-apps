@@ -1,0 +1,101 @@
+replicaCount: 2
+revisionHistoryLimit: 3
+
+configSecret:
+  create: true
+
+config:
+  issuer: https://dex.aimhighergg.com
+
+  storage:
+    type: kubernetes
+    config:
+      inCluster: true
+
+  logger:
+    level: info
+    format: json
+
+  oauth2:
+    grantTypes:
+      - authorization_code
+      - refresh_token
+    responseTypes:
+      - code
+    skipApprovalScreen: true
+    alwaysShowLoginScreen: true
+
+  enablePasswordDB: false
+
+  connectors:
+    - type: oidc
+      id: entra-id
+      name: Microsoft Entra ID
+      config:
+        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/azure/dex#tenant_id>/v2.0"
+        clientID: <path:secret/data/oauth-client/azure/dex#client_id>
+        clientSecret: <path:secret/data/oauth-client/azure/dex#client_secret>
+        redirectURI: https://dex.aimhighergg.com/callback
+        scopes:
+          - profile
+          - email
+        # emailクレームがなければ、preferred_usernameをDexのメールアドレスとして扱う
+        insecureSkipEmailVerified: true
+        claimMapping:
+          email: preferred_username
+    - type: oidc
+      id: google
+      name: Google
+      config:
+        issuer: https://accounts.google.com
+        clientID: <path:secret/data/oauth-client/google/dex#client_id>
+        clientSecret: <path:secret/data/oauth-client/google/dex#client_secret>
+        redirectURI: https://dex.aimhighergg.com/callback
+
+  staticClients: []
+
+serviceAccount:
+  create: true
+
+rbac:
+  create: true
+  createClusterScoped: true
+
+podDisruptionBudget:
+  enabled: true
+  maxUnavailable: 1
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: dex
+        app.kubernetes.io/name: dex
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false

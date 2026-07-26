@@ -28,8 +28,8 @@ server:
       oauth:
         enabled: true
         issuerUrl: "https://keycloak.aimhighergg.com/realms/aimhighergg"
-        clientId: <path:secret/data/oauth_client/keycloak/immich-dev#client_id>
-        clientSecret: <path:secret/data/oauth_client/keycloak/immich-dev#client_secret>
+        clientId: <path:secret/data/oauth-client/keycloak/immich-dev#client_id>
+        clientSecret: <path:secret/data/oauth-client/keycloak/immich-dev#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
