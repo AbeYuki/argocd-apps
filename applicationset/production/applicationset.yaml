@@ -389,7 +389,7 @@ spec:
             repoURL: https://github.com/AbeYuki/storageclass.git
             path: ./
             plugin: kustomize-helmcharts
-            autoSync: true
+            autoSync: false
             syncOptions: []
           - name: www-aimhighergg-com
             namespace: www-aimhighergg-com
