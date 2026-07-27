@@ -6,4 +6,6 @@ defaultSettings:
   defaultLonghornStaticStorageClass: "longhorn"
   nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
   nodeDrainPolicy: "block-for-eviction-if-contains-last-replica"
-  replicaAutoBalance: "best-effort"
+  concurrentReplicaRebuildPerNodeLimit: 1
+  replicaAutoBalance: "least-effort"
+  engineReplicaTimeout: 15
