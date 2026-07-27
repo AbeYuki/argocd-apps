@@ -387,7 +387,7 @@ spec:
           - name: storageclass
             namespace: ''
             repoURL: https://github.com/AbeYuki/argocd-apps.git
-            path: manifesets/storageclass/production/
+            path: manifests/storageclass/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions: []
