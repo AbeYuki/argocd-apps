@@ -385,9 +385,9 @@ spec:
             syncOptions:
               - CreateNamespace=true
           - name: storageclass
-            namespace: nfs-provisioner
-            repoURL: https://github.com/AbeYuki/storageclass.git
-            path: ./
+            namespace: ''
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: manifesets/storageclass/production/
             plugin: kustomize-helmcharts
             autoSync: false
             syncOptions: []

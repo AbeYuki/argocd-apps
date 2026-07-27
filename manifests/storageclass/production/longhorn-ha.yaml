@@ -1,0 +1,18 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-ha
+  annotations:
+    storageclass.kubernetes.io/description: Longhorn with two replicas and best-effort data locality
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+parameters:
+  numberOfReplicas: "2"
+  dataLocality: best-effort
+  fsType: xfs
+  fromBackup: ""
+  staleReplicaTimeout: "30"
+  nfsOptions: vers=4.2,noresvport,softerr,timeo=600,retrans=5
+  unmapMarkSnapChainRemoved: ignored
