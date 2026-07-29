@@ -28,21 +28,21 @@ config:
   enablePasswordDB: false
 
   connectors:
-    #- type: oidc
-    #  id: entra-id
-    #  name: Microsoft Entra ID
-    #  config:
-    #    issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex#tenant_id>/v2.0"
-    #    clientID: <path:secret/data/oauth-client/entra-id/dex#client_id>
-    #    clientSecret: <path:secret/data/oauth-client/entra-id/dex#client_secret>
-    #    redirectURI: https://dex.aimhighergg.com/callback
-    #    scopes:
-    #      - profile
-    #      - email
-    #    # emailクレームがなければ、preferred_usernameをDexのメールアドレスとして扱う
-    #    insecureSkipEmailVerified: true
-    #    claimMapping:
-    #      email: preferred_username
+    - type: oidc
+      id: entra-id
+      name: Microsoft Entra ID
+      config:
+        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex#tenant_id>/v2.0"
+        clientID: <path:secret/data/oauth-client/entra-id/dex#client_id>
+        clientSecret: <path:secret/data/oauth-client/entra-id/dex#client_secret>
+        redirectURI: https://dex.aimhighergg.com/callback
+        scopes:
+          - profile
+          - email
+        # emailクレームがなければ、preferred_usernameをDexのメールアドレスとして扱う
+        insecureSkipEmailVerified: true
+        claimMapping:
+          email: preferred_username
     - type: oidc
       id: google
       name: Google
