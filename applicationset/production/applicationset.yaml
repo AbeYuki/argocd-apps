@@ -54,7 +54,9 @@ spec:
             path: ./manifests/argocd/production
             plugin: kustomize-helmcharts
             autoSync: false
-            syncOptions: []
+            syncOptions:
+              - CreateNamespace=true
+              - ServerSideApply=true
           - name: runner-deployment
             namespace: arc-runner
             repoURL: https://github.com/AbeYuki/argocd-apps.git
