@@ -41,7 +41,7 @@ server:
           - http://immich-immich-ml:3003
 postgres:
   persistence:
-    storageClassName: longhorn
+    storageClassName: longhorn-local
     accessModes:
       - ReadWriteOnce
     size: 5Gi
