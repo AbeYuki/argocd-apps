@@ -151,9 +151,9 @@ prometheus-node-exporter:
             - __meta_kubernetes_pod_node_name
           targetLabel: hostname
           action: replace
-        - source_labels: [__address__]
+        - sourceLabels: [__address__]
           regex: "(.*):9101"
-          target_label: instance
+          targetLabel: instance
           replacement: "$1"
   updateStrategy:
     type: RollingUpdate
