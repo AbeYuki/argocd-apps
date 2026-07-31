@@ -7,7 +7,7 @@ server:
       url: http://victoria-metrics-cluster-vmselect.monitoring.svc:8481
   notifier:
     alertmanager:
-      url: http://monitoring-backend-alertmanager01-001.monitoring.svc:9093
+      url: http://kube-prometheus-stack-alertmanager.monitoring.svc:9093
   extraArgs:
     external.url: "https://grafana.aimhighergg.com"
     external.alert.source: >-
