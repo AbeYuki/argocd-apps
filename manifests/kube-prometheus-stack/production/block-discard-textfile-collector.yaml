@@ -1,0 +1,174 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: block-discard-textfile-collector
+  namespace: monitoring
+data:
+  collect.sh: |
+    #!/bin/sh
+    set -eu
+
+    sysfs_root=${SYSFS_ROOT:-/host/sys}
+    output_dir=${TEXTFILE_DIR:-/textfile}
+    output_file="${output_dir}/block-discard.prom"
+    temporary_file="${output_file}.$$"
+
+    cleanup() {
+      rm -f "${temporary_file}"
+    }
+    trap cleanup EXIT INT TERM
+
+    read_uint() {
+      value=0
+      if [ -r "$1" ]; then
+        value=$(cat "$1")
+      fi
+      case "${value}" in
+        ''|*[!0-9]*) value=0 ;;
+      esac
+      printf '%s' "${value}"
+    }
+
+    {
+      echo '# HELP node_block_discard_supported Whether the Linux block layer exposes discard support for the device.'
+      echo '# TYPE node_block_discard_supported gauge'
+      echo '# HELP node_block_discard_granularity_bytes Smallest aligned discard unit exposed by the Linux block layer.'
+      echo '# TYPE node_block_discard_granularity_bytes gauge'
+      echo '# HELP node_block_discard_max_bytes Maximum discard request size exposed by the Linux block layer.'
+      echo '# TYPE node_block_discard_max_bytes gauge'
+      echo '# HELP node_block_discard_max_hw_bytes Maximum hardware discard request size exposed by the Linux block layer.'
+      echo '# TYPE node_block_discard_max_hw_bytes gauge'
+
+      for sys_device in "${sysfs_root}"/block/*; do
+        [ -d "${sys_device}" ] || continue
+        device=${sys_device##*/}
+
+        case "${device}" in
+          loop*|ram*|fd*|sr*|dm-*) continue ;;
+        esac
+
+        [ -e "${sys_device}/device" ] || continue
+
+        discard_granularity=$(read_uint "${sys_device}/queue/discard_granularity")
+        discard_max_bytes=$(read_uint "${sys_device}/queue/discard_max_bytes")
+        discard_max_hw_bytes=$(read_uint "${sys_device}/queue/discard_max_hw_bytes")
+        rotational=$(read_uint "${sys_device}/queue/rotational")
+        provisioning_mode=unknown
+
+        for provisioning_file in "${sys_device}"/device/scsi_disk/*/provisioning_mode; do
+          [ -r "${provisioning_file}" ] || continue
+          provisioning_mode=$(tr -cd '[:alnum:]_-' < "${provisioning_file}")
+          break
+        done
+
+        discard_supported=0
+        if [ "${discard_granularity}" -gt 0 ] && [ "${discard_max_bytes}" -gt 0 ]; then
+          discard_supported=1
+        fi
+
+        labels="device=\"${device}\",rotational=\"${rotational}\",provisioning_mode=\"${provisioning_mode}\""
+        echo "node_block_discard_supported{${labels}} ${discard_supported}"
+        echo "node_block_discard_granularity_bytes{${labels}} ${discard_granularity}"
+        echo "node_block_discard_max_bytes{${labels}} ${discard_max_bytes}"
+        echo "node_block_discard_max_hw_bytes{${labels}} ${discard_max_hw_bytes}"
+      done
+
+      echo '# HELP node_block_discard_metrics_last_success_timestamp_seconds Unix timestamp of the last successful block discard capability collection.'
+      echo '# TYPE node_block_discard_metrics_last_success_timestamp_seconds gauge'
+      echo "node_block_discard_metrics_last_success_timestamp_seconds $(date +%s)"
+    } > "${temporary_file}"
+
+    chmod 0644 "${temporary_file}"
+    mv "${temporary_file}" "${output_file}"
+    trap - EXIT INT TERM
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: block-discard-textfile-collector
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: block-discard-textfile-collector
+    app.kubernetes.io/component: exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: block-discard-textfile-collector
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: block-discard-textfile-collector
+        app.kubernetes.io/component: exporter
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+        - operator: Exists
+      terminationGracePeriodSeconds: 10
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: collector
+          image: busybox:1.37.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              while true; do
+                /config/collect.sh
+                sleep 300 &
+                wait $!
+              done
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - test -s /textfile/block-discard.prom
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 5m
+              memory: 8Mi
+            limits:
+              cpu: 20m
+              memory: 16Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: false
+            runAsUser: 0
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
+            - name: host-sys
+              mountPath: /host/sys
+              readOnly: true
+            - name: textfile
+              mountPath: /textfile
+      volumes:
+        - name: config
+          configMap:
+            name: block-discard-textfile-collector
+            defaultMode: 0555
+        - name: host-sys
+          hostPath:
+            path: /sys
+            type: Directory
+        - name: textfile
+          hostPath:
+            path: /var/lib/node_exporter/textfile_collector
+            type: DirectoryOrCreate

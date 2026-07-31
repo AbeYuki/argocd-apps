@@ -257,3 +257,60 @@ server:
             annotations:
               summary: "{{ $labels.instance }} NodeSystemdUnitActivatingTooLong"
               description: "{{ $labels.name }} サービスがハングアップしている可能性あり"
+        - name: block_discard
+          rules:
+          - alert: NodeSSDDiscardUnsupported
+            expr: |
+              node_block_discard_supported{rotational="0"} == 0
+            for: 15m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.hostname }} の {{ $labels.device }} でTRIM/discardが利用不可"
+              description: "Linux block layerがSSDのdiscardを公開していません (provisioning_mode={{ $labels.provisioning_mode }})。USB-SATAブリッジのTRIM/UNMAPパススルーを確認してください。"
+          - alert: NodeBlockDiscardMetricsMissing
+            expr: |
+              up{job="node-exporter", namespace="monitoring"} == 1
+              unless on(instance)
+              node_block_discard_metrics_last_success_timestamp_seconds
+            for: 15m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.hostname }} のblock discardメトリクスがありません"
+              description: "node_exporterは稼働していますがtextfile collectorのblock discardメトリクスを取得できません。"
+          - alert: NodeBlockDiscardMetricsStale
+            expr: |
+              time() - node_block_discard_metrics_last_success_timestamp_seconds > 900
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.hostname }} のblock discardメトリクス更新停止"
+              description: "block discardメトリクスが15分以上更新されていません (経過={{ $value }}秒)。"
+        - name: disk_io_pressure
+          rules:
+          - alert: NodeDiskIOPressureCritical
+            expr: |
+              rate(node_disk_io_time_weighted_seconds_total{device!~"^(loop|ram|fd|sr|dm-).*"}[2m]) > 10
+              and on(instance, hostname)
+              avg by(instance, hostname) (rate(node_cpu_seconds_total{mode="iowait"}[2m])) > 0.30
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "{{ $labels.hostname }} の {{ $labels.device }} で深刻なI/O待ち"
+              description: "ディスクI/Oキュー相当値が高く、CPU iowaitも30%を超えています (weighted I/O time rate={{ $value }})。"
+          - alert: NodeLoad1PerCPUHigh
+            expr: |
+              node_load1
+              /
+              on(instance, hostname) group_left
+              count by(instance, hostname) (node_cpu_seconds_total{mode="idle"})
+              > 2
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "{{ $labels.hostname }} の1分load averageがCPU数の2倍超過"
+              description: "短時間のCPUまたはI/O待ち急増を検知しました (1CPUあたりload={{ $value }})。"
