@@ -10,7 +10,7 @@ reclaimPolicy: Delete
 volumeBindingMode: Immediate
 parameters:
   numberOfReplicas: "2"
-  dataLocality: best-effort
+  dataLocality: disabled
   fsType: ext4
   fromBackup: ""
   staleReplicaTimeout: "30"

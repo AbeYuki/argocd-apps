@@ -5,7 +5,8 @@ preUpgradeChecker:
 defaultSettings:
   defaultLonghornStaticStorageClass: "longhorn"
   nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
-  nodeDrainPolicy: "block-for-eviction-if-contains-last-replica"
-  concurrentReplicaRebuildPerNodeLimit: 1
-  replicaAutoBalance: "least-effort"
+  nodeDrainPolicy: "block-if-contains-last-replica"
+  concurrentReplicaRebuildPerNodeLimit: 0
+  offlineReplicaRebuilding: false
+  replicaAutoBalance: "disabled"
   engineReplicaTimeout: 15
