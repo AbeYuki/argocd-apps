@@ -11,7 +11,7 @@ db:
     MARIADB_USER: <path:secret/data/nextcloud#MYSQL_USER>
 nextcloud:
   persistence:
-    storageClass: "longhorn"
+    storageClass: "longhorn-ha"
     accessModes:
       - ReadWriteMany
     size: 1Gi
