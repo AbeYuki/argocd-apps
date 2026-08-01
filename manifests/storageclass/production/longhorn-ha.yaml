@@ -3,7 +3,7 @@ kind: StorageClass
 metadata:
   name: longhorn-ha
   annotations:
-    storageclass.kubernetes.io/description: Longhorn with two replicas and best-effort data locality
+    storageclass.kubernetes.io/description: Longhorn with two replicas and data locality disabled
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete

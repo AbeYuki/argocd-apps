@@ -3,13 +3,13 @@ kind: StorageClass
 metadata:
   name: longhorn-local
   annotations:
-    storageclass.kubernetes.io/description: Longhorn with one strict-local replica for application-level replicated data
+    storageclass.kubernetes.io/description: Deprecated compatibility class; use longhorn-ha for new volumes
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 parameters:
-  numberOfReplicas: "1"
+  numberOfReplicas: "2"
   dataLocality: disabled
   fsType: ext4
   fromBackup: ""

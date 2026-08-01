@@ -1,12 +1,15 @@
 persistence:
+  defaultDataLocality: "disabled"
   nfsOptions: "vers=4.2,noresvport,softerr,timeo=600,retrans=5"
 preUpgradeChecker:
   jobEnabled: false
 defaultSettings:
+  defaultDataLocality: "disabled"
   defaultLonghornStaticStorageClass: "longhorn"
   nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
   nodeDrainPolicy: "block-if-contains-last-replica"
-  concurrentReplicaRebuildPerNodeLimit: 0
+  replicaReplenishmentWaitInterval: 600
+  concurrentReplicaRebuildPerNodeLimit: 1
   offlineReplicaRebuilding: false
   replicaAutoBalance: "disabled"
   engineReplicaTimeout: 15
