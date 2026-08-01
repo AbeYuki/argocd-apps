@@ -109,7 +109,7 @@ spec:
             namespace: monitoring
             repoURL: https://github.com/AbeYuki/monitoring-k8s.git
             path: overlay/prod/
-            plugin: "kustomize-helmcharts"
+            plugin: argocd-vault-plugin-kustomize
             autoSync: true
             syncOptions:
               - CreateNamespace=true
