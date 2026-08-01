@@ -11,7 +11,7 @@ volumeBindingMode: Immediate
 parameters:
   numberOfReplicas: "1"
   dataLocality: strict-local
-  fsType: xfs
+  fsType: ext4
   fromBackup: ""
   staleReplicaTimeout: "30"
   unmapMarkSnapChainRemoved: ignored

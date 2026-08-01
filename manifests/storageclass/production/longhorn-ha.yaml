@@ -11,7 +11,7 @@ volumeBindingMode: Immediate
 parameters:
   numberOfReplicas: "2"
   dataLocality: best-effort
-  fsType: xfs
+  fsType: ext4
   fromBackup: ""
   staleReplicaTimeout: "30"
   nfsOptions: vers=4.2,noresvport,softerr,timeo=600,retrans=5
