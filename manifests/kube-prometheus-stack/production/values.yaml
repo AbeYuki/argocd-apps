@@ -190,6 +190,29 @@ prometheus:
     scrapeInterval: 1m
     scrapeTimeout: 30s
     evaluationInterval: 1m
+    # 長期メトリクスは remote_write 経由で VictoriaMetrics に保存
+    # ローカル TSDB を小さくし、compaction と WAL replay の負荷を軽減
+    retention: 24h
+    maximumStartupDurationSeconds: 900
+    resources:
+      requests:
+        cpu: "2"
+        memory: 3Gi
+      limits:
+        memory: 5Gi
+    # compaction 中は health endpoint の応答が一時的に遅延する可能性がある
+    # 復旧不能と判定して再起動するまで、5分間の猶予を設定
+    containers:
+      - name: prometheus
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: http-web
+            scheme: HTTP
+          failureThreshold: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
     remoteWrite:
       - url: http://victoria-metrics-cluster-vminsert:8480/insert/0/prometheus/api/v1/write
     additionalScrapeConfigsSecret:
