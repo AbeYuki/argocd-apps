@@ -3,7 +3,17 @@ helmCharts:
     repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
     version: "4.0.18"
     namespace: nfs-provisioner
-    releaseName: nfs-subdir-external-provisioner
-    valuesFile: ../values.yaml
+    releaseName: nfs-provisioner-apps
+    valuesFile: values.yaml
     additionalValuesFiles:
-      - additional-values.yaml
+      - additional-values-apps.yaml
+---
+helmCharts:
+  - name: nfs-subdir-external-provisioner
+    repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    version: "4.0.18"
+    namespace: nfs-provisioner
+    releaseName: nfs-provisioner-observability
+    valuesFile: values.yaml
+    additionalValuesFiles:
+      - additional-values-observability.yaml

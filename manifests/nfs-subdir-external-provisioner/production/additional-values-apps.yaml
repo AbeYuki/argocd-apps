@@ -1,0 +1,17 @@
+fullnameOverride: nfs-apps
+
+nfs:
+  server: 192.168.1.31
+  path: /k8s
+
+storageClass:
+  name: nfs-apps
+  provisionerName: k8s-sigs.io/nfs-apps
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: nfs-apps
+        topologyKey: kubernetes.io/hostname

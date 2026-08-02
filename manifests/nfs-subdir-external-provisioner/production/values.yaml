@@ -1,0 +1,7 @@
+replicaCount: 2
+
+strategyType: RollingUpdate
+
+podDisruptionBudget:
+  enabled: true
+  maxUnavailable: 1

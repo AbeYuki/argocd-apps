@@ -354,6 +354,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: nfs-provisioner
+            namespace: nfs-provisioner
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nfs-subdir-external-provisioner/production
+            plugin: kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: nfs-provisioner-g9-enp4s0-rwo
             namespace: nfs-provisioner
             repoURL: https://github.com/AbeYuki/argocd-apps.git

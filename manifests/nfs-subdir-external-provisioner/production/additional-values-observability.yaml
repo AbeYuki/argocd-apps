@@ -1,0 +1,17 @@
+fullnameOverride: nfs-observability
+
+nfs:
+  server: 192.168.1.32
+  path: /k8s
+
+storageClass:
+  name: nfs-observability
+  provisionerName: k8s-sigs.io/nfs-observability
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: nfs-observability
+        topologyKey: kubernetes.io/hostname
