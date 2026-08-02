@@ -7,8 +7,7 @@ helmCharts:
     valuesFile: values.yaml
     additionalValuesFiles:
       - additional-values-apps.yaml
----
-helmCharts:
+
   - name: nfs-subdir-external-provisioner
     repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
     version: "4.0.18"
