@@ -22,13 +22,13 @@ spec:
             syncOptions: 
               - CreateNamespace=true
               - ServerSideApply=true
-          - name: redmine-create-ticket-webhook
-            repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook-k8s.git
-            path: .
-            namespace: webhook
-            plugin: argocd-vault-plugin-kustomize-helmcharts
-            autoSync: false
-            syncOptions: []
+          #- name: redmine-create-ticket-webhook
+          #  repoURL: https://github.com/AbeYuki/redmine-create-ticket-webhook-k8s.git
+          #  path: .
+          #  namespace: webhook
+          #  plugin: argocd-vault-plugin-kustomize-helmcharts
+          #  autoSync: false
+          #  syncOptions: []
           - name: actions-runner-controller
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/actions-runner-controller/production
