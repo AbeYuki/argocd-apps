@@ -59,6 +59,8 @@ kubeApiServer:
 
 kubelet:
   enabled: true
+  serviceMonitor:
+    interval: 60s
 
 kubeControllerManager:
   enabled: false
@@ -187,7 +189,7 @@ prometheus:
   enabled: true
   prometheusSpec:
     externalUrl: https://kps-prometheus.aimhighergg.com
-    scrapeInterval: 1m
+    scrapeInterval: 60s
     scrapeTimeout: 30s
     evaluationInterval: 1m
     # 長期メトリクスは remote_write 経由で VictoriaMetrics に保存
@@ -232,7 +234,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: victoria-metrics-vminsert
       namespaceSelector:
@@ -246,7 +248,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: victoria-metrics-vmstorage
       namespaceSelector:
@@ -260,7 +262,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: victoria-logs-vlselect
       namespaceSelector:
@@ -274,7 +276,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: victoria-logs-vlinsert
       namespaceSelector:
@@ -288,7 +290,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: victoria-logs-vlstorage
       namespaceSelector:
@@ -302,7 +304,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: longhorn
       namespaceSelector:
@@ -314,7 +316,7 @@ prometheus:
       endpoints:
         - port: manager
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: cert-manager
       namespaceSelector:
@@ -341,7 +343,7 @@ prometheus:
       endpoints:
         - targetPort: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-application-controller
       namespaceSelector:
@@ -355,7 +357,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-applicationset-controller
       namespaceSelector:
@@ -369,7 +371,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-notifications-controller
       namespaceSelector:
@@ -383,7 +385,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-repo-server
       namespaceSelector:
@@ -397,7 +399,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-server
       namespaceSelector:
@@ -411,7 +413,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: argocd-redis
       namespaceSelector:
@@ -425,7 +427,7 @@ prometheus:
       endpoints:
         - port: http-metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: envoy-gateway
       namespaceSelector:
@@ -438,7 +440,7 @@ prometheus:
       endpoints:
         - port: metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: blackbox-exporter
       namespaceSelector:
@@ -451,7 +453,7 @@ prometheus:
       endpoints:
         - port: http
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
     - name: traefik
       namespaceSelector:
@@ -465,7 +467,7 @@ prometheus:
       endpoints:
         - targetPort: metrics
           path: /metrics
-          interval: 30s
+          interval: 60s
           scrapeTimeout: 10s
 thanosRuler:
   enabled: false

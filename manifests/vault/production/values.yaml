@@ -82,7 +82,7 @@ serverTelemetry:
     enabled: true
     selectors:
       release: kube-prometheus-stack
-    interval: 30s
+    interval: 60s
     scrapeTimeout: 10s
     tlsConfig:
       serverName: vault.vault.svc.cluster.local
