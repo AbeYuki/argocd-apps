@@ -17,7 +17,7 @@ nextcloud:
     size: 1Gi
     data:
       enabled: true
-      storageClass: "nfs-g9-enp4s0-rwx"
+      storageClass: "nfs-apps"
       accessModes:
         - ReadWriteMany
       size: 5Gi
