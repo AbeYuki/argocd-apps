@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - longhorn-ha.yaml
   - longhorn-local.yaml
+  - longhorn-replica-2.yaml
