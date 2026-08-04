@@ -2,7 +2,7 @@ db:
   persistentVolumeClaim:
     storageClassName: longhorn-replica-2
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     size: 1Gi
   secret:
     MARIADB_ROOT_PASSWORD: <path:secret/data/nextcloud#MYSQL_ROOT_PASSWORD>
