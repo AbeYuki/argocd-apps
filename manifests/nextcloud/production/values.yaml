@@ -1,6 +1,6 @@
 db:
   persistentVolumeClaim:
-    storageClassName: longhorn
+    storageClassName: longhorn-replica-2
     accessModes:
       - ReadWriteMany
     size: 1Gi
@@ -11,7 +11,7 @@ db:
     MARIADB_USER: <path:secret/data/nextcloud#MYSQL_USER>
 nextcloud:
   persistence:
-    storageClass: "longhorn-ha"
+    storageClass: longhorn-replica-2
     accessModes:
       - ReadWriteMany
     size: 1Gi

@@ -16,7 +16,7 @@ spec:
       # コピー元 PVC の容量以上を指定
       storage: 1Gi
   # この StorageClass は ext4 でフォーマットされた Longhorn ボリュームを作成
-  storageClassName: longhorn-ha
+  storageClassName: longhorn-replica-2
   volumeMode: Filesystem
 ---
 apiVersion: batch/v1
