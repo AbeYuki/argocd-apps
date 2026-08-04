@@ -1,0 +1,17 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-replica-2
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+parameters:
+  backupTargetName: default
+  dataEngine: v1
+  numberOfReplicas: "2"
+  dataLocality: disabled
+  fsType: ext4
+  fromBackup: ""
+  staleReplicaTimeout: "30"
+  unmapMarkSnapChainRemoved: ignored
