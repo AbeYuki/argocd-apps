@@ -2,6 +2,18 @@ replicaCount: 2
 
 strategyType: RollingUpdate
 
+nfs:
+  mountOptions:
+    - vers=4.2
+    - hard
+    - timeo=600
+    - retrans=5
+    - noresvport
+    - max_connect=2 
+
+storageClass:
+  accessModes: ReadWriteMany
+
 podDisruptionBudget:
   enabled: true
   maxUnavailable: 1
