@@ -6,6 +6,11 @@ crds:
 defaultRules:
   create: true
   rules:
+    # 24h retention の小規模クラスタで 1d/3d の raw series を毎分走査すると
+    # Prometheus の rule evaluation がディスク律速になるため無効化
+    kubeApiserverBurnrate: false
+    # apiserver_request:burnrate* recording rule に依存する alert も無効化
+    kubeApiserverSlos: false
     windows: false
   disabled:
     CPUThrottlingHigh: true
@@ -61,6 +66,16 @@ kubelet:
   enabled: true
   serviceMonitor:
     interval: 60s
+    metricRelabelings:
+      # kube-prometheus-stack の既定値。kubelet storage histogram の不要なbucket を削減
+      - action: drop
+        sourceLabels: [__name__, le]
+        regex: (csi_operations|storage_operation_duration)_seconds_bucket;(0.25|2.5|15|25|120|600)(\.0)?
+      # k3s server は kubelet /metrics に control-plane component の metrics も公開
+      # 専用の apiserver scrape と重複するため kubelet 側では保存しない
+      - action: drop
+        sourceLabels: [__name__]
+        regex: (apiserver_.*|etcd_.*|watch_cache_.*)
 
 kubeControllerManager:
   enabled: false
@@ -202,7 +217,7 @@ prometheus:
         memory: 3Gi
       limits:
         memory: 5Gi
-    # compaction 中は health endpoint の応答が一時的に遅延する可能性がある
+    # compaction 中は health endpoint の応答が一時的に遅延する可能性があり
     # 復旧不能と判定して再起動するまで、5分間の猶予を設定
     containers:
       - name: prometheus
