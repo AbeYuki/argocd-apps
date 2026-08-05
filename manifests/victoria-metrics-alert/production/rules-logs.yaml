@@ -144,7 +144,6 @@ server:
               severity: critical
             annotations:
               summary: "USBデバイスのリセットが発生"
-
         - name: application
           type: vlogs 
           interval: 1m
