@@ -354,6 +354,7 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+              - ServerSideApply=true
           - name: nfs-provisioner
             namespace: nfs-provisioner
             repoURL: https://github.com/AbeYuki/argocd-apps.git
