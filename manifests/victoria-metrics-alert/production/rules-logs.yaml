@@ -133,6 +133,18 @@ server:
               severity: critical
             annotations:
               summary: "外部からSSHログイン"
+          - alert: ResetUsbDevice
+            expr: |
+              _KERNEL_SUBSYSTEM:"usb"
+              "reset SuperSpeed USB device"
+              | stats by (_HOSTNAME) count() as matches
+              | filter matches:>0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: "USBデバイスのリセットが発生"
+
         - name: application
           type: vlogs 
           interval: 1m
