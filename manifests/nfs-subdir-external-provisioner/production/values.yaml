@@ -9,7 +9,6 @@ nfs:
     - timeo=600
     - retrans=5
     - noresvport
-    - max_connect=2 
 
 storageClass:
   accessModes: ReadWriteMany
