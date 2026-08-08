@@ -259,15 +259,15 @@ server:
               description: "{{ $labels.name }} サービスがハングアップしている可能性あり"
         - name: block_discard
           rules:
-          - alert: NodeSSDDiscardUnsupported
-            expr: |
-              node_block_discard_supported{rotational="0"} == 0
-            for: 15m
-            labels:
-              severity: warning
-            annotations:
-              summary: "{{ $labels.hostname }} の {{ $labels.device }} でTRIM/discardが利用不可"
-              description: "Linux block layerがSSDのdiscardを公開していません (provisioning_mode={{ $labels.provisioning_mode }})。USB-SATAブリッジのTRIM/UNMAPパススルーを確認してください。"
+          #- alert: NodeSSDDiscardUnsupported
+          #  expr: |
+          #    node_block_discard_supported{rotational="0"} == 0
+          #  for: 15m
+          #  labels:
+          #    severity: warning
+          #  annotations:
+          #    summary: "{{ $labels.hostname }} の {{ $labels.device }} でTRIM/discardが利用不可"
+          #    description: "Linux block layerがSSDのdiscardを公開していません (provisioning_mode={{ $labels.provisioning_mode }})。USB-SATAブリッジのTRIM/UNMAPパススルーを確認してください。"
           - alert: NodeBlockDiscardMetricsMissing
             expr: |
               up{job="node-exporter", namespace="monitoring"} == 1
