@@ -308,7 +308,7 @@ server:
               on(instance, hostname) group_left
               count by(instance, hostname) (node_cpu_seconds_total{mode="idle"})
               > 2
-            for: 2m
+            for: 15m
             labels:
               severity: warning
             annotations:
