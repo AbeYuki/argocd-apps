@@ -1,3 +1,7 @@
+# Raspberry Pi 環境ではリソースが潤沢ではなく、１つの Node でリソースが枯渇すると I/O がボトルネックになりload が高騰する
+# その結果、 Longhorn が NG になり Rebuild が発生し、Rebuild の影響で連鎖的に複数の Node がハングアップしてしまう事象が発生する可能性がある
+# 主に Rebuild を抑制する設定を追加することで、Raspberry Pi 環境での安定稼働を維持する
+
 persistence:
   defaultDataLocality: "disabled"
 preUpgradeChecker:
@@ -7,11 +11,12 @@ defaultSettings:
   nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
   # full rebuild を発生しないようにメンテナンス時の一時的な Unhealthy を許容する
   nodeDrainPolicy: "block-if-contains-last-replica"
-  # メンテナンス中に レプリカをすぐに作り直さない(10分間待つ)
+  # メンテナンスや一時的な Longhorn が停止中に レプリカをすぐに作り直さない(10分間待つ)
+  # 障害時の冗長性回復のバランスを考慮する
   replicaReplenishmentWaitInterval: 600
   # 1つのノードで同時に再構築する Replica の数を制限する
   concurrentReplicaRebuildPerNodeLimit: 1
-  # offline node の Replica を自動で再構築しない
+  # Volume が Detach されている状態では、degraded replica の rebuild を行わない
   offlineReplicaRebuilding: false
   replicaAutoBalance: "disabled"
   engineReplicaTimeout: 15
