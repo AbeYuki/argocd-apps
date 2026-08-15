@@ -4,12 +4,14 @@ preUpgradeChecker:
   jobEnabled: false
 defaultSettings:
   defaultDataLocality: "disabled"
-  defaultLonghornStaticStorageClass: "longhorn"
   nodeDownPodDeletionPolicy: "delete-both-statefulset-and-deployment-pod"
   # full rebuild を発生しないようにメンテナンス時の一時的な Unhealthy を許容する
   nodeDrainPolicy: "block-if-contains-last-replica"
+  # メンテナンス中に レプリカをすぐに作り直さない(10分間待つ)
   replicaReplenishmentWaitInterval: 600
+  # 1つのノードで同時に再構築する Replica の数を制限する
   concurrentReplicaRebuildPerNodeLimit: 1
+  # offline node の Replica を自動で再構築しない
   offlineReplicaRebuilding: false
   replicaAutoBalance: "disabled"
   engineReplicaTimeout: 15
