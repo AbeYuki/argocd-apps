@@ -258,10 +258,10 @@ spec:
               - CreateNamespace=true
           - name: immich
             namespace: immich
-            repoURL: https://github.com/AbeYuki/immich-k8s.git
-            path: production/
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/immich/production/
             plugin: ""
-            autoSync: true
+            autoSync: false
             syncOptions:
               - CreateNamespace=true
           #- name: immich-dev
