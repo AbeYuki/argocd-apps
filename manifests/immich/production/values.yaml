@@ -54,3 +54,16 @@ postgres:
       POSTGRES_PASSWORD: <DB_PASSWORD>
       POSTGRES_USER: <DB_USERNAME>
       POSTGRES_DB: <DB_DATABASE_NAME>
+machineLearning:
+  resources:
+    requests:
+      memory: 1024Mi
+      cpu: "0.5"
+    limits:
+      memory: 2048Mi
+      cpu: "1"
+  persistence:
+    storageClassName: "local-path"
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
