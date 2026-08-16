@@ -8,10 +8,10 @@ server:
       memory: 2048Mi
       cpu: "1"
   persistence:
-    storageClassName: "nfs-g9-enp5s0-rwx"
+    storageClassName: "nfs-apps"
     accessModes:
       - ReadWriteMany
-    size: 10Gi
+    size: 50Gi
   secret:
     annotations:
       avp.kubernetes.io/path: "secret/data/immich"
