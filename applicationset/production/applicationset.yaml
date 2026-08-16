@@ -260,7 +260,7 @@ spec:
             namespace: immich
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/immich/production/
-            plugin: ""
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
             autoSync: false
             syncOptions:
               - CreateNamespace=true
