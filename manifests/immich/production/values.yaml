@@ -63,7 +63,7 @@ machineLearning:
       memory: 2048Mi
       cpu: "1"
   persistence:
-    storageClassName: "local-path"
+    storageClassName: "longhorn-replica-1"
     accessModes:
       - ReadWriteOnce
     size: 1Gi
