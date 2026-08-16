@@ -24,19 +24,19 @@ server:
   immichConfig:
     immich.yaml: |
       server:
-        externalDomain: "https://<EXTERNAL_DOMAIN>"
+        externalDomain: "<path:secret/data/immich#EXTERNAL_DOMAIN>"
       passwordLogin:
-        enabled: false
+        enabled: true
       oauth:
         enabled: true
-        issuerUrl: "https://accounts.google.com"
-        clientId: <path:secret/data/oauth-client/google/immich#client_id>
-        clientSecret: <path:secret/data/oauth-client/google/immich#client_secret>
+        issuerUrl: "https://dex.aimhighergg.com"
+        clientId: <path:secret/data/oauth-client/dex/immich#client_id>
+        clientSecret: <path:secret/data/oauth-client/dex/immich#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
-        mobileRedirectUri: "https://<EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
-        autoRegister: false
+        mobileRedirectUri: "<path:secret/data/immich#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        autoRegister: true
       machineLearning:
         enabled: true
         urls:
