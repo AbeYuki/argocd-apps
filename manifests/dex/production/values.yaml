@@ -64,10 +64,7 @@ config:
       name: Vault
       secret: <path:secret/data/oauth-client/dex/vault#client_secret>
       redirectURIs:
-        - "<path:secret/data/vault#EXTERNAL_DOMAIN>/auth/login"
-        - "<path:secret/data/vault#EXTERNAL_DOMAIN>/user-settings"
-        - "<path:secret/data/vault#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
-
+        - "<path:secret/data/oauth-client/dex/vault#redirect_uri>"
 
 
 serviceAccount:
