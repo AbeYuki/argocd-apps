@@ -38,6 +38,7 @@ spec:
               cp -a /home/runner/. /runner-assets/
               test -s /runner-assets/k8s/index.js
               chown -R 1001:1001 /runner-assets
+          resources: {}
           securityContext:
             runAsUser: 0
           volumeMounts:
