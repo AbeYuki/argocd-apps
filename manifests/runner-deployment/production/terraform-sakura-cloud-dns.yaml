@@ -26,7 +26,8 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            # Leave room for providers, downloads, Terraform and runner temp files.
+            storage: 10Gi
       initContainers:
         - name: runner-assets
           # /home/runner/k8s contains the volume-based hooks (0.7.0).
