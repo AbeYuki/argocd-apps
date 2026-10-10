@@ -51,6 +51,8 @@ config:
         clientID: <path:secrets/data/oauth-client/google/dex#client_id>
         clientSecret: <path:secrets/data/oauth-client/google/dex#client_secret>
         redirectURI: https://dex.aimhighergg.com/callback
+        providerDiscoveryOverrides:
+          authURL: "https://accounts.google.com/o/oauth2/v2/auth?prompt=select_account"
         promptType: select_account
 
   staticClients:
