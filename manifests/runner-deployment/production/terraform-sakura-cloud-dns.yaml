@@ -4,27 +4,55 @@ metadata:
   name: arc-runner-terraform-sakura-cloud-dns
   namespace: arc-system
 spec:
-  replicas: 1
+  replicas: 3
   template:
     spec:
       repository: AbeYuki/terraform-sakura-cloud-dns
+      ephemeral: true
+      image: summerwind/actions-runner:ubuntu-22.04
+      nodeSelector:
+        kubernetes.io/arch: arm64
       labels:
         - self-hosted
         - kubernetes
         - arm64
       containerMode: kubernetes
       serviceAccountName: arc-runner-sa
+      # Kubernetes hooks share this generic ephemeral PVC with job/action Pods.
+      # emptyDir cannot be shared between Pods.
       workVolumeClaimTemplate:
         storageClassName: "longhorn"
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            # Leave room for providers, downloads, Terraform and runner temp files.
+            storage: 10Gi
+      initContainers:
+        - name: runner-assets
+          # /home/runner/k8s contains the volume-based hooks (0.7.0).
+          # Do not use k8s-novolume: event.json copying has known regressions.
+          image: ghcr.io/actions/actions-runner:2.338.0
+          command: ["/bin/sh", "-ec"]
+          args:
+            - |
+              cp -a /home/runner/. /runner-assets/
+              test -s /runner-assets/k8s/index.js
+              chown -R 1001:1001 /runner-assets
+          resources: {}
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: runner-assets
+              mountPath: /runner-assets
+      volumes:
+        - name: runner-assets
+          emptyDir: {}
+      volumeMounts:
+        # The legacy startup script copies RUNNER_ASSETS_DIR into /runner.
+        - name: runner-assets
+          mountPath: /runnertmp
+          readOnly: true
       env:
-        - name: ACTIONS_RUNNER_POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
-          value: "true"
+        - name: RUNNER_ASSETS_DIR
+          value: /runnertmp
