@@ -51,6 +51,9 @@ config:
         clientID: <path:secrets/data/oauth-client/google/dex-dev#client_id>
         clientSecret: <path:secrets/data/oauth-client/google/dex-dev#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
+        # promptType は offline_access 要求時のみ適用されるため、認可 URL にも指定する。
+        providerDiscoveryOverrides:
+          authURL: "https://accounts.google.com/o/oauth2/v2/auth?prompt=select_account"
         promptType: select_account
 
   staticClients:
