@@ -64,14 +64,25 @@ spec:
             - name: nextcloud-data
               mountPath: /var/lib/nextcloud
             {{- end }}
-          {{- if .Values.nextcloud.persistence.data.enabled }}
-          env:
-            - name: NEXTCLOUD_DATA_DIR
-              value: "/var/lib/nextcloud/data"
-          {{- end }}
           envFrom:
             - secretRef:
                 name: {{ include "nextcloud.fullname" . }}-nextcloud
+{{/* SSO/OIDC 設定 */}}
+{{- if and $.Values.sso.enabled $.Values.sso.clientId }}
+          env:
+            - name: NEXTCLOUD_DATA_DIR
+              value: "/var/lib/nextcloud/data"
+            - name: NEXTCLOUD_OIDC_ENABLED
+              value: "true"
+            - name: NEXTCLOUD_OIDC_PROVIDER
+              value: {{ $.Values.sso.provider | default "openid" | quote }}
+            - name: NEXTCLOUD_OIDC_SCOPES
+              value: {{ $.Values.sso.scopes | default "openid profile email" | quote }}
+{{- else if .Values.nextcloud.persistence.data.enabled }}
+          env:
+            - name: NEXTCLOUD_DATA_DIR
+              value: "/var/lib/nextcloud/data"
+        {{- end }}
       volumes:
         - name: nextcloud
           persistentVolumeClaim:

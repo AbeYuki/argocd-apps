@@ -43,7 +43,7 @@ config:
     #    insecureSkipEmailVerified: true
     #    claimMapping:
     #      email: preferred_username
-    #- type: oidc
+    - type: oidc
       id: google
       name: Google
       config:

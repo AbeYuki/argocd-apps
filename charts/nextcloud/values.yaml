@@ -308,6 +308,35 @@ nextcloud:
 
   affinity: {}
 
+# SSO/OIDC 設定 (Single Sign-On)
+sso:
+  # OIDC を有効にする (false の場合、標準の Nextcloud ログインを使用)
+  enabled: false
+  
+  # OIDC プロバイダーの設定
+  provider: ""  # "keycloak", "okta", "auth0" など。カスタム OIDC の場合は空文字
+  
+  # OIDC 設定（プロバイダー固有の値は後で上書き可能）
+  issuer: ""       # OIDC エンドポイント (例：https://idp.example.com/.well-known/openid-configuration)
+  clientId: ""     # クライアント ID
+  clientSecret: "" # クライアントシークレット（secret に保存される）
+  
+  # Nextcloud アプリの設定
+  app:
+    enabled: true   # nextcloud_oidc プロバイダーアプリを有効化
+  
+  # 追加の OIDC スコープ（デフォルト：openid profile email）
+  scopes: ""       # スペース区切りで複数指定 (例："openid profile email groups")
+  
+  # ユーザーマッピング設定
+  userMapping:
+    # Nextcloud のユーザー名に使用する OIDC クレーム
+    usernameClaim: "preferred_username"
+    # メールアドレスに使用する OIDC クレーム
+    emailClaim: "email"
+    # 表示名に使用する OIDC クレーム
+    displayNameClaim: "name"
+
 redis:
   replicaCount: 1
   image:
