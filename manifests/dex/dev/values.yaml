@@ -60,6 +60,12 @@ config:
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+    - id: <path:secrets/data/oauth-client/dex-dev/bloggg#client_id>
+      name: Bloggg
+      secret: <path:secrets/data/oauth-client/dex/bloggg#client_secret>
+      redirectURIs:
+        - "<path:secrets/data/oauth-client/dex/bloggg-dev#redirect_uri>"
+        - http://localhost:8080/api/auth/callback
 
 serviceAccount:
   create: true
