@@ -2,16 +2,16 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: <path:secret/data/viteful/dev/namespace#NAMESPACE>
-  namespace: <path:secret/data/viteful/dev/namespace#NAMESPACE>
+  name: <path:secrets/data/viteful/dev/namespace#NAMESPACE>
+  namespace: <path:secrets/data/viteful/dev/namespace#NAMESPACE>
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<path:secret/data/viteful/dev/ingress#HOST>`) && PathPrefix(`/`)
+    - match: Host(`<path:secrets/data/viteful/dev/ingress#HOST>`) && PathPrefix(`/`)
       kind: Rule
       services:
         - name: viteful-frontend
           port: 80
   tls:
-    secretName: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
+    secretName: <path:secrets/data/viteful/dev/namespace#NAMESPACE>-tls

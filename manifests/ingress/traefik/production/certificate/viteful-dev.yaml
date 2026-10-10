@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
-  namespace: <path:secret/data/viteful/dev/namespace#NAMESPACE>
+  name: <path:secrets/data/viteful/dev/namespace#NAMESPACE>-tls
+  namespace: <path:secrets/data/viteful/dev/namespace#NAMESPACE>
 spec:
-  secretName: <path:secret/data/viteful/dev/namespace#NAMESPACE>-tls
+  secretName: <path:secrets/data/viteful/dev/namespace#NAMESPACE>-tls
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-prod-http01-traefik
   dnsNames:
-    - <path:secret/data/viteful/dev/ingress#HOST>
+    - <path:secrets/data/viteful/dev/ingress#HOST>

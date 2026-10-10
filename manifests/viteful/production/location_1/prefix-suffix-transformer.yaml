@@ -1,8 +1,8 @@
 apiVersion: builtin
 kind: PrefixSuffixTransformer
 metadata:
-  name: prefixsuffix-transformer-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
-suffix: -<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+  name: prefixsuffix-transformer-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
+suffix: -<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
 fieldSpecs:
   - path: metadata/name
   - path: spec/template/spec/containers/name

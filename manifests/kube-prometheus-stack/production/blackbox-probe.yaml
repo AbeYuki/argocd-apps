@@ -18,8 +18,8 @@ spec:
     staticConfig:
       static:
         - https://www.aimhighergg.com/
-        - "<path:secret/data/monitoring-k8s/prometheus#private_url_1>"
-        - "<path:secret/data/monitoring-k8s/prometheus#private_url_2>"
-        - "<path:secret/data/monitoring-k8s/prometheus#private_url_3>"
+        - "<path:secrets/data/monitoring-k8s/prometheus#private_url_1>"
+        - "<path:secrets/data/monitoring-k8s/prometheus#private_url_2>"
+        - "<path:secrets/data/monitoring-k8s/prometheus#private_url_3>"
       labels:
         probe_type: http_status

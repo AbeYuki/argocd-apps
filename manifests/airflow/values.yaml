@@ -10,21 +10,21 @@ migrateDatabaseJob:
 executor: "KubernetesExecutor"
 data:
   metadataConnection:
-    user: <path:secret/data/airflow/database#USERNAME>
-    pass: <path:secret/data/airflow/database#PASSWORD>
+    user: <path:secrets/data/airflow/database#USERNAME>
+    pass: <path:secrets/data/airflow/database#PASSWORD>
     protocol: postgresql
     host: "airflow-postgresql"
     port: 5432
-    db: <path:secret/data/airflow/database#DATABASE>
+    db: <path:secrets/data/airflow/database#DATABASE>
     sslmode: disable
 redis:
-  password: <path:secret/data/airflow/redis#PASSWORD>
+  password: <path:secrets/data/airflow/redis#PASSWORD>
 postgresql:
   enabled: false
 dags:
   gitSync:
     enabled: true
-    repo: <path:secret/data/github/private-repo-url#REPO_URL_8>
+    repo: <path:secrets/data/github/private-repo-url#REPO_URL_8>
     branch: main
     rev: HEAD
     depth: 1

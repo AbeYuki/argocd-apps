@@ -32,9 +32,9 @@ config:
     #  id: entra-id
     #  name: Microsoft Entra ID
     #  config:
-    #    issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex#tenant_id>/v2.0"
-    #    clientID: <path:secret/data/oauth-client/entra-id/dex#client_id>
-    #    clientSecret: <path:secret/data/oauth-client/entra-id/dex#client_secret>
+    #    issuer: "https://login.microsoftonline.com/<path:secrets/data/oauth-client/entra-id/dex#tenant_id>/v2.0"
+    #    clientID: <path:secrets/data/oauth-client/entra-id/dex#client_id>
+    #    clientSecret: <path:secrets/data/oauth-client/entra-id/dex#client_secret>
     #    redirectURI: https://dex.aimhighergg.com/callback
     #    scopes:
     #      - profile
@@ -48,24 +48,29 @@ config:
       name: Google
       config:
         issuer: https://accounts.google.com
-        clientID: <path:secret/data/oauth-client/google/dex#client_id>
-        clientSecret: <path:secret/data/oauth-client/google/dex#client_secret>
+        clientID: <path:secrets/data/oauth-client/google/dex#client_id>
+        clientSecret: <path:secrets/data/oauth-client/google/dex#client_secret>
         redirectURI: https://dex.aimhighergg.com/callback
 
   staticClients:
-    - id: <path:secret/data/oauth-client/dex/immich#client_id>
+    - id: <path:secrets/data/oauth-client/dex/immich#client_id>
       name: Immich
-      secret: <path:secret/data/oauth-client/dex/immich#client_secret>
+      secret: <path:secrets/data/oauth-client/dex/immich#client_secret>
       redirectURIs:
-        - "<path:secret/data/immich#EXTERNAL_DOMAIN>/auth/login"
-        - "<path:secret/data/immich#EXTERNAL_DOMAIN>/user-settings"
-        - "<path:secret/data/immich#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
-    - id: <path:secret/data/oauth-client/dex/vault#client_id>
+        - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/auth/login"
+        - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/user-settings"
+        - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+    - id: <path:secrets/data/oauth-client/dex/vault#client_id>
       name: Vault
-      secret: <path:secret/data/oauth-client/dex/vault#client_secret>
+      secret: <path:secrets/data/oauth-client/dex/vault#client_secret>
       redirectURIs:
-        - "<path:secret/data/oauth-client/dex/vault#redirect_uri>"
-
+        - "<path:secrets/data/oauth-client/dex/vault#redirect_uri>"
+    - id: <path:secrets/data/oauth-client/dex/bloggg#client_id>
+      name: Bloggg
+      secret: <path:secrets/data/oauth-client/dex/bloggg#client_secret>
+      redirectURIs:
+        - "<path:secrets/data/oauth-client/dex/bloggg#redirect_uri>"
+        - http://localhost:8080/api/auth/callback
 
 serviceAccount:
   create: true

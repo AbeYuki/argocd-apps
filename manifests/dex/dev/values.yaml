@@ -32,9 +32,9 @@ config:
       id: entra-id
       name: Microsoft Entra ID
       config:
-        issuer: "https://login.microsoftonline.com/<path:secret/data/oauth-client/entra-id/dex-dev#tenant_id>/v2.0"
-        clientID: <path:secret/data/oauth-client/entra-id/dex-dev#client_id>
-        clientSecret: <path:secret/data/oauth-client/entra-id/dex-dev#client_secret>
+        issuer: "https://login.microsoftonline.com/<path:secrets/data/oauth-client/entra-id/dex-dev#tenant_id>/v2.0"
+        clientID: <path:secrets/data/oauth-client/entra-id/dex-dev#client_id>
+        clientSecret: <path:secrets/data/oauth-client/entra-id/dex-dev#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
         scopes:
           - profile
@@ -48,18 +48,18 @@ config:
       name: Google
       config:
         issuer: https://accounts.google.com
-        clientID: <path:secret/data/oauth-client/google/dex-dev#client_id>
-        clientSecret: <path:secret/data/oauth-client/google/dex-dev#client_secret>
+        clientID: <path:secrets/data/oauth-client/google/dex-dev#client_id>
+        clientSecret: <path:secrets/data/oauth-client/google/dex-dev#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
 
   staticClients:
-    - id: <path:secret/data/oauth-client/dex-dev/immich-dev#client_id>
+    - id: <path:secrets/data/oauth-client/dex-dev/immich-dev#client_id>
       name: Immich Dev
-      secret: <path:secret/data/oauth-client/dex-dev/immich-dev#client_secret>
+      secret: <path:secrets/data/oauth-client/dex-dev/immich-dev#client_secret>
       redirectURIs:
-        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
-        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"
-        - "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
+        - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"
+        - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
 
 serviceAccount:
   create: true

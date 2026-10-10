@@ -442,7 +442,7 @@ spec:
             syncOptions:
               - CreateNamespace=true
           #- name: viteful-dev
-          #  namespace:  <path:secret/data/viteful/dev/namespace#NAMESPACE>
+          #  namespace:  <path:secrets/data/viteful/dev/namespace#NAMESPACE>
           #  repoURL: https://github.com/AbeYuki/argocd-apps.git
           #  path: ./manifests/viteful/dev
           #  plugin: ""
@@ -450,7 +450,7 @@ spec:
           #  syncOptions:
           #    - CreateNamespace=true
           - name: viteful
-            namespace:  <path:secret/data/viteful/production/namespace#NAMESPACE>
+            namespace:  <path:secrets/data/viteful/production/namespace#NAMESPACE>
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/viteful/production
             plugin: ""

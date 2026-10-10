@@ -52,7 +52,7 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: ip-whitelist
-  namespace: <path:secret/data/ingress/app_1#namespace>
+  namespace: <path:secrets/data/ingress/app_1#namespace>
 spec:
   ipWhiteList:
     sourceRange:
@@ -62,7 +62,7 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: ip-whitelist
-  namespace: <path:secret/data/ingress/app_2#namespace>
+  namespace: <path:secrets/data/ingress/app_2#namespace>
 spec:
   ipWhiteList:
     sourceRange:

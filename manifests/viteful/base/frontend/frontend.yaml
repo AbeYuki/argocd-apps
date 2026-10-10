@@ -18,7 +18,7 @@ spec:
         - name: registry-credentials
       containers:
         - name: frontend
-          image: <path:secret/data/viteful/dev/registry#FRONTEND_IMAGE>:0.1.0
+          image: <path:secrets/data/viteful/dev/registry#FRONTEND_IMAGE>:0.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80

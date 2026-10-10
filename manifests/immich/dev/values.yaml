@@ -22,18 +22,18 @@ server:
   immichConfig:
     immich.yaml: |
       server:
-        externalDomain: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>"
+        externalDomain: "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>"
       passwordLogin:
         enabled: true
       oauth:
         enabled: true
         issuerUrl: "https://dex-dev.aimhighergg.com"
-        clientId: <path:secret/data/oauth-client/dex-dev/immich-dev#client_id>
-        clientSecret: <path:secret/data/oauth-client/dex-dev/immich-dev#client_secret>
+        clientId: <path:secrets/data/oauth-client/dex-dev/immich-dev#client_id>
+        clientSecret: <path:secrets/data/oauth-client/dex-dev/immich-dev#client_secret>
         scope: "openid email profile"
         signingAlgorithm: "RS256"
         mobileOverrideEnabled: true
-        mobileRedirectUri: "<path:secret/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        mobileRedirectUri: "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
         autoRegister: true
       machineLearning:
         enabled: true

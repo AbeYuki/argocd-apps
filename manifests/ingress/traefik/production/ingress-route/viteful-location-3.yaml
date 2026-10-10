@@ -2,44 +2,44 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_3>-<path:secret/data/viteful/production/namespace#NAMESPACE>
-  namespace: <path:secret/data/viteful/production/namespace#NAMESPACE>
+  name: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_3>-<path:secrets/data/viteful/production/namespace#NAMESPACE>
+  namespace: <path:secrets/data/viteful/production/namespace#NAMESPACE>
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/.+教室(/.*)?$`)
+    - match: Host(`<path:secrets/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/.+教室(/.*)?$`)
       kind: Rule
       middlewares:
-        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+        - name: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secrets/data/viteful/production/namespace#NAMESPACE>-redirect
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+        - name: viteful-frontend-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/category(/.*)?$`)
+    - match: Host(`<path:secrets/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/category(/.*)?$`)
       kind: Rule
       middlewares:
-        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+        - name: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secrets/data/viteful/production/namespace#NAMESPACE>-redirect
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+        - name: viteful-frontend-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/お問い合わせ(/.*)?$`)
+    - match: Host(`<path:secrets/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/お問い合わせ(/.*)?$`)
       kind: Rule
       middlewares:
-        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+        - name: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secrets/data/viteful/production/namespace#NAMESPACE>-redirect
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+        - name: viteful-frontend-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/20[0-9]{2}.*$`)
+    - match: Host(`<path:secrets/data/viteful/production/ingress#HOST_3>`) && PathRegexp(`^/20[0-9]{2}.*$`)
       kind: Rule
       middlewares:
-        - name: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secret/data/viteful/production/namespace#NAMESPACE>-redirect
+        - name: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>-<path:secrets/data/viteful/production/namespace#NAMESPACE>-redirect
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_1>
+        - name: viteful-frontend-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_1>
           port: 80
-    - match: Host(`<path:secret/data/viteful/production/ingress#HOST_3>`) && PathPrefix(`/`)
+    - match: Host(`<path:secrets/data/viteful/production/ingress#HOST_3>`) && PathPrefix(`/`)
       kind: Rule
       services:
-        - name: viteful-frontend-<path:secret/data/viteful/production/env#VITE_LOCATION_NAME_3>
+        - name: viteful-frontend-<path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_3>
           port: 80
   tls:
-    secretName: <path:secret/data/viteful/production/env#VITE_LOCATION_NAME_3>-<path:secret/data/viteful/production/namespace#NAMESPACE>-tls
+    secretName: <path:secrets/data/viteful/production/env#VITE_LOCATION_NAME_3>-<path:secrets/data/viteful/production/namespace#NAMESPACE>-tls
