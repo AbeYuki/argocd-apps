@@ -28,22 +28,22 @@ config:
   enablePasswordDB: false
 
   connectors:
-    - type: oidc
-      id: entra-id
-      name: Microsoft Entra ID
-      config:
-        issuer: "https://login.microsoftonline.com/<path:secrets/data/oauth-client/entra-id/dex-dev#tenant_id>/v2.0"
-        clientID: <path:secrets/data/oauth-client/entra-id/dex-dev#client_id>
-        clientSecret: <path:secrets/data/oauth-client/entra-id/dex-dev#client_secret>
-        redirectURI: https://dex-dev.aimhighergg.com/callback
-        scopes:
-          - profile
-          - email
-        # emailクレームがなければ、preferred_usernameをDexのメールアドレスとして扱う
-        insecureSkipEmailVerified: true
-        claimMapping:
-          email: preferred_username
-    - type: oidc
+    #- type: oidc
+    #  id: entra-id
+    #  name: Microsoft Entra ID
+    #  config:
+    #    issuer: "https://login.microsoftonline.com/<path:secrets/data/oauth-client/entra-id/dex-dev#tenant_id>/v2.0"
+    #    clientID: <path:secrets/data/oauth-client/entra-id/dex-dev#client_id>
+    #    clientSecret: <path:secrets/data/oauth-client/entra-id/dex-dev#client_secret>
+    #    redirectURI: https://dex-dev.aimhighergg.com/callback
+    #    scopes:
+    #      - profile
+    #      - email
+    #    # emailクレームがなければ、preferred_usernameをDexのメールアドレスとして扱う
+    #    insecureSkipEmailVerified: true
+    #    claimMapping:
+    #      email: preferred_username
+    #- type: oidc
       id: google
       name: Google
       config:
@@ -51,6 +51,7 @@ config:
         clientID: <path:secrets/data/oauth-client/google/dex-dev#client_id>
         clientSecret: <path:secrets/data/oauth-client/google/dex-dev#client_secret>
         redirectURI: https://dex-dev.aimhighergg.com/callback
+        promptType: select_account
 
   staticClients:
     - id: <path:secrets/data/oauth-client/dex-dev/immich-dev#client_id>
