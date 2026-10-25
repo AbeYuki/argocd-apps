@@ -11,7 +11,7 @@ spec:
       kind: Rule
       middlewares:
         - name: ip-whitelist
-          namespace: nextcloud
+          namespace: nextcloud-dev
         #- name: basic-auth
         #  namespace: nextcloud
       services:
