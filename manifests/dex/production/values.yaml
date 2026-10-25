@@ -54,6 +54,11 @@ config:
         providerDiscoveryOverrides:
           authURL: "https://accounts.google.com/o/oauth2/v2/auth?prompt=select_account"
         promptType: select_account
+        # https://dexidp.io/docs/configuration/custom-scopes-claims-clients/
+        # openid は自動追加されるので指定不要
+        scopes:
+          - profile
+          - email
 
   staticClients:
     - id: <path:secrets/data/oauth-client/dex/immich#client_id>
@@ -74,9 +79,9 @@ config:
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/bloggg#redirect_uri>"
         - http://localhost:8080/api/auth/callback
-    - id: <path:secrets/data/oauth-client/dex/nc/prod#client_id>
-      name: <path:secrets/data/oauth-client/dex/nc/prod#name>
-      secret: <path:secrets/data/oauth-client/dex/nc/prod#client_secret>
+    - id: <path:secrets/data/oauth-client/dex/nc/production#client_id>
+      name: <path:secrets/data/oauth-client/dex/nc/production#name>
+      secret: <path:secrets/data/oauth-client/dex/nc/production#client_secret>
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/nc/prod#redirect_uri>"
 

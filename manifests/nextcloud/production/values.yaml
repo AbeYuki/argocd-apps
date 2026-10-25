@@ -5,10 +5,10 @@ db:
       - ReadWriteOnce
     size: 1Gi
   secret:
-    MARIADB_ROOT_PASSWORD: <path:secrets/data/nextcloud#MYSQL_ROOT_PASSWORD>
-    MARIADB_PASSWORD: <path:secrets/data/nextcloud#MYSQL_PASSWORD>
-    MARIADB_DATABASE: <path:secrets/data/nextcloud#MYSQL_DATABASE>
-    MARIADB_USER: <path:secrets/data/nextcloud#MYSQL_USER>
+    MARIADB_ROOT_PASSWORD: <path:secrets/data/nextcloud/production#MYSQL_ROOT_PASSWORD>
+    MARIADB_PASSWORD: <path:secrets/data/nextcloud/production#MYSQL_PASSWORD>
+    MARIADB_DATABASE: <path:secrets/data/nextcloud/production#MYSQL_DATABASE>
+    MARIADB_USER: <path:secrets/data/nextcloud/production#MYSQL_USER>
 nextcloud:
   persistence:
     storageClass: longhorn-replica-2
@@ -22,8 +22,26 @@ nextcloud:
         - ReadWriteMany
       size: 5Gi
   secret:
-    MYSQL_PASSWORD: <path:secrets/data/nextcloud#MYSQL_PASSWORD>
-    MYSQL_DATABASE: <path:secrets/data/nextcloud#MYSQL_DATABASE>
-    MYSQL_USER: <path:secrets/data/nextcloud#MYSQL_USER>
-    NEXTCLOUD_TRUSTED_DOMAINS: <path:secrets/data/nextcloud#NEXTCLOUD_TRUSTED_DOMAINS>
-    TRUSTED_PROXIES: <path:secrets/data/nextcloud#TRUSTED_PROXIES>
+    NEXTCLOUD_ADMIN_USER: <path:secrets/data/nextcloud/production#NEXTCLOUD_ADMIN_USER>
+    NEXTCLOUD_ADMIN_PASSWORD: <path:secrets/data/nextcloud/production#NEXTCLOUD_ADMIN_PASSWORD>
+    MYSQL_PASSWORD: <path:secrets/data/nextcloud/production#MYSQL_PASSWORD>
+    MYSQL_DATABASE: <path:secrets/data/nextcloud/production#MYSQL_DATABASE>
+    MYSQL_USER: <path:secrets/data/nextcloud/production#MYSQL_USER>
+    NEXTCLOUD_TRUSTED_DOMAINS: <path:secrets/data/nextcloud/production#NEXTCLOUD_TRUSTED_DOMAINS>
+    OVERWRITEPROTOCOL: "https"
+    OVERWRITEHOST: <path:secrets/data/nextcloud/production#OVERWRITEHOST>
+    OVERWRITECLIURL: <path:secrets/data/nextcloud/production#OVERWRITECLIURL>
+    TRUSTED_PROXIES: <path:secrets/data/nextcloud/production#TRUSTED_PROXIES>
+sso:
+  enabled: true
+  provider: "dex"
+  issuer:  <path:secrets/data/nextcloud/production#ISSUER>
+  clientId: <path:secrets/data/oauth-client/dex/nc/production#client_id>
+  clientSecret: <path:secrets/data/oauth-client/dex/nc/production#client_secret>
+  app:
+    enabled: true 
+  scopes: "openid profile email"
+  userMapping:
+    usernameClaim: "sub"
+    emailClaim: "email"
+    displayNameClaim: "name"
