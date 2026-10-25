@@ -1,0 +1,11 @@
+{{- if .Values.sso.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nextcloud.fullname" . }}-sso
+  labels:
+    {{- include "nextcloud.labelsWithComponent" (dict "component" "nextcloud" "context" .) | nindent 4 }}
+data:
+  20-configure-oidc.sh: |
+    {{- .Files.Get "files/configure-oidc.sh" | nindent 4 }}
+{{- end }}
