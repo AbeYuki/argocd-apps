@@ -4,6 +4,7 @@ resources:
   - keycloak-aimhighergg-com.yaml
   - keycloak-dev-aimhighergg-com.yaml
   - nextcloud-aimhighergg-com.yaml
+  - nextcloud-dev-aimhighergg-com.yaml
   - traefik-dashboard.yaml
   - vault-aimhighergg-com.yaml
   - viteful-dev.yaml
