@@ -74,6 +74,11 @@ config:
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/bloggg#redirect_uri>"
         - http://localhost:8080/api/auth/callback
+    - id: <path:secrets/data/oauth-client/dex/nc/prod#client_id>
+      name: <path:secrets/data/oauth-client/dex/nc/prod#name>
+      secret: <path:secrets/data/oauth-client/dex/nc/prod#client_secret>
+      redirectURIs:
+        - "<path:secrets/data/oauth-client/dex/nc/prod#redirect_uri>"
 
 serviceAccount:
   create: true
