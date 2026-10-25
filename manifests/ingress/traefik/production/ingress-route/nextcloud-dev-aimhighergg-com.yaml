@@ -15,7 +15,7 @@ spec:
         #- name: basic-auth
         #  namespace: nextcloud
       services:
-        - name: nextcloud-nextcloud
+        - name: nextcloud-dev-nextcloud
           port: 80
   tls:
     secretName: nextcloud-dev-aimhighergg-com-tls
