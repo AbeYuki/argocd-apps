@@ -83,7 +83,7 @@ config:
       name: <path:secrets/data/oauth-client/dex/nc/production#name>
       secret: <path:secrets/data/oauth-client/dex/nc/production#client_secret>
       redirectURIs:
-        - "<path:secrets/data/oauth-client/dex/nc/prod#redirect_uri>"
+        - "<path:secrets/data/oauth-client/dex/nc/production#redirect_uri>"
 
 serviceAccount:
   create: true
