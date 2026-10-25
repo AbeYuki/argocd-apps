@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nextcloud-dev-aimhighergg-com-tls
+  namespace: nextcloud-dev
+spec:
+  secretName: nextcloud-dev-aimhighergg-com-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod-dns01
+  dnsNames:
+    - nextcloud-dev.aimhighergg.com
