@@ -457,6 +457,14 @@ spec:
             autoSync: false
             syncOptions:
               - CreateNamespace=true
+          - name: nextcloud-dev
+            namespace: nextcloud-dev
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/nextcloud/dev
+            plugin: argocd-vault-plugin-kustomize-helmcharts
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: nextcloud
             namespace: nextcloud
             repoURL: https://github.com/AbeYuki/argocd-apps.git
