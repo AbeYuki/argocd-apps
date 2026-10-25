@@ -205,6 +205,10 @@ nextcloud:
   # - MYSQL_HOST
   # - REDIS_HOST
   # - NEXTCLOUD_DATA_DIR
+    # Nextcloud の管理者ユーザー名
+    NEXTCLOUD_ADMIN_USER: ""
+    # Nextcloud の管理者パスワード
+    NEXTCLOUD_ADMIN_PASSWORD: ""
     # Nextcloud が DB 接続に使うパスワード
     MYSQL_PASSWORD: "nextcloud"
     # Nextcloud が利用する DB 名
@@ -239,7 +243,7 @@ nextcloud:
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "32.0.9-apache"
+    tag: "35.0.2-apache"
 
   # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   imagePullSecrets: []
@@ -310,32 +314,35 @@ nextcloud:
 
 # SSO/OIDC 設定 (Single Sign-On)
 sso:
-  # OIDC を有効にする (false の場合、標準の Nextcloud ログインを使用)
+  # before-starting フックで user_oidc の Provider 設定を作成・更新
+  # 標準ログインは残し false に戻しても DB 内の既存 Provider は削除しない
   enabled: false
-  
-  # OIDC プロバイダーの設定
-  provider: ""  # "keycloak", "okta", "auth0" など。カスタム OIDC の場合は空文字
-  
-  # OIDC 設定（プロバイダー固有の値は後で上書き可能）
-  issuer: ""       # OIDC エンドポイント (例：https://idp.example.com/.well-known/openid-configuration)
-  clientId: ""     # クライアント ID
-  clientSecret: "" # クライアントシークレット（secret に保存される）
-  
-  # Nextcloud アプリの設定
+
+  # user_oidc 内での固定識別名(空の場合は dex が使用される)
+  provider: ""
+
+  # sso.enabled=true の場合は以下の3項目が必須。
+  # これらの環境変数は公式イメージではなく、この chart の起動フックが読み取る。
+  issuer: ""       # NEXTCLOUD_OIDC_ISSUER: Discovery URL (https://dex.example.com/.well-known/openid-configuration)
+  clientId: ""     # NEXTCLOUD_OIDC_CLIENT_ID
+  clientSecret: "" # NEXTCLOUD_OIDC_CLIENT_SECRET (Secret に保存)
+
   app:
-    enabled: true   # nextcloud_oidc プロバイダーアプリを有効化
-  
-  # 追加の OIDC スコープ（デフォルト：openid profile email）
-  scopes: ""       # スペース区切りで複数指定 (例："openid profile email groups")
-  
+    # user_oidc が未導入ならインストールし、無効なら有効化
+    # false の場合は user_oidc を別途インストール・有効化しておく必要があり
+    enabled: true
+
+  # NEXTCLOUD_OIDC_SCOPES: 空の場合は "openid profile email"
+  scopes: ""
+
   # ユーザーマッピング設定
   userMapping:
-    # Nextcloud のユーザー名に使用する OIDC クレーム
-    usernameClaim: "preferred_username"
-    # メールアドレスに使用する OIDC クレーム
-    emailClaim: "email"
-    # 表示名に使用する OIDC クレーム
-    displayNameClaim: "name"
+    # Nextcloud のユーザー名に使用する OIDC クレーム: sub, preferred_username
+    usernameClaim: ""
+    # メールアドレスに使用する OIDC クレーム: email
+    emailClaim: ""
+    # 表示名に使用する OIDC クレーム: name
+    displayNameClaim: ""
 
 redis:
   replicaCount: 1
