@@ -42,6 +42,8 @@ server:
         urls:
           - http://immich-immich-ml:3003
 postgres:
+  config:
+    PGDATA: /var/lib/postgresql/data
   persistence:
     storageClassName: longhorn
     accessModes:
