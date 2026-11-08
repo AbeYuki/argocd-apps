@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "immich.labelsWithComponent" (dict "component" "redis" "context" .) | nindent 4 }}
 spec:
+  # 更新中もキューを処理するキャッシュが複数起動しないようにする
+  strategy:
+    type: Recreate
   replicas: {{ .Values.redis.replicaCount }}
   selector:
     matchLabels:

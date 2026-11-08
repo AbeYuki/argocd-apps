@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "immich.labelsWithComponent" (dict "component" "postgres" "context" .) | nindent 4 }}
 spec:
+  strategy:
+    type: Recreate
   replicas: {{ .Values.postgres.replicaCount }}
   selector:
     matchLabels:
@@ -13,6 +15,7 @@ spec:
     metadata:
       annotations:
         checksum/secret: {{ include (print $.Template.BasePath "/postgres-secret.yaml") . | sha256sum }}
+        checksum/config: {{ toYaml .Values.postgres.config | sha256sum }}
         {{- with .Values.postgres.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -46,6 +49,10 @@ spec:
           env:
             - name: TZ
               value: {{ .Values.global.timezone | quote }}
+            {{- range $key, $value := .Values.postgres.config }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ include "immich.postgresSecretName" . }}
@@ -56,7 +63,13 @@ spec:
           volumeMounts:
             - name: db-data
               mountPath: /var/lib/postgresql/data
+            - name: dshm
+              mountPath: /dev/shm
       volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: {{ .Values.postgres.shmSize }}
         - name: db-data
           persistentVolumeClaim:
             claimName: {{ .Values.postgres.persistence.existingClaim | default (include "immich.dbDataPvcName" .) | quote }}

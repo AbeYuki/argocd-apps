@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "immich.labelsWithComponent" (dict "component" "server" "context" .) | nindent 4 }}
 spec:
+  strategy:
+    {{- toYaml .Values.server.strategy | nindent 4 }}
   {{- if not .Values.server.autoscaling.enabled }}
   replicas: {{ .Values.server.replicaCount }}
   {{- end }}
@@ -61,6 +63,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
+            {{- if .Values.server.persistence.legacyLayout }}
             - name: immich-data
               mountPath: /usr/src/app/upload
               subPath: upload
@@ -79,6 +82,10 @@ spec:
             - name: immich-data
               mountPath: /usr/src/app/backups
               subPath: backups
+            {{- else }}
+            - name: immich-data
+              mountPath: /data
+            {{- end }}
             - name: localtime
               mountPath: /etc/localtime
               readOnly: true

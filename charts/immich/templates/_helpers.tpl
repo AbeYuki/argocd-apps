@@ -1,12 +1,12 @@
 {{/*
-Expand the name of the chart.
+チャート名を生成
 */}}
 {{- define "immich.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Create a default fully qualified app name.
+既定の完全修飾アプリケーション名を生成
 */}}
 {{- define "immich.fullname" -}}
 {{- if .Values.fullnameOverride }}
@@ -22,14 +22,14 @@ Create a default fully qualified app name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart label.
+ラベルに使用するチャート名とバージョンを生成
 */}}
 {{- define "immich.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Common labels.
+共通ラベル
 */}}
 {{- define "immich.labels" -}}
 helm.sh/chart: {{ include "immich.chart" . }}
@@ -42,7 +42,7 @@ environment: {{ .Values.global.environment | quote }}
 {{- end }}
 
 {{/*
-Selector labels.
+セレクター用ラベル
 */}}
 {{- define "immich.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "immich.name" . }}
@@ -50,7 +50,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Application label value for selectors.
+セレクターに使用するアプリケーションラベル
 */}}
 {{- define "immich.appLabel" -}}
 {{- if eq .component "server" -}}immich-server
@@ -60,7 +60,7 @@ Application label value for selectors.
 {{- end }}
 
 {{/*
-Selector labels with component.
+コンポーネント名を含むセレクター用ラベル
 */}}
 {{- define "immich.selectorLabelsWithComponent" -}}
 {{- $ctx := .context -}}
@@ -70,7 +70,7 @@ app: {{ include "immich.appLabel" . }}
 {{- end }}
 
 {{/*
-Common labels with component.
+コンポーネント名を含む共通ラベル
 */}}
 {{- define "immich.labelsWithComponent" -}}
 {{- $ctx := .context -}}
@@ -80,7 +80,7 @@ app: {{ include "immich.appLabel" . }}
 {{- end }}
 
 {{/*
-Component resource name.
+コンポーネントのリソース名
 */}}
 {{- define "immich.componentName" -}}
 {{- printf "%s-%s" (include "immich.fullname" .context) .component | trunc 63 | trimSuffix "-" }}
@@ -131,7 +131,7 @@ Component resource name.
 {{- end }}
 
 {{/*
-Create the name of the service account to use.
+使用するサービスアカウント名を生成
 */}}
 {{- define "immich.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}

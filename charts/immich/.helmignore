@@ -1,4 +1,4 @@
-# Patterns to ignore when building packages.
+# パッケージ作成時に除外するパターン。
 .DS_Store
 .git/
 .gitignore

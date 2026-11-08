@@ -48,21 +48,12 @@ helm uninstall <release-name> --namespace <namespace>
 
 ### Test
 
-```
-cd charts/nextcloud/
-```
-
-deploy
-
-```
-helm upgrade --install nextcloud ./ \
-    -f ../../manifests/nextcloud/production/values.yaml \
-    --namespace nextcloud-dev \
-    --create-namespace
+```sh
+make test-nextcloud
+make test-immich
 ```
 
-cleaning
-
-```
-helm uninstall nextcloud -n nextcloud-dev
+```sh
+make clean-nextcloud
+make clean-immich
 ```

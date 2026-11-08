@@ -8,7 +8,7 @@ server:
       memory: 2048Mi
       cpu: "1"
   persistence:
-    storageClassName: "nfs-g9-enp5s0-rwx"
+    storageClassName: "nfs-apps"
     accessModes:
       - ReadWriteMany
     size: 1Gi
@@ -40,6 +40,9 @@ server:
         urls:
           - http://immich-immich-ml:3003
 postgres:
+  config:
+    # 新規 PVC 直下の lost+found を避け、サブディレクトリに DB を作成
+    PGDATA: /var/lib/postgresql/data/pgdata
   persistence:
     storageClassName: longhorn-local
     accessModes:
