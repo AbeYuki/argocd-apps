@@ -6,7 +6,7 @@ global:
 
 server:
   replicaCount: 2
-  # DB・ファイルパスの移行を開始する前に旧バージョンを停止します。
+  # DB・ファイルパスの移行を開始する前に旧バージョンを停止
   strategy:
     type: Recreate
   image:
@@ -31,7 +31,7 @@ server:
     httpGet:
       path: /api/server/ping
       port: 2283
-    # DB の移行を待つため、再起動まで最大 10 分の猶予を設けます。
+    # DB の移行を待つため、再起動まで最大 10 分の猶予
     failureThreshold: 120
     periodSeconds: 5
     timeoutSeconds: 2
@@ -44,9 +44,9 @@ server:
     timeoutSeconds: 2
     failureThreshold: 6
   persistence:
-    # 既存環境では chart 0.1.x のマウント構成を維持します。
-    # 新規環境では false にすると PVC 全体を /data にマウントします。
-    # 既存環境で変更する場合は、先に README.md を確認してください。
+    # 既存環境では chart 0.1.x のマウント構成を維持
+    # 新規環境では false にすると PVC 全体を /data にマウント
+    # 既存環境で変更する場合は、先に README.md を確認
     legacyLayout: true
     existingClaim: ""
     storageClassName: ""
