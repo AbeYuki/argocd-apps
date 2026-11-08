@@ -73,6 +73,7 @@ config:
       secret: <path:secrets/data/oauth-client/dex/vault#client_secret>
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/vault#redirect_uri>"
+        - "http://localhost:8250/oidc/callback"
     - id: <path:secrets/data/oauth-client/dex/bloggg#client_id>
       name: Bloggg
       secret: <path:secrets/data/oauth-client/dex/bloggg#client_secret>
