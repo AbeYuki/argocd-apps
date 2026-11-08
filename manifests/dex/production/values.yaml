@@ -87,7 +87,7 @@ config:
       secret: <path:secrets/data/oauth-client/dex/nc/production#client_secret>
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/nc/production#redirect_uri>"
-        - http://localhost:8080/apps/user_oidc/code
+        - "http://localhost:8080/apps/user_oidc/code"
   
 
 serviceAccount:
