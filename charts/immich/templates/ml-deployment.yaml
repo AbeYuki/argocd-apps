@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "immich.labelsWithComponent" (dict "component" "immich-ml" "context" .) | nindent 4 }}
 spec:
+  strategy:
+    {{- toYaml .Values.machineLearning.strategy | nindent 4 }}
   replicas: {{ .Values.machineLearning.replicaCount }}
   selector:
     matchLabels:
@@ -39,6 +41,14 @@ spec:
           {{- end }}
           image: "{{ .Values.machineLearning.image.repository }}:{{ .Values.machineLearning.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.machineLearning.image.pullPolicy }}
+          {{- with .Values.machineLearning.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.machineLearning.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.machineLearning.resources | nindent 12 }}
           envFrom:

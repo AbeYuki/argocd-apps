@@ -1,4 +1,4 @@
-# Default values for immich.
+# Immich の既定値。
 
 global:
   environment: production
@@ -6,10 +6,15 @@ global:
 
 server:
   replicaCount: 2
+  # DB・ファイルパスの移行を開始する前に旧バージョンを停止
+  strategy:
+    type: Recreate
   image:
     repository: ghcr.io/immich-app/immich-server
     pullPolicy: IfNotPresent
-    tag: "v2.5.2"
+    # 空の場合は Chart.appVersion を使用
+    # イメージを変更する場合は指定
+    tag: ""
   service:
     type: ClusterIP
     port: 2283
@@ -26,7 +31,8 @@ server:
     httpGet:
       path: /api/server/ping
       port: 2283
-    failureThreshold: 30
+    # DB の移行を待つため、再起動まで最大 10 分の猶予
+    failureThreshold: 120
     periodSeconds: 5
     timeoutSeconds: 2
   readinessProbe:
@@ -38,14 +44,16 @@ server:
     timeoutSeconds: 2
     failureThreshold: 6
   persistence:
+    # 既存環境では chart 0.1.x のマウント構成を維持
+    # 新規環境では false にすると PVC 全体を /data にマウント
+    # 既存環境で変更する場合は、先に README.md を確認
+    legacyLayout: true
     existingClaim: ""
     storageClassName: ""
     accessModes:
       - ReadWriteMany
     size: 50Gi
   config:
-    UPLOAD_LOCATION: "./library"
-    DB_DATA_LOCATION: "./postgres"
     IMMICH_LOG_LEVEL: "warn"
   secret:
     annotations: {}
@@ -87,14 +95,29 @@ server:
 
 machineLearning:
   replicaCount: 1
+  strategy:
+    type: Recreate
   image:
     repository: ghcr.io/immich-app/immich-machine-learning
     pullPolicy: IfNotPresent
-    tag: "v2.5.2"
+    tag: ""
   service:
     type: ClusterIP
     port: 3003
     targetPort: 3003
+  startupProbe:
+    httpGet:
+      path: /ping
+      port: 3003
+    failureThreshold: 60
+    periodSeconds: 5
+    timeoutSeconds: 2
+  readinessProbe:
+    httpGet:
+      path: /ping
+      port: 3003
+    periodSeconds: 10
+    timeoutSeconds: 2
   resources:
     requests:
       memory: 2048Mi
@@ -109,7 +132,7 @@ machineLearning:
       - ReadWriteOnce
     size: 1Gi
   config:
-    MACHINE_LEARNING_WORKERS: "3"
+    MACHINE_LEARNING_WORKERS: "1"
     MACHINE_LEARNING_REQUEST_THREADS: "1"
     MACHINE_LEARNING_MODEL_INTER_OP_THREADS: "1"
     MACHINE_LEARNING_MODEL_INTRA_OP_THREADS: "2"
@@ -128,7 +151,10 @@ postgres:
   image:
     repository: ghcr.io/immich-app/postgres
     pullPolicy: IfNotPresent
-    tag: "14-vectorchord0.4.3-pgvectors0.2.0@sha256:5f6a838e4e44c8e0e019d0ebfe3ee8952b69afc2809b2c25f7b0119641978e91"
+    tag: "14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23"
+  config:
+    POSTGRES_INITDB_ARGS: "--data-checksums"
+  shmSize: 128Mi
   service:
     type: ClusterIP
     port: 5432
@@ -146,8 +172,11 @@ postgres:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "postgres"
   readinessProbe:
-    tcpSocket:
-      port: 5432
+    exec:
+      command:
+        - /bin/sh
+        - -ec
+        - pg_isready --username="$POSTGRES_USER" --dbname="$POSTGRES_DB"
     initialDelaySeconds: 2
     periodSeconds: 5
     timeoutSeconds: 3
@@ -167,7 +196,7 @@ redis:
   image:
     repository: docker.io/valkey/valkey
     pullPolicy: IfNotPresent
-    tag: "8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11"
+    tag: "9@sha256:c123e3715db63d06d4ad6964884037aa0d5d4d703939b9929954112889708e1d"
   args:
     - --save
     - ""
