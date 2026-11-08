@@ -14,7 +14,7 @@ server:
     size: 1Gi
   secret:
     annotations:
-      avp.kubernetes.io/path: "secret/data/immich-dev"
+      avp.kubernetes.io/path: "secrets/data/immich-dev"
     stringData:
       DB_PASSWORD: <DB_PASSWORD>
       DB_USERNAME: <DB_USERNAME>
@@ -50,7 +50,7 @@ postgres:
     size: 5Gi
   secret:
     annotations:
-      avp.kubernetes.io/path: "secret/data/immich-dev"
+      avp.kubernetes.io/path: "secrets/data/immich-dev"
     stringData:
       POSTGRES_PASSWORD: <DB_PASSWORD>
       POSTGRES_USER: <DB_USERNAME>
@@ -68,3 +68,4 @@ machineLearning:
     accessModes:
       - ReadWriteOnce
     size: 1Gi
+ 
