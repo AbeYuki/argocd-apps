@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   immich:
   - apiVersion: v2
+    appVersion: v3.3.6
+    created: "2026-11-08T10:38:05.7844364Z"
+    description: A Helm chart for Immich
+    digest: a7f778193efcbab91fe3dcbc626a748aceeb3951a7b4a2888deff01acf34e933
+    name: immich
+    type: application
+    urls:
+    - https://github.com/AbeYuki/argocd-apps/releases/download/immich-0.2.0/immich-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: v2.5.2
     created: "2026-07-21T12:30:37.031181854Z"
     description: A Helm chart for Immich
@@ -82,4 +92,4 @@ entries:
     urls:
     - https://github.com/AbeYuki/argocd-apps/releases/download/nextcloud-0.1.11/nextcloud-0.1.11.tgz
     version: 0.1.11
-generated: "2026-10-25T14:32:16.417882021Z"
+generated: "2026-11-08T10:38:05.784447366Z"
