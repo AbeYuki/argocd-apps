@@ -68,6 +68,8 @@ config:
         - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/auth/login"
         - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/user-settings"
         - "<path:secrets/data/immich#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        - "http://localhost:8080/auth/login"
+        - "http://localhost:8080/user-settings"
     - id: <path:secrets/data/oauth-client/dex/vault#client_id>
       name: Vault
       secret: <path:secrets/data/oauth-client/dex/vault#client_secret>
@@ -85,6 +87,8 @@ config:
       secret: <path:secrets/data/oauth-client/dex/nc/production#client_secret>
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/nc/production#redirect_uri>"
+        - http://localhost:8080/apps/user_oidc/code
+  
 
 serviceAccount:
   create: true

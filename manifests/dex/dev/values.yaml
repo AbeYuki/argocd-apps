@@ -68,6 +68,8 @@ config:
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/auth/login"
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/user-settings"
         - "<path:secrets/data/immich-dev#EXTERNAL_DOMAIN>/api/oauth/mobile-redirect"
+        - "http://localhost:8080/auth/login"
+        - "http://localhost:8080/user-settings"
     - id: <path:secrets/data/oauth-client/dex-dev/bloggg#client_id>
       name: Bloggg
       secret: <path:secrets/data/oauth-client/dex-dev/bloggg#client_secret>
@@ -79,7 +81,7 @@ config:
       secret: <path:secrets/data/oauth-client/dex/nc/dev#client_secret>
       redirectURIs:
         - "<path:secrets/data/oauth-client/dex/nc/dev#redirect_uri>"
-
+        - "http://localhost:8080/apps/user_oidc/code"
 
 serviceAccount:
   create: true
