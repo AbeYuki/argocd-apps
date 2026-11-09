@@ -38,12 +38,6 @@ configs:
         - profile
         - email
         - groups
-    rbac:
-      policy.default: ""
-      scopes: "[groups, email]"
-      policy.csv: |
-        <path:secrets/data/argocd/cm/production#policy_admin>
-        <path:secrets/data/argocd/cm/production#policy_user>
     resource.customizations.health.argoproj.io_Application: |
       hs = {}
       hs.status = "Progressing"
@@ -69,7 +63,12 @@ configs:
     resource.customizations.ignoreDifferences.apiregistration.k8s.io_APIService: |
       jqPathExpressions:
         - .spec.insecureSkipTLSVerify
-
+  rbac:
+    policy.default: ""
+    scopes: "[groups, email]"
+    policy.csv: |
+      <path:secrets/data/argocd/cm/production#policy_admin>
+      <path:secrets/data/argocd/cm/production#policy_user>
   cmp:
     create: true
     plugins:
