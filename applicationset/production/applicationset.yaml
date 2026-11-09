@@ -52,7 +52,7 @@ spec:
             namespace: argocd
             repoURL: https://github.com/AbeYuki/argocd-apps.git
             path: ./manifests/argocd/production
-            plugin: kustomize-helmcharts
+            plugin: "argocd-vault-plugin-kustomize-helmcharts"
             autoSync: false
             syncOptions:
               - CreateNamespace=true

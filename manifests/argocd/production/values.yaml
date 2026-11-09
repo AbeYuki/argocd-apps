@@ -8,7 +8,7 @@ controller:
 
 dex:
   metrics:
-    enabled: true
+    enabled: false
 
 redis:
   metrics:
@@ -26,8 +26,24 @@ configs:
   params:
     server.insecure: true
   cm:
-    url: https://argocd.aimhighergg.com
+    url: <secrets/data/argocd/cm/production#url>
     exec.enabled: true
+    oidc.config: |
+      name: <secrets/data/argocd/cm/production#name>
+      issuer: <secrets/data/argocd/cm/production#issuer>
+      clientID: <secrets/data/argocd/cm/production#client_id>
+      clientSecret: <secrets/data/argocd/cm/production#client_secret>
+      requestedScopes:
+        - openid
+        - profile
+        - email
+        - groups
+    rbac:
+      policy.default: ""
+      scopes: "[groups, email]"
+      policy.csv: |
+        <secrets/data/argocd/cm/production#policy_admin>
+        <secrets/data/argocd/cm/production#policy_user>
     resource.customizations.health.argoproj.io_Application: |
       hs = {}
       hs.status = "Progressing"
