@@ -1,4 +1,4 @@
-/2apiVersion: cert-manager.io/v1
+apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod-dns01-zone-2
@@ -14,7 +14,7 @@ spec:
           groupName: acme.sakuracloud.aimhighergg.com
           solverName: sakuracloud-dns-solver
           config:
-            zoneID: <path:secret/data/sakuracloud/dns#ZONE_ID_2 | jsonParse>
+            zoneID: <path:secrets/data/sakuracloud/dns#ZONE_ID_2 | jsonParse>
             accessTokenRef:
               name: sakuracloud-dns-credentials
               key: accessToken

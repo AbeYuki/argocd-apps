@@ -14,7 +14,7 @@ spec:
           groupName: acme.sakuracloud.aimhighergg.com
           solverName: sakuracloud-dns-solver
           config:
-            zoneID: <path:secret/data/sakuracloud/dns#ZONE_ID | jsonParse>
+            zoneID: <path:secrets/data/sakuracloud/dns#ZONE_ID | jsonParse>
             accessTokenRef:
               name: sakuracloud-dns-credentials
               key: accessToken
