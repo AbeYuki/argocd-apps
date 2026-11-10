@@ -441,14 +441,14 @@ spec:
             autoSync: true
             syncOptions:
               - CreateNamespace=true
-          #- name: viteful-dev
-          #  namespace:  <path:secrets/data/viteful/dev/namespace#NAMESPACE>
-          #  repoURL: https://github.com/AbeYuki/argocd-apps.git
-          #  path: ./manifests/viteful/dev
-          #  plugin: ""
-          #  autoSync: false
-          #  syncOptions:
-          #    - CreateNamespace=true
+          - name: viteful-dev
+            namespace:  <path:secrets/data/viteful/dev/namespace#NAMESPACE>
+            repoURL: https://github.com/AbeYuki/argocd-apps.git
+            path: ./manifests/viteful/dev
+            plugin: ""
+            autoSync: false
+            syncOptions:
+              - CreateNamespace=true
           - name: viteful
             namespace:  <path:secrets/data/viteful/production/namespace#NAMESPACE>
             repoURL: https://github.com/AbeYuki/argocd-apps.git
