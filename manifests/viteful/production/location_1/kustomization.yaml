@@ -30,10 +30,3 @@ patches:
 replicas:
 - name: viteful-frontend
   count: 2
-images:
-  - name: frontend
-    newName: <path:secrets/data/viteful/dev/registry#FRONTEND_IMAGE>
-    newTag: "0.2.0"
-  - name: backend
-    newName: <path:secrets/data/viteful/registry#BACKEND_IMAGE>
-    newTag: "0.1.1"
