@@ -34,6 +34,6 @@ images:
   - name: frontend
     newName: <path:secrets/data/viteful/dev/registry#FRONTEND_IMAGE>
     newTag: "0.1.0"
-  - name: frontend
+  - name: backend
     newName: <path:secrets/data/viteful/registry#BACKEND_IMAGE>
     newTag: "0.1.0"
