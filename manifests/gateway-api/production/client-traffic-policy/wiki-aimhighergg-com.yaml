@@ -24,4 +24,5 @@ spec:
       kind: Gateway
       name: envoy
       sectionName: https-wiki-aimhighergg-com
-  proxyProtocol: {}
+  proxyProtocol:
+    optional: true

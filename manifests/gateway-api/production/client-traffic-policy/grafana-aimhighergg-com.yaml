@@ -25,7 +25,8 @@ spec:
       kind: Gateway
       name: envoy
       sectionName: https-grafana-aimhighergg-com
-  proxyProtocol: {}
+  proxyProtocol:
+    optional: true
   clientIPDetection:
     xForwardedFor:
       numTrustedHops: 1
