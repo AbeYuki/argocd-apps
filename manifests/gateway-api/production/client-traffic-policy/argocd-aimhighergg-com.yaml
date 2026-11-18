@@ -25,4 +25,5 @@ spec:
       kind: Gateway
       name: envoy
       sectionName: https-argocd-aimhighergg-com
-  proxyProtocol: {}
+  proxyProtocol:
+    optional: true
