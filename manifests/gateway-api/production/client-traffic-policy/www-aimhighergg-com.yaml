@@ -25,4 +25,4 @@ spec:
       name: envoy
       sectionName: https-www-aimhighergg-com
   proxyProtocol:
-    optional: true
+    optional: true # proxy protocol のヘッダーがなくても受け付けるオプション

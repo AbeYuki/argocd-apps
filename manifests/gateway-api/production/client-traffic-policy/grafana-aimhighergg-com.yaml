@@ -26,7 +26,7 @@ spec:
       name: envoy
       sectionName: https-grafana-aimhighergg-com
   proxyProtocol:
-    optional: true
+    optional: true # proxy protocol のヘッダーがなくても受け付けるオプション
   clientIPDetection:
     xForwardedFor:
       numTrustedHops: 1
