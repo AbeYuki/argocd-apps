@@ -25,5 +25,5 @@ spec:
       kind: Gateway
       name: envoy
       sectionName: https-argocd-aimhighergg-com
-  proxyProtocol:
-    optional: true # proxy protocol のヘッダーがなくても受け付けるオプション
+  proxyProtocol: {}
+    #optional: true # proxy protocol のヘッダーがなくても受け付けるオプション
