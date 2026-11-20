@@ -48,11 +48,19 @@ spec:
       volumes:
         - name: runner-assets
           emptyDir: {}
+        - name: job-pod-template
+          configMap:
+            name: terraform-sakura-cloud-dns-job-pod-template
       volumeMounts:
         # The legacy startup script copies RUNNER_ASSETS_DIR into /runner.
         - name: runner-assets
           mountPath: /runnertmp
           readOnly: true
+        - name: job-pod-template
+          mountPath: /etc/runner-hooks
+          readOnly: true
       env:
         - name: RUNNER_ASSETS_DIR
           value: /runnertmp
+        - name: ACTIONS_RUNNER_CONTAINER_HOOK_TEMPLATE
+          value: /etc/runner-hooks/job-pod-template.yaml
