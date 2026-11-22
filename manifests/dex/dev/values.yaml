@@ -55,7 +55,6 @@ config:
         providerDiscoveryOverrides:
           authURL: "https://accounts.google.com/o/oauth2/v2/auth?prompt=select_account"
         promptType: select_account
-        # 上流 OIDC の groups クレームを受け取る（グループ情報は再認証時に更新）
         insecureEnableGroups: true
         # https://dexidp.io/docs/configuration/custom-scopes-claims-clients/
         # openid は自動追加されるので指定不要
