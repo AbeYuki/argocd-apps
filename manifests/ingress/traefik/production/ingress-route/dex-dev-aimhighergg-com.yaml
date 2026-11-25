@@ -11,5 +11,8 @@ spec:
       services:
         - name: dex-dev
           port: 5556
+      middlewares:
+        - name: ip-whitelist
+          namespace: dex-dev
   tls:
     secretName: dex-dev-aimhighergg-com-tls
