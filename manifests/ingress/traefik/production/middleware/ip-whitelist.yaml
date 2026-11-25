@@ -159,7 +159,6 @@ spec:
     - <path:secrets/data/ingress/traefik/ip-whitelist#80>
     - <path:secrets/data/ingress/traefik/ip-whitelist#81>
     - <path:secrets/data/ingress/traefik/ip-whitelist#82>
-    - <path:secrets/data/ingress/traefik/ip-whitelist#83>
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
