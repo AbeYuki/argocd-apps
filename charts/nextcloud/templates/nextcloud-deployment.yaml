@@ -85,6 +85,8 @@ spec:
             {{- if .Values.sso.enabled }}
             - name: NEXTCLOUD_OIDC_ENABLED
               value: "true"
+            - name: NEXTCLOUD_ALLOW_LOCAL_REMOTE_SERVERS
+              value: {{ .Values.sso.allowLocalRemoteServers | toString | quote }}
             - name: NEXTCLOUD_OIDC_PROVIDER
               value: {{ .Values.sso.provider | default "dex" | quote }}
             - name: NEXTCLOUD_OIDC_INSTALL_APP
