@@ -34,6 +34,7 @@ nextcloud:
     TRUSTED_PROXIES: <path:secrets/data/nextcloud/production#TRUSTED_PROXIES>
 sso:
   enabled: true
+  allowLocalRemoteServers: true
   provider: "dex"
   issuer:  <path:secrets/data/nextcloud/production#ISSUER>
   clientId: <path:secrets/data/oauth-client/dex/nc/production#client_id>
