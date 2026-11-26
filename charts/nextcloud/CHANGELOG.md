@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.1.17](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.16...charts/nextcloud/v0.1.17) - 2026-11-26
+
+- Feat/immich chart v0.2.0 app v3.3.6 by @AbeYuki in https://github.com/AbeYuki/argocd-apps/pull/30
+- update charts-nextcloud chartVersion:0.1.17 by @AbeYuki in https://github.com/AbeYuki/argocd-apps/pull/32
+
 ## [v0.1.16](https://github.com/AbeYuki/argocd-apps/compare/charts/nextcloud/v0.1.15...charts/nextcloud/v0.1.16) - 2026-10-25
 
 - update charts nextcloud chart_version:0.1.16 APP_version: 35.0.2-apache by @AbeYuki in https://github.com/AbeYuki/argocd-apps/pull/29
