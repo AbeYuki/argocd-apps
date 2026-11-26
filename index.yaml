@@ -34,6 +34,16 @@ entries:
   nextcloud:
   - apiVersion: v2
     appVersion: 35.0.2-apache
+    created: "2026-11-26T13:56:36.978453414Z"
+    description: A Helm chart for Kubernetes
+    digest: ee587c7ab3735ffa2ae68278fa068d8fc641c30f9766c84561e7f69fc31a5e1d
+    name: nextcloud
+    type: application
+    urls:
+    - https://github.com/AbeYuki/argocd-apps/releases/download/nextcloud-0.1.17/nextcloud-0.1.17.tgz
+    version: 0.1.17
+  - apiVersion: v2
+    appVersion: 35.0.2-apache
     created: "2026-10-25T14:32:16.417841521Z"
     description: A Helm chart for Kubernetes
     digest: 4c33472a5497363f1203dcc820e7e3ec708f48c7c987e0741f91099af3de16eb
@@ -92,4 +102,4 @@ entries:
     urls:
     - https://github.com/AbeYuki/argocd-apps/releases/download/nextcloud-0.1.11/nextcloud-0.1.11.tgz
     version: 0.1.11
-generated: "2026-11-08T10:38:05.784447366Z"
+generated: "2026-11-26T13:56:36.9784709Z"
