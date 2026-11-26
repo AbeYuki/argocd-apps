@@ -30,6 +30,11 @@ fi
 : "${NEXTCLOUD_OIDC_CLIENT_SECRET:?OIDC client secret is required}"
 
 occ status --output=json >/dev/null
+log "Configuring Nextcloud local network HTTP access."
+occ config:system:set allow_local_remote_servers \
+    --type=boolean \
+    --value="${NEXTCLOUD_ALLOW_LOCAL_REMOTE_SERVERS:-false}"
+
 apps="$(occ app:list --output=json)"
 state="$(printf '%s' "$apps" | php -r '
     $apps = json_decode(stream_get_contents(STDIN), true, 512, JSON_THROW_ON_ERROR);

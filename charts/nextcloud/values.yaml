@@ -318,6 +318,12 @@ sso:
   # 標準ログインは残し false に戻しても DB 内の既存 Provider は削除しない
   enabled: false
 
+  # sso.enabled=true の起動フックで allow_local_remote_servers を設定する
+  # true は OIDC に限らず Nextcloud の共通 HTTP クライアントからローカル・プライベート IP への通信を許可する
+  # false に戻すと許可を解除する
+  # sso.enabled=false の場合、保存済みの設定は無視される
+  allowLocalRemoteServers: false
+
   # user_oidc 内での固定識別名(空の場合は dex が使用される)
   provider: ""
 
